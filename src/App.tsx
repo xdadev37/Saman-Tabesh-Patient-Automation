@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createMuiTheme, Grid } from "@material-ui/core";
+import Header from "./Pages/Header/Header";
+import MainPage from "./Pages/MainPage/MainPage";
+import { ThemeProvider } from "@material-ui/core/styles";
+import RTLProvider from "./RTLProvider";
+import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
+import React from "react";
 
-function App() {
+const App: React.FC = () => {
+  const theme = createMuiTheme({
+    direction: "rtl",
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <RTLProvider theme={theme}>
+        <Grid container>
+          <Grid item xs={12} sm={12} lg={12}>
+            {/* <Header /> */}
+          </Grid>
+          <Grid xs={12} sm={12} lg={12}>
+            {/* <MainPage /> */}
+            <AddPatientPage />
+          </Grid>
+        </Grid>
+      </RTLProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
