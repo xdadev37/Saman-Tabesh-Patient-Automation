@@ -2,62 +2,54 @@ export const dataArrayRequiredName = [
   {
     title: "نام",
     placeholder: "نام بیمار",
-    id: "firstName",
+    id: "Name",
   },
   {
     title: "نام خانوادگی",
     placeholder: "نام خانوادگی بیمار",
-    id: "lastName",
-  },
-];
-export const dataArrayRequiredCode = [
-  {
-    title: "شماره ملی",
-    placeholder: "شماره ملی بیمار",
-    id: "nationalCode",
-  },
-  {
-    title: "شماره پرونده",
-    placeholder: "شماره پرونده بیمار",
-    id: "caseNumber",
+    id: "FamilyName",
   },
 ];
 
 export const dataArrayOptional = [
   {
     title: "کارت ملی",
-    id: "nationalCard",
+    id: "NationalIdDoc",
   },
   {
     title: "برگ پاتولوژی",
-    id: "pathologyPaper",
+    id: "PathologyDoc",
   },
   {
-    title: "برگ اول پرونده",
-    id: "firstCasePage",
+    title: "کارت درمان",
+    id: "TreatmentDoc",
   },
   {
     title: "فرم رضایت بیمار",
-    id: "patientConsentForm",
+    id: "CommitmentDoc",
   },
   {
-    title: "گزارش MR",
-    id: "MRReport",
+    title: "گزارش MRI",
+    id: "MRIReportDoc",
   },
   {
     title: "گزارش CT",
-    id: "CTReport",
+    id: "CTReportDoc",
   },
   {
     title: "گزارش PET",
-    id: "PETReport",
+    id: "PETReportDoc",
   },
   {
     title: "گزارش سونو",
-    id: "sonoReport",
+    id: "SonoReportDoc",
   },
   {
     title: "گزارش ماموگرافی",
-    id: "mammographyReport",
+    id: "MamoReportDoc",
+  },
+  {
+    title: "گزارشات آزمایشگاهی",
+    id: "LabReportDoc",
   },
 ];

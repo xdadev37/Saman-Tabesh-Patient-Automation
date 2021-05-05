@@ -1,82 +1,136 @@
-import { InputLabel, Input } from "@material-ui/core";
-import {
-  dataArrayRequiredName,
-  dataArrayRequiredCode,
-  dataArrayOptional,
-} from "./dataArray";
+import { InputLabel, Input, Button } from "@material-ui/core";
+import { dataArrayRequiredName, dataArrayOptional } from "./dataArray";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { FC, Fragment } from "react";
+import { FC, Fragment, ChangeEvent, KeyboardEvent, useState } from "react";
 
-const schema = yup.object().shape({
-  requiredName: yup.string().required(""),
-  requiredCode: yup.number().positive().integer().required(""),
-  pictureSize: yup
-    .mixed()
-    .test("fileSize", "حجم عکس بیش از حد مجاز است", (value) => {
-      return value && value[0].size <= 100000;
-    }),
-  pdfSize: yup
-    .mixed()
-    .test("fileSize", "حجم فایل بیش از حد مجاز است", (value) => {
-      return value && value[0].size <= 250000;
-    }),
-});
+interface IFormInputs {
+  requiredName: string;
+  NationalId: number;
+  FileNumber: number;
+  Avatar: string;
+  pdfFiles: string;
+  Comment: string;
+}
 
 const AddPatientPage: FC = () => {
+  const [fileStatus, setFileStatus] = useState(true);
+
+  const numberType = (event: KeyboardEvent) => {
+    if (event.which < 47 || event.which > 58) {
+      event.preventDefault();
+    }
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  } = useForm<IFormInputs>();
 
   const submit = (data: any) => {
-    return data;
+    if (fileStatus === true) {
+      return JSON.stringify(data);
+    } else {
+      alert("حجم فایل ها بیش تر از حد مجاز است!");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
+      {/* Names */}
       {dataArrayRequiredName.map((data) => (
         <Fragment key={data.id}>
           <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
           <Input
-            onKeyPress={(event: React.KeyboardEvent) => {
-              if (event.which <= 1575 || event.which >= 1740) {
+            onKeyPress={(event: KeyboardEvent) => {
+              const ew = event.which;
+              console.log(ew);
+              if (ew === 32) {
+                return;
+              }
+              if (ew < 1574 || ew > 1741) {
                 event.preventDefault();
               }
             }}
+            inputProps={{ maxLength: 80 }}
             placeholder={data.placeholder}
             id={data.id}
-            {...register}
+            {...register("requiredName", {
+              required: "پر کردن این فیلد الزامی است!",
+            })}
             type="text"
           />
-          {errors.requiredName && errors.requiredName.message}
+          {errors.requiredName && <p>{errors.requiredName.message}</p>}
         </Fragment>
       ))}
-      {dataArrayRequiredCode.map((data) => (
-        <Fragment key={data.id}>
-          <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
-          <Input id={data.id} {...register} type="number" />
-          {errors.requiredName && <p>{errors.requiredCode.message}</p>}
-        </Fragment>
-      ))}
+
+      {/* NationalId */}
+      <InputLabel htmlFor="NationalId">کد ملی</InputLabel>
+      <Input
+        onKeyPress={numberType}
+        inputProps={{ maxLength: 11 }}
+        id="NationalId"
+        {...register("NationalId", {
+          required: "پر کردن این فیلد الزامی است!",
+          minLength: {
+            value: 11,
+            message: "مقدار کد ملی حداقل باید 11 عدد باشد!",
+          },
+        })}
+      />
+      {errors.NationalId && <p>{errors.NationalId.message}</p>}
+
+      {/* FileNumber */}
+      <InputLabel htmlFor="FileNumber">شماره پرونده</InputLabel>
+      <Input
+        onKeyPress={numberType}
+        id="FileNumber"
+        inputProps={{ maxLength: 20 }}
+        {...register("FileNumber", {
+          required: "پر کردن این فیلد الزامی است!",
+        })}
+      />
+      {errors.FileNumber && <p>{errors.FileNumber.message}</p>}
+
+      {/* Avatar */}
+      <InputLabel htmlFor="Avatar">عکس پرسنلی بیمار</InputLabel>
+      <Input
+        id="Avatar"
+        type="file"
+        inputProps={{
+          accept: ".jpeg",
+        }}
+      />
+      {errors.Avatar && <p>ss</p>}
+
+      {/* Files */}
       {dataArrayOptional.map((data) => (
         <Fragment key={data.id}>
           <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
           <Input
             id={data.id}
-            {...register}
             type="file"
             inputProps={{ accept: ".pdf" }}
+            // {...register("pdfSize", {})}
+            onInput={(event: ChangeEvent<HTMLInputElement>) => {
+              const file = event.target.files![0].size;
+              if (file > 250001) {
+                alert("حجم فایل بیش تر از حد مجاز است!");
+                setFileStatus(false);
+              }
+            }}
           />
-          {errors.requiredName && <p>{errors.pdfSize.message}</p>}
+          {errors.pdfFiles && <p>{errors.pdfFiles.message}</p>}
         </Fragment>
       ))}
-      <InputLabel htmlFor="sss">ssssss</InputLabel>
-      <Input id="sss" type="submit" />
+
+      {/* Comment */}
+      <InputLabel htmlFor="Comment">توضیحات</InputLabel>
+      <Input id="Comment" type="text" inputProps={{ maxLength: 800 }} />
+
+      <Button variant="contained" type="submit">
+        ثبت
+      </Button>
     </form>
   );
 };
