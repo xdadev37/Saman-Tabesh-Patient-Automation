@@ -1,19 +1,30 @@
-import { InputLabel, Input, Button } from "@material-ui/core";
+import { FC, Fragment, ChangeEvent, KeyboardEvent, useState } from "react";
+import { InputLabel, Input, Button, Typography } from "@material-ui/core";
 import { dataArrayRequiredName, dataArrayOptional } from "./dataArray";
 import { useForm } from "react-hook-form";
-import { FC, Fragment, ChangeEvent, KeyboardEvent, useState } from "react";
+import axios from "axios";
 
 interface IFormInputs {
-  requiredName: string;
+  Name: string;
+  FamilyName: string;
   NationalId: number;
   FileNumber: number;
   Avatar: string;
-  pdfFiles: string;
+  NationalIdDoc: string;
+  PathologyDoc: string;
+  TreatmentDoc: string;
+  CommitmentDoc: string;
+  MRIReportDoc: string;
+  CTReportDoc: string;
+  PETReportDoc: string;
+  SonoReportDoc: string;
+  MamoReportDoc: string;
+  LabReportDoc: string;
   Comment: string;
 }
 
 const AddPatientPage: FC = () => {
-  const [fileStatus, setFileStatus] = useState(true);
+  const [fileStatus, setFileStatus] = useState(false);
 
   const numberType = (event: KeyboardEvent) => {
     if (event.which < 47 || event.which > 58) {
@@ -25,11 +36,30 @@ const AddPatientPage: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs | any>();
 
-  const submit = (data: any) => {
-    if (fileStatus === true) {
-      return JSON.stringify(data);
+  const submit = () => {
+    if (fileStatus === false) {
+      axios
+        .get("https://reqres.in/api/users?page=2", {
+          // Name: Name,
+          // FamilyName: FamilyName,
+          // NationalId: NationalId,
+          // FileNumber: FileNumber,
+          // Avatar: Avatar,
+          // NationalIdDoc: NationalIdDoc,
+          // PathologyDoc: PathologyDoc,
+          // TreatmentDoc: TreatmentDoc,
+          // CommitmentDoc: CommitmentDoc,
+          // MRIReportDoc: MRIReportDoc,
+          // CTReportDoc: CTReportDoc,
+          // PETReportDoc: PETReportDoc,
+          // SonoReportDoc: SonoReportDoc,
+          // MamoReportDoc: MamoReportDoc,
+          // LabReportDoc: LabReportDoc,
+          // Comment: Comment,
+        })
+        .then((res) => {});
     } else {
       alert("حجم فایل ها بیش تر از حد مجاز است!");
     }
@@ -44,7 +74,7 @@ const AddPatientPage: FC = () => {
           <Input
             onKeyPress={(event: KeyboardEvent) => {
               const ew = event.which;
-              console.log(ew);
+
               if (ew === 32) {
                 return;
               }
@@ -55,12 +85,14 @@ const AddPatientPage: FC = () => {
             inputProps={{ maxLength: 80 }}
             placeholder={data.placeholder}
             id={data.id}
-            {...register("requiredName", {
+            {...register<any>(data.id, {
               required: "پر کردن این فیلد الزامی است!",
             })}
             type="text"
           />
-          {errors.requiredName && <p>{errors.requiredName.message}</p>}
+          {errors[data.id] && (
+            <Typography>{errors[data.id].message}</Typography>
+          )}
         </Fragment>
       ))}
 
@@ -111,16 +143,15 @@ const AddPatientPage: FC = () => {
             id={data.id}
             type="file"
             inputProps={{ accept: ".pdf" }}
-            // {...register("pdfSize", {})}
             onInput={(event: ChangeEvent<HTMLInputElement>) => {
               const file = event.target.files![0].size;
               if (file > 250001) {
-                alert("حجم فایل بیش تر از حد مجاز است!");
-                setFileStatus(false);
+                setFileStatus(true);
               }
             }}
           />
-          {errors.pdfFiles && <p>{errors.pdfFiles.message}</p>}
+          {errors[data.id] && <p>{errors[data.id].message}</p>}
+          {fileStatus && <p>حجم فایل زیاد است!</p>}
         </Fragment>
       ))}
 
