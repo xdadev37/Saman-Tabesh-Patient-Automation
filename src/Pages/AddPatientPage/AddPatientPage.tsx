@@ -4,8 +4,6 @@ import { dataArrayRequiredName, dataArrayOptional } from "./dataArray";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import {
-  setRequiredFields,
-  setOptionalFields,
   selectRequiredField,
   selectOptionalField,
 } from "../../Redux/Slicer/patientInfoSlice";
@@ -16,8 +14,7 @@ const AddPatientPage: FC = () => {
   const optionalField = useAppSelector(selectOptionalField);
   const dispatch = useAppDispatch();
   const [fileStatus, setFileStatus] = useState(false);
-  const [name, setName] = useState();
-  // console.log(requiredField);
+  console.log(requiredField);
 
   const numberType = (event: KeyboardEvent) => {
     if (event.which < 47 || event.which > 58) {
@@ -66,10 +63,7 @@ const AddPatientPage: FC = () => {
         <Fragment key={data.id}>
           <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
           <Input
-            onInput={() => {
-              console.log(requiredField[0][data.id]);
-              // dispatch(setRequiredFields(requiredField[0][data.id] = watch(data.id)));
-            }}
+            onInput={() => {}}
             onKeyPress={(event: KeyboardEvent) => {
               const ew = event.which;
 
