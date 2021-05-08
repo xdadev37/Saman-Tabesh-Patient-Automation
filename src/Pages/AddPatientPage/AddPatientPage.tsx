@@ -2,29 +2,22 @@ import { FC, Fragment, ChangeEvent, KeyboardEvent, useState } from "react";
 import { InputLabel, Input, Button, Typography } from "@material-ui/core";
 import { dataArrayRequiredName, dataArrayOptional } from "./dataArray";
 import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import {
+  setRequiredFields,
+  setOptionalFields,
+  selectRequiredField,
+  selectOptionalField,
+} from "../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 
-interface IFormInputs {
-  Name: string;
-  FamilyName: string;
-  NationalId: number;
-  FileNumber: number;
-  Avatar: string;
-  NationalIdDoc: string;
-  PathologyDoc: string;
-  TreatmentDoc: string;
-  CommitmentDoc: string;
-  MRIReportDoc: string;
-  CTReportDoc: string;
-  PETReportDoc: string;
-  SonoReportDoc: string;
-  MamoReportDoc: string;
-  LabReportDoc: string;
-  Comment: string;
-}
-
 const AddPatientPage: FC = () => {
+  const requiredField = useAppSelector(selectRequiredField);
+  const optionalField = useAppSelector(selectOptionalField);
+  const dispatch = useAppDispatch();
   const [fileStatus, setFileStatus] = useState(false);
+  const [name, setName] = useState();
+  // console.log(requiredField);
 
   const numberType = (event: KeyboardEvent) => {
     if (event.which < 47 || event.which > 58) {
@@ -35,13 +28,14 @@ const AddPatientPage: FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<IFormInputs | any>();
+  } = useForm<any>();
 
   const submit = () => {
     if (fileStatus === false) {
       axios
-        .get("https://reqres.in/api/users?page=2", {
+        .post("http://localhost:3000/addPatient", {
           // Name: Name,
           // FamilyName: FamilyName,
           // NationalId: NationalId,
@@ -72,6 +66,10 @@ const AddPatientPage: FC = () => {
         <Fragment key={data.id}>
           <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
           <Input
+            onInput={() => {
+              console.log(requiredField[0][data.id]);
+              // dispatch(setRequiredFields(requiredField[0][data.id] = watch(data.id)));
+            }}
             onKeyPress={(event: KeyboardEvent) => {
               const ew = event.which;
 
@@ -85,7 +83,7 @@ const AddPatientPage: FC = () => {
             inputProps={{ maxLength: 80 }}
             placeholder={data.placeholder}
             id={data.id}
-            {...register<any>(data.id, {
+            {...register<string>(data.id, {
               required: "پر کردن این فیلد الزامی است!",
             })}
             type="text"
