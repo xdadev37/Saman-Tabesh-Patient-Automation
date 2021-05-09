@@ -54,37 +54,37 @@ export const patientInfoSlice = createSlice({
       state.requiredFields[0].Avatar = action.payload;
     },
     setNationalIdDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].NationalIdDoc = action.payload;
     },
     setPathologyDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].PathologyDoc = action.payload;
     },
     setTreatmentDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].TreatmentDoc = action.payload;
     },
     setCommitmentDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].CommitmentDoc = action.payload;
     },
     setMRIReportDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].MRIReportDoc = action.payload;
     },
     setCTReportDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].CTReportDoc = action.payload;
     },
-    setPETReport: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+    setPETReportDoc: (state, action: PayloadAction<string>) => {
+      state.optionalFields[0].PETReportDoc = action.payload;
     },
     setSonoReportDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].SonoReportDoc = action.payload;
     },
     setMamoReportDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].MamoReportDoc = action.payload;
     },
     setLabReportDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].LabReportDoc = action.payload;
     },
     setComment: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Avatar = action.payload;
+      state.optionalFields[0].Comment = action.payload;
     },
   },
 });
@@ -101,7 +101,7 @@ export const {
   setCommitmentDoc,
   setMRIReportDoc,
   setCTReportDoc,
-  setPETReport,
+  setPETReportDoc,
   setSonoReportDoc,
   setMamoReportDoc,
   setLabReportDoc,

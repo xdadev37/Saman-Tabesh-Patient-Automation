@@ -1,55 +1,82 @@
+import {
+  setName,
+  setFamilyName,
+  setNationalIdDoc,
+  setPathologyDoc,
+  setTreatmentDoc,
+  setCommitmentDoc,
+  setMRIReportDoc,
+  setCTReportDoc,
+  setPETReportDoc,
+  setSonoReportDoc,
+  setMamoReportDoc,
+  setLabReportDoc,
+} from "../../Redux/Slicer/patientInfoSlice";
+
 export const dataArrayRequiredName = [
   {
     title: "نام",
     placeholder: "نام بیمار",
     id: "Name",
+    func: (arg: string) => setName(arg),
   },
   {
     title: "نام خانوادگی",
     placeholder: "نام خانوادگی بیمار",
     id: "FamilyName",
+    func: (arg: string) => setFamilyName(arg),
   },
 ];
 
 export const dataArrayOptional = [
   {
     title: "کارت ملی",
-    id: "NationalIdDoc",
+    id: { value: "NationalIdDoc", message: false },
+    func: (arg: string) => setNationalIdDoc(arg),
   },
   {
     title: "برگ پاتولوژی",
-    id: "PathologyDoc",
+    id: { value: "PathologyDoc", message: false },
+    func: (arg: string) => setPathologyDoc(arg),
   },
   {
     title: "کارت درمان",
-    id: "TreatmentDoc",
+    id: { value: "TreatmentDoc", message: false },
+    func: (arg: string) => setTreatmentDoc(arg),
   },
   {
     title: "فرم رضایت بیمار",
-    id: "CommitmentDoc",
+    id: { value: "CommitmentDoc", message: false },
+    func: (arg: string) => setCommitmentDoc(arg),
   },
   {
     title: "گزارش MRI",
-    id: "MRIReportDoc",
+    id: { value: "MRIReportDoc", message: false },
+    func: (arg: string) => setMRIReportDoc(arg),
   },
   {
     title: "گزارش CT",
-    id: "CTReportDoc",
+    id: { value: "CTReportDoc", message: false },
+    func: (arg: string) => setCTReportDoc(arg),
   },
   {
     title: "گزارش PET",
-    id: "PETReportDoc",
+    id: { value: "PETReportDoc", message: false },
+    func: (arg: string) => setPETReportDoc(arg),
   },
   {
     title: "گزارش سونو",
-    id: "SonoReportDoc",
+    id: { value: "SonoReportDoc", message: false },
+    func: (arg: string) => setSonoReportDoc(arg),
   },
   {
     title: "گزارش ماموگرافی",
-    id: "MamoReportDoc",
+    id: { value: "MamoReportDoc", message: false },
+    func: (arg: string) => setMamoReportDoc(arg),
   },
   {
     title: "گزارشات آزمایشگاهی",
-    id: "LabReportDoc",
+    id: { value: "LabReportDoc", message: false },
+    func: (arg: string) => setLabReportDoc(arg),
   },
 ];

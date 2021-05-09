@@ -1,159 +1,146 @@
-import { FC, Fragment, ChangeEvent, KeyboardEvent, useState } from "react";
-import { InputLabel, Input, Button, Typography } from "@material-ui/core";
-import { dataArrayRequiredName, dataArrayOptional } from "./dataArray";
+import { FC, useState, Fragment } from "react";
+import {
+  Button,
+  Typography,
+  Step,
+  Stepper,
+  StepLabel,
+} from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import { useAppSelector } from "../../Redux/hook";
 import {
   selectRequiredField,
   selectOptionalField,
 } from "../../Redux/Slicer/patientInfoSlice";
+import RequiredFields from "./FormFields/RequiredFields/requiredFields";
+import OptionalFields from "./FormFields/OptionalFields/optionalFields";
 import axios from "axios";
+
+const getSteps = () => [
+  "اطلاعات اولیه بیمار",
+  "آپلود مدارک بیمار",
+  "مرور اطلاعات بیمار",
+];
+const getStepContent = (step: number) => {
+  switch (step) {
+    case 0:
+      return <RequiredFields />;
+    case 1:
+      return <OptionalFields />;
+    case 2:
+      return <p>sss</p>;
+    default:
+      return <RequiredFields />;
+  }
+};
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
   const optionalField = useAppSelector(selectOptionalField);
-  const dispatch = useAppDispatch();
-  const [fileStatus, setFileStatus] = useState(false);
-  console.log(requiredField);
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
+  const { handleSubmit } = useForm();
+  const steps = getSteps();
 
-  const numberType = (event: KeyboardEvent) => {
-    if (event.which < 47 || event.which > 58) {
-      event.preventDefault();
-    }
+  const isStepOptional = (step: number) => {
+    return step === 1;
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<any>();
+  const isStepSkipped = (step: number) => {
+    return skipped.has(step);
+  };
 
-  const submit = () => {
-    if (fileStatus === false) {
-      axios
-        .post("http://localhost:3000/addPatient", {
-          // Name: Name,
-          // FamilyName: FamilyName,
-          // NationalId: NationalId,
-          // FileNumber: FileNumber,
-          // Avatar: Avatar,
-          // NationalIdDoc: NationalIdDoc,
-          // PathologyDoc: PathologyDoc,
-          // TreatmentDoc: TreatmentDoc,
-          // CommitmentDoc: CommitmentDoc,
-          // MRIReportDoc: MRIReportDoc,
-          // CTReportDoc: CTReportDoc,
-          // PETReportDoc: PETReportDoc,
-          // SonoReportDoc: SonoReportDoc,
-          // MamoReportDoc: MamoReportDoc,
-          // LabReportDoc: LabReportDoc,
-          // Comment: Comment,
-        })
-        .then((res) => {});
-    } else {
-      alert("حجم فایل ها بیش تر از حد مجاز است!");
+  const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
     }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+      throw new Error("پر کردن فیلد ها الزامی است!");
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped((prevSkipped) => {
+      const newSkipped = new Set(prevSkipped.values());
+      newSkipped.add(activeStep);
+      return newSkipped;
+    });
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+
+  const submit = (data: any) => {
+    return data;
+    // axios
+    //   .post("http://localhost:3000/addPatient", {
+    //     Name: requiredField.Name,
+    //     FamilyName: requiredField.FamilyName,
+    //     NationalId: requiredField.NationalId,
+    //     FileNumber: requiredField.FileNumber,
+    //     Avatar: requiredField.Avatar,
+    //     NationalIdDoc: optionalField.NationalIdDoc,
+    //     PathologyDoc: optionalField.PathologyDoc,
+    //     TreatmentDoc: optionalField.TreatmentDoc,
+    //     CommitmentDoc: optionalField.CommitmentDoc,
+    //     MRIReportDoc: optionalField.MRIReportDoc,
+    //     CTReportDoc: optionalField.CTReportDoc,
+    //     PETReportDoc: optionalField.PETReportDoc,
+    //     SonoReportDoc: optionalField.SonoReportDoc,
+    //     MamoReportDoc: optionalField.MamoReportDoc,
+    //     LabReportDoc: optionalField.LabReportDoc,
+    //     Comment: optionalField.Comment,
+    //   })
+    //   .then((res) => {});
   };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      {/* Names */}
-      {dataArrayRequiredName.map((data) => (
-        <Fragment key={data.id}>
-          <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
-          <Input
-            onInput={() => {}}
-            onKeyPress={(event: KeyboardEvent) => {
-              const ew = event.which;
-
-              if (ew === 32) {
-                return;
-              }
-              if (ew < 1574 || ew > 1741) {
-                event.preventDefault();
-              }
-            }}
-            inputProps={{ maxLength: 80 }}
-            placeholder={data.placeholder}
-            id={data.id}
-            {...register<string>(data.id, {
-              required: "پر کردن این فیلد الزامی است!",
-            })}
-            type="text"
-          />
-          {errors[data.id] && (
-            <Typography>{errors[data.id].message}</Typography>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      {activeStep === steps.length ? (
+        <Fragment>
+          <Typography>اطلاعات با موفقیت ثبت شد!</Typography>
+          <Button onClick={handleReset}>ریست</Button>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <Typography>{getStepContent(activeStep)}</Typography>
+          <Button disabled={activeStep === 0} onClick={handleBack}>
+            برگشت
+          </Button>
+          {isStepOptional(activeStep) && (
+            <Button onClick={handleSkip} variant="contained" color="primary">
+              رد کردن
+            </Button>
           )}
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={handleNext}
+          >
+            {activeStep === steps.length - 1 ? "ثبت" : "بعدی"}
+          </Button>
         </Fragment>
-      ))}
-
-      {/* NationalId */}
-      <InputLabel htmlFor="NationalId">کد ملی</InputLabel>
-      <Input
-        onKeyPress={numberType}
-        inputProps={{ maxLength: 11 }}
-        id="NationalId"
-        {...register("NationalId", {
-          required: "پر کردن این فیلد الزامی است!",
-          minLength: {
-            value: 11,
-            message: "مقدار کد ملی حداقل باید 11 عدد باشد!",
-          },
-        })}
-      />
-      {errors.NationalId && <p>{errors.NationalId.message}</p>}
-
-      {/* FileNumber */}
-      <InputLabel htmlFor="FileNumber">شماره پرونده</InputLabel>
-      <Input
-        onKeyPress={numberType}
-        id="FileNumber"
-        inputProps={{ maxLength: 20 }}
-        {...register("FileNumber", {
-          required: "پر کردن این فیلد الزامی است!",
-        })}
-      />
-      {errors.FileNumber && <p>{errors.FileNumber.message}</p>}
-
-      {/* Avatar */}
-      <InputLabel htmlFor="Avatar">عکس پرسنلی بیمار</InputLabel>
-      <Input
-        id="Avatar"
-        type="file"
-        inputProps={{
-          accept: ".jpeg",
-        }}
-      />
-      {errors.Avatar && <p>ss</p>}
-
-      {/* Files */}
-      {dataArrayOptional.map((data) => (
-        <Fragment key={data.id}>
-          <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
-          <Input
-            id={data.id}
-            type="file"
-            inputProps={{ accept: ".pdf" }}
-            onInput={(event: ChangeEvent<HTMLInputElement>) => {
-              const file = event.target.files![0].size;
-              if (file > 250001) {
-                setFileStatus(true);
-              }
-            }}
-          />
-          {errors[data.id] && <p>{errors[data.id].message}</p>}
-          {fileStatus && <p>حجم فایل زیاد است!</p>}
-        </Fragment>
-      ))}
-
-      {/* Comment */}
-      <InputLabel htmlFor="Comment">توضیحات</InputLabel>
-      <Input id="Comment" type="text" inputProps={{ maxLength: 800 }} />
-
-      <Button variant="contained" type="submit">
-        ثبت
-      </Button>
+      )}
     </form>
   );
 };
