@@ -1,9 +1,10 @@
-import { FC, ChangeEvent, KeyboardEvent } from "react";
+import { FC, ChangeEvent, KeyboardEvent, Fragment } from "react";
 import { InputLabel, Input, Typography, Button } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import NameFields from "./nameFields";
+import { dataArrayRequiredName } from "../../dataArray";
 import {
   setNationalId,
   setFileNumber,
@@ -54,7 +55,37 @@ const RequiredFields: FC = () => {
   return (
     <form onSubmit={handleSubmit(submit)}>
       {/* Names */}
-      <NameFields />
+      {dataArrayRequiredName.map((data) => (
+        <Fragment key={data.id}>
+          <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
+          <Input
+            onKeyPress={(event: KeyboardEvent) => {
+              const ew = event.which;
+
+              if (ew === 32) {
+                return;
+              }
+              if (ew < 1574 || ew > 1741) {
+                event.preventDefault();
+              }
+            }}
+            inputProps={{ maxLength: 80 }}
+            placeholder={data.placeholder}
+            id={data.id}
+            {...register<string>(data.id, {
+              required: "پر کردن این فیلد الزامی است!",
+            })}
+            type="text"
+            onMouseEnter={() => console.log(errors)}
+            onInput={() => {
+              dispatch(data.func(watch(data.id)));
+            }}
+          />
+          {errors[data.id] && (
+            <Typography>{errors[data.id].message}</Typography>
+          )}
+        </Fragment>
+      ))}
 
       {/* NationalId */}
       <InputLabel htmlFor="NationalId">کد ملی</InputLabel>

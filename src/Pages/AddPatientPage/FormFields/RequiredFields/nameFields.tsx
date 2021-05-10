@@ -35,11 +35,14 @@ const NameFields: FC = () => {
               required: "پر کردن این فیلد الزامی است!",
             })}
             type="text"
+            onMouseEnter={() => console.log(errors)}
             onInput={() => {
               dispatch(data.func(watch(data.id)));
             }}
           />
-          {errors[data.id] && <Typography>{errors[data.id]}</Typography>}
+          {errors[data.id] && (
+            <Typography>{errors[data.id].message}</Typography>
+          )}
         </Fragment>
       ))}
     </Fragment>

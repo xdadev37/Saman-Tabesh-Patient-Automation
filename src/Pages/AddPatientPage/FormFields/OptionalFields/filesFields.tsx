@@ -7,10 +7,7 @@ import { useAppDispatch } from "../../../../Redux/hook";
 const FilesFields: FC = () => {
   const [message, setMessage] = useState("");
   const dispatch = useAppDispatch();
-  const {
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { watch } = useForm();
 
   return (
     <Fragment>
@@ -36,9 +33,6 @@ const FilesFields: FC = () => {
               }
             }}
           />
-          {errors[data.id.value] && (
-            <Typography>{errors[data.id.value]}</Typography>
-          )}
           {data.id.message && <Typography>{message}</Typography>}
         </Fragment>
       ))}
