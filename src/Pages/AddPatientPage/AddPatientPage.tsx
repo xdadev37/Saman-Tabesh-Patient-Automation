@@ -21,18 +21,6 @@ const getSteps = () => [
   "آپلود مدارک بیمار",
   "مرور اطلاعات بیمار",
 ];
-const getStepContent = (step: number) => {
-  switch (step) {
-    case 0:
-      return <RequiredFields />;
-    case 1:
-      return <OptionalFields />;
-    case 2:
-      return <p>sss</p>;
-    default:
-      return <RequiredFields />;
-  }
-};
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
@@ -59,6 +47,19 @@ const AddPatientPage: FC = () => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+  };
+
+  const getStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return <RequiredFields />;
+      case 1:
+        return <OptionalFields />;
+      case 2:
+        return <p>sss</p>;
+      default:
+        return <RequiredFields />;
+    }
   };
 
   const handleBack = () => {
@@ -107,7 +108,7 @@ const AddPatientPage: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
+    <Fragment>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -141,7 +142,7 @@ const AddPatientPage: FC = () => {
           </Button>
         </Fragment>
       )}
-    </form>
+    </Fragment>
   );
 };
 

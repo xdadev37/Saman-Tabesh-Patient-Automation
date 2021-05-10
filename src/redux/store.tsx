@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import patientInfoReducer from "./Slicer/patientInfoSlice";
+import collapsibleReducer from "./Slicer/collapsibleSlice";
 
 export const store = configureStore({
   reducer: {
     patientInfo: patientInfoReducer,
+    collapsibleTable: collapsibleReducer,
   },
 });
 

@@ -2,33 +2,27 @@ import {
   TableRow,
   TableCell,
   Table,
-  Avatar,
   TableBody,
   TableHead,
   Link,
 } from "@material-ui/core";
-import { ICollapsible } from "../Collapsible";
 
-const MoreDetailesRow1: React.FC<ICollapsible> = () => {
-  const rows1 = [
+const MoreDetailsRow2: React.FC = () => {
+  const rows2 = [
     {
-      title: "کارت ملی",
+      title: "گزارش CT",
       link: "",
     },
     {
-      title: "برگ پاتولوژی",
+      title: "گزارش PET",
       link: "",
     },
     {
-      title: "برگ اول پرونده",
+      title: "گزارش سونو",
       link: "",
     },
     {
-      title: "فرم رضایت بیمار",
-      link: "",
-    },
-    {
-      title: "گزارش MR",
+      title: "گزارش ماموگرافی",
       link: "",
     },
   ];
@@ -36,27 +30,25 @@ const MoreDetailesRow1: React.FC<ICollapsible> = () => {
   return (
     <Table size="small">
       <TableHead>
-        <TableCell>عکس پرسنلی بیمار</TableCell>
-        {rows1.map((row) => (
+        {rows2.map((row) => (
           <TableCell key={row.title}>{row.title}</TableCell>
         ))}
+        <TableCell>توضیحات</TableCell>
       </TableHead>
       <TableBody>
         <TableRow>
-          <TableCell>
-            <Avatar alt="Avatar" src=""></Avatar>
-          </TableCell>
-          {rows1.map((row) => (
+          {rows2.map((row) => (
             <TableCell key={row.title}>
               <Link href={row.link} target="_blank" rel="noreferrer">
                 مشاهده عکس
               </Link>
             </TableCell>
           ))}
+          <TableCell></TableCell>
         </TableRow>
       </TableBody>
     </Table>
   );
 };
 
-export default MoreDetailesRow1;
+export default MoreDetailsRow2;

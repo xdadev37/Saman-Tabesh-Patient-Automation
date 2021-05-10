@@ -5,12 +5,15 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
-import { ICollapsible } from "./Collapsible";
-import MoreDetailesRow1 from "./MoreDetailesRows/MoreDetailesRow1";
-import MoreDetailesRow2 from "./MoreDetailesRows/MoreDetailesRow2";
-import ButtonsGroup from "./MoreDetailesRows/ButtonsGroup";
+import MoreDetailsRow1 from "./MoreDetailsRows/MoreDetailsRow1";
+import MoreDetailsRow2 from "./MoreDetailsRows/MoreDetailsRow2";
+import ButtonsGroup from "./MoreDetailsRows/ButtonsGroup";
+import { useAppSelector } from "../../../../../Redux/hook";
+import { selectOpen } from "../../../../../Redux/Slicer/collapsibleSlice";
 
-const MoreDetailsTable: React.FC<ICollapsible> = ({ open, setOpen }) => {
+const MoreDetailsTable: React.FC = () => {
+  const open = useAppSelector(selectOpen);
+
   return (
     <TableRow>
       <TableCell colSpan={6}>
@@ -18,8 +21,8 @@ const MoreDetailsTable: React.FC<ICollapsible> = ({ open, setOpen }) => {
           <Box>
             <Typography variant="h6">مدارک پیوست</Typography>
             <hr />
-            <MoreDetailesRow1 open={open} setOpen={setOpen} />
-            <MoreDetailesRow2 open={open} setOpen={setOpen} />
+            <MoreDetailsRow1 />
+            <MoreDetailsRow2 />
             <ButtonsGroup />
           </Box>
         </Collapse>

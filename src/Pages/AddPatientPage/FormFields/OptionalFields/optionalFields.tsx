@@ -19,6 +19,7 @@ const OptionalFields: FC = () => {
       <Input
         id="Comment"
         type="text"
+        rows={5}
         inputProps={{ maxLength: 800 }}
         onInput={() => {
           dispatch(setComment(watch("Comment")));

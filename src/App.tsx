@@ -1,4 +1,3 @@
-import { FC, StrictMode } from "react";
 import { createMuiTheme, Grid } from "@material-ui/core";
 import Header from "./Pages/Header/Header";
 import MainPage from "./Pages/MainPage/MainPage";
@@ -6,13 +5,12 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import RTLProvider from "./RTLProvider";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
 
-const App: FC = () => {
+const App: React.FC = () => {
   const theme = createMuiTheme({
     direction: "rtl",
   });
 
   return (
-    <StrictMode>
       <ThemeProvider theme={theme}>
         <RTLProvider theme={theme}>
           <Grid container>
@@ -26,7 +24,6 @@ const App: FC = () => {
           </Grid>
         </RTLProvider>
       </ThemeProvider>
-    </StrictMode>
   );
 };
 

@@ -1,20 +1,25 @@
-import { FC, Fragment, ChangeEvent, KeyboardEvent } from "react";
-import { InputLabel, Input, Typography } from "@material-ui/core";
+import { FC, ChangeEvent, KeyboardEvent } from "react";
+import { InputLabel, Input, Typography, Button } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import NameFields from "./nameFields";
 import {
   setNationalId,
   setFileNumber,
   setAvatar,
+  selectRequiredField,
 } from "../../../../Redux/Slicer/patientInfoSlice";
+import axios from "axios";
 
 const RequiredFields: FC = () => {
   const dispatch = useAppDispatch();
+  const requiredField = useAppSelector(selectRequiredField);
   const {
     register,
     watch,
     formState: { errors },
+    handleSubmit,
   } = useForm();
 
   const numberType = (event: KeyboardEvent) => {
@@ -23,8 +28,31 @@ const RequiredFields: FC = () => {
     }
   };
 
+  const submit = () => {
+    axios
+      .post("http://localhost:3000/api/requiredForm", {
+        Name: requiredField.Name,
+        FamilyName: requiredField.FamilyName,
+        NationalId: requiredField.NationalId,
+        FileNumber: requiredField.FileNumber,
+        Avatar: requiredField.Avatar,
+      })
+      .then((res) => {
+        if ((res.status = 201)) {
+          <Alert variant="filled" severity="success">
+            اطلاعات اولیه با موفقیت ثبت شد
+          </Alert>;
+        }
+      })
+      .catch((error) => {
+        <Alert variant="filled" severity="error">
+          {error}
+        </Alert>;
+      });
+  };
+
   return (
-    <Fragment>
+    <form onSubmit={handleSubmit(submit)}>
       {/* Names */}
       <NameFields />
 
@@ -79,14 +107,19 @@ const RequiredFields: FC = () => {
         onInput={(event: ChangeEvent<HTMLInputElement>) => {
           const file = event.target.files![0].size;
 
-          if (file > 110000) {
-            alert("حجم عکس آپلود شده بیش تر از حد مجاز است!");
+          if (file > 100000) {
+            alert(
+              <Alert variant="filled" severity="warning">
+                حجم عکس آپلود شده بیش تر از حد مجاز است!
+              </Alert>
+            );
           } else {
             dispatch(setAvatar(watch("Avatar")));
           }
         }}
       />
-    </Fragment>
+      <Button type="submit">بعدی</Button>
+    </form>
   );
 };
 
