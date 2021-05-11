@@ -3,7 +3,6 @@ import { InputLabel, Input, Typography, Button } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
-import NameFields from "./nameFields";
 import { dataArrayRequiredName } from "../../dataArray";
 import {
   setNationalId,
@@ -13,7 +12,11 @@ import {
 } from "../../../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 
-const RequiredFields: FC = () => {
+interface IHandleNext {
+  handleNext: () => void;
+}
+
+const RequiredFields: FC<IHandleNext> = ({ handleNext }) => {
   const dispatch = useAppDispatch();
   const requiredField = useAppSelector(selectRequiredField);
   const {
@@ -29,27 +32,29 @@ const RequiredFields: FC = () => {
     }
   };
 
-  const submit = () => {
-    axios
-      .post("http://localhost:3000/api/requiredForm", {
-        Name: requiredField.Name,
-        FamilyName: requiredField.FamilyName,
-        NationalId: requiredField.NationalId,
-        FileNumber: requiredField.FileNumber,
-        Avatar: requiredField.Avatar,
-      })
-      .then((res) => {
-        if ((res.status = 201)) {
-          <Alert variant="filled" severity="success">
-            اطلاعات اولیه با موفقیت ثبت شد
-          </Alert>;
-        }
-      })
-      .catch((error) => {
-        <Alert variant="filled" severity="error">
-          {error}
-        </Alert>;
-      });
+  const submit = async () => {
+    let axiosPromise = new Promise((sent, rejected) => {
+      axios
+        .post("http://localhost:3000/api/requiredForm", {
+          Name: requiredField.Name,
+          FamilyName: requiredField.FamilyName,
+          NationalId: requiredField.NationalId,
+          FileNumber: requiredField.FileNumber,
+          Avatar: requiredField.Avatar,
+        })
+        .then((res) => {
+          console.log(res);
+          if ((res.status = 201)) {
+            sent(handleNext());
+          } else {
+            sent(console.log("Error"));
+          }
+        });
+
+      rejected(console.log("ارتباط قطع می باشد!"));
+    });
+
+    await axiosPromise;
   };
 
   return (
@@ -76,7 +81,6 @@ const RequiredFields: FC = () => {
               required: "پر کردن این فیلد الزامی است!",
             })}
             type="text"
-            onMouseEnter={() => console.log(errors)}
             onInput={() => {
               dispatch(data.func(watch(data.id)));
             }}
@@ -133,7 +137,7 @@ const RequiredFields: FC = () => {
         id="Avatar"
         type="file"
         inputProps={{
-          accept: ".jpeg",
+          accept: ".jpeg, .jpg",
         }}
         onInput={(event: ChangeEvent<HTMLInputElement>) => {
           const file = event.target.files![0].size;

@@ -6,7 +6,6 @@ import {
   Stepper,
   StepLabel,
 } from "@material-ui/core";
-import { useForm } from "react-hook-form";
 import { useAppSelector } from "../../Redux/hook";
 import {
   selectRequiredField,
@@ -27,7 +26,6 @@ const AddPatientPage: FC = () => {
   const optionalField = useAppSelector(selectOptionalField);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
-  const { handleSubmit } = useForm();
   const steps = getSteps();
 
   const isStepOptional = (step: number) => {
@@ -52,18 +50,14 @@ const AddPatientPage: FC = () => {
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <RequiredFields />;
+        return <RequiredFields handleNext={handleNext} />;
       case 1:
         return <OptionalFields />;
       case 2:
         return <p>sss</p>;
       default:
-        return <RequiredFields />;
+        return <RequiredFields handleNext={handleNext} />;
     }
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleSkip = () => {
@@ -124,22 +118,19 @@ const AddPatientPage: FC = () => {
       ) : (
         <Fragment>
           <Typography>{getStepContent(activeStep)}</Typography>
-          <Button disabled={activeStep === 0} onClick={handleBack}>
-            برگشت
-          </Button>
           {isStepOptional(activeStep) && (
             <Button onClick={handleSkip} variant="contained" color="primary">
               رد کردن
             </Button>
           )}
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             type="submit"
             onClick={handleNext}
           >
             {activeStep === steps.length - 1 ? "ثبت" : "بعدی"}
-          </Button>
+          </Button> */}
         </Fragment>
       )}
     </Fragment>
