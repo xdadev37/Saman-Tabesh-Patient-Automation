@@ -1,15 +1,15 @@
 import { FC, Fragment, KeyboardEvent } from "react";
 import { InputLabel, Input, Typography } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { dataArrayRequiredName } from "../../dataArray";
-import { useAppDispatch } from "../../../../Redux/hook";
+import { useFormContext } from "react-hook-form";
+import { dataArrayRequiredName } from "../dataArray";
+import { useAppDispatch } from "../../../Redux/hook";
 
 const NameFields: FC = () => {
   const {
     register,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useFormContext();
   const dispatch = useAppDispatch();
 
   return (
@@ -35,8 +35,7 @@ const NameFields: FC = () => {
               required: "پر کردن این فیلد الزامی است!",
             })}
             type="text"
-            onMouseEnter={() => console.log(errors)}
-            onInput={() => {
+            onSelect={() => {
               dispatch(data.func(watch(data.id)));
             }}
           />

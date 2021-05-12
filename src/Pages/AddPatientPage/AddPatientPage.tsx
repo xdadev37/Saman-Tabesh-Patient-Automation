@@ -1,33 +1,19 @@
-import { FC, ChangeEvent, KeyboardEvent, Fragment } from "react";
-import { InputLabel, Input, Typography, Button } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { dataArrayRequiredName } from "./dataArray";
-import {
-  setNationalId,
-  setFileNumber,
-  setAvatar,
-  selectRequiredField,
-} from "../../Redux/Slicer/patientInfoSlice";
+import { Button } from "@material-ui/core";
+import { useForm, FormProvider } from "react-hook-form";
+import { useAppSelector } from "../../Redux/hook";
+import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
-import NameFields from "./FormFields/RequiredFields/nameFields";
+import NameFields from "./AddFormDescenders/nameFields";
+import NumericFields from "./AddFormDescenders/numericFields";
+import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
+import { FC, useState } from "react";
 
-const RequiredFields: FC = () => {
-  const dispatch = useAppDispatch();
+const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
-  const {
-    register,
-    watch,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-
-  const numberType = (event: KeyboardEvent) => {
-    if (event.which < 47 || event.which > 58) {
-      event.preventDefault();
-    }
-  };
+  const methods = useForm();
+  const { handleSubmit } = methods;
+  const [avatar, setAvatar] = useState("");
+  const [nationalIdDoc, setNationalIdDoc] = useState("");
 
   const submit = async () => {
     let axiosPromise = new Promise((sent, rejected) => {
@@ -37,12 +23,13 @@ const RequiredFields: FC = () => {
           FamilyName: requiredField.FamilyName,
           NationalId: requiredField.NationalId,
           FileNumber: requiredField.FileNumber,
-          Avatar: requiredField.Avatar,
+          Avatar: avatar,
+          NationalIdDoc: nationalIdDoc,
         })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           if ((res.status = 201)) {
-            // sent();
+            sent(console.log(res.statusText));
           } else {
             sent(console.log("Error"));
           }
@@ -55,75 +42,22 @@ const RequiredFields: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
-      {/* Names */}
-      <NameFields />
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(submit)}>
+        {/* Names */}
+        <NameFields />
+        {/* NumericFields */}
+        <NumericFields />
+        {/* requiredFilesFields */}
+        <RequiredFilesFields
+          setAvatar={setAvatar}
+          setNationalIdDoc={setNationalIdDoc}
+        />
 
-      {/* NationalId */}
-      <InputLabel htmlFor="NationalId">کد ملی</InputLabel>
-      <Input
-        onKeyPress={numberType}
-        inputProps={{ maxLength: 11 }}
-        placeholder="کد ملی بیمار"
-        id="NationalId"
-        {...register("NationalId", {
-          required: "پر کردن این فیلد الزامی است!",
-          minLength: {
-            value: 11,
-            message: "مقدار کد ملی حداقل باید 11 عدد باشد!",
-          },
-        })}
-        onInput={() => {
-          dispatch(setNationalId(watch("NationalId")));
-        }}
-      />
-      {errors.NationalId && (
-        <Typography>{errors.NationalId.message}</Typography>
-      )}
-
-      {/* FileNumber */}
-      <InputLabel htmlFor="FileNumber">شماره پرونده</InputLabel>
-      <Input
-        onKeyPress={numberType}
-        id="FileNumber"
-        inputProps={{ maxLength: 20 }}
-        placeholder="شماره پرونده بیمار"
-        {...register("FileNumber", {
-          required: "پر کردن این فیلد الزامی است!",
-        })}
-        onInput={() => {
-          dispatch(setFileNumber(watch("FileNumber")));
-        }}
-      />
-      {errors.FileNumber && (
-        <Typography>{errors.FileNumber.message}</Typography>
-      )}
-
-      {/* Avatar */}
-      <InputLabel htmlFor="Avatar">عکس پرسنلی بیمار</InputLabel>
-      <Input
-        id="Avatar"
-        type="file"
-        inputProps={{
-          accept: ".jpeg, .jpg",
-        }}
-        onInput={(event: ChangeEvent<HTMLInputElement>) => {
-          const file = event.target.files![0].size;
-
-          if (file > 100000) {
-            alert(
-              <Alert variant="filled" severity="warning">
-                حجم عکس آپلود شده بیش تر از حد مجاز است!
-              </Alert>
-            );
-          } else {
-            dispatch(setAvatar(watch("Avatar")));
-          }
-        }}
-      />
-      <Button type="submit">بعدی</Button>
-    </form>
+        <Button type="submit">ثبت</Button>
+      </form>
+    </FormProvider>
   );
 };
 
-export default RequiredFields;
+export default AddPatientPage;

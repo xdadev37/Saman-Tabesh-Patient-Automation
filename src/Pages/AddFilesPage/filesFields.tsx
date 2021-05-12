@@ -1,13 +1,10 @@
 import { FC, Fragment, ChangeEvent, useState } from "react";
-import { dataArrayOptional } from "../../dataArray";
+import { dataArrayOptional } from "../AddPatientPage/dataArray";
 import { InputLabel, Input, Typography } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../../Redux/hook";
+import axios from "axios";
 
 const FilesFields: FC = () => {
   const [message, setMessage] = useState("");
-  const dispatch = useAppDispatch();
-  const { watch } = useForm();
 
   return (
     <Fragment>
@@ -19,17 +16,30 @@ const FilesFields: FC = () => {
             type="file"
             inputProps={{ accept: ".pdf" }}
             onInput={(event: ChangeEvent<HTMLInputElement>) => {
+              const file = event.target.files![0];
               const fileSize = event.target.files![0].size;
-              let fileName = event.target.files![0].name;
 
-              if (fileSize > 250001) {
+              if (fileSize > 300000) {
                 data.id.message = true;
-                setMessage("حجم فایل بیش تر از حد مجاز است!");
+                setMessage("حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!");
               } else {
                 data.id.message = false;
                 setMessage("");
-                // fileName = `${}.pdf`
-                dispatch(data.func(watch(data.id.value)));
+                axios
+                  .post(
+                    `http://localhost:3002/optionalForm/1/asdasdsadasassd`,
+                    {
+                      // name: "sjsjdsad",
+                      [data.id.value]: file,
+                      // asdasdsadasassd: {},
+                      // id:1
+
+                      // id: 7
+                    }
+                  )
+                  .then((res) => {
+                    console.log(res.data);
+                  });
               }
             }}
           />
