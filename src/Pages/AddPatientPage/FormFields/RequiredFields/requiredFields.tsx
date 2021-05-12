@@ -12,11 +12,7 @@ import {
 } from "../../../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 
-interface IHandleNext {
-  handleNext: () => void;
-}
-
-const RequiredFields: FC<IHandleNext> = ({ handleNext }) => {
+const RequiredFields: FC = () => {
   const dispatch = useAppDispatch();
   const requiredField = useAppSelector(selectRequiredField);
   const {
@@ -45,7 +41,7 @@ const RequiredFields: FC<IHandleNext> = ({ handleNext }) => {
         .then((res) => {
           console.log(res);
           if ((res.status = 201)) {
-            sent(handleNext());
+            // sent();
           } else {
             sent(console.log("Error"));
           }
