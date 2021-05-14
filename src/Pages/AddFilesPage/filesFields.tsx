@@ -5,6 +5,29 @@ import axios from "axios";
 
 const FilesFields: FC = () => {
   const [message, setMessage] = useState("");
+  const [name, setName] = useState("nameAction");
+
+  const dispatchFile = async (dataName: string, files: {}) => {
+    const patch = new Promise((sent, rejected) => {
+      axios.post("http://localhost:3001/optionalForm/", {
+        data: {
+          guid: "",
+          [dataName]: files,
+          actionName: name,
+        },
+      });
+
+      rejected(console.log("لا اتصال"));
+
+      // const patch = new Promise((sent, rejected) => {
+      //   axios.get("http://localhost:3002/optionalForm/4").then((res) => {
+      //     const dataPush = res.data.name;
+      //   });
+      // });
+    });
+
+    await patch;
+  };
 
   return (
     <Fragment>
@@ -25,21 +48,7 @@ const FilesFields: FC = () => {
               } else {
                 data.id.message = false;
                 setMessage("");
-                axios
-                  .post(
-                    `http://localhost:3002/optionalForm/1/asdasdsadasassd`,
-                    {
-                      // name: "sjsjdsad",
-                      [data.id.value]: file,
-                      // asdasdsadasassd: {},
-                      // id:1
-
-                      // id: 7
-                    }
-                  )
-                  .then((res) => {
-                    console.log(res.data);
-                  });
+                dispatchFile(data.id.value, file);
               }
             }}
           />

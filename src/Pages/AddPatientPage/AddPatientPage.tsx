@@ -16,7 +16,7 @@ const AddPatientPage: FC = () => {
   const [nationalIdDoc, setNationalIdDoc] = useState("");
 
   const submit = async () => {
-    let axiosPromise = new Promise((sent, rejected) => {
+    const axiosPromise = new Promise((sent, rejected) => {
       axios
         .post("http://localhost:3000/api/requiredForm", {
           Name: requiredField.Name,
