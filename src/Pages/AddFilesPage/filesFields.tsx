@@ -1,29 +1,34 @@
-import { FC, Fragment, ChangeEvent, useState } from "react";
+import { FC, Fragment, ChangeEvent } from "react";
 import { dataArrayOptional } from "../AddPatientPage/dataArray";
 import { InputLabel, Input, Typography } from "@material-ui/core";
 import axios from "axios";
+import { useAppSelector } from "../../Redux/hook";
+import { selectFiletId } from "../../Redux/Slicer/idPasserSlice";
 
 const FilesFields: FC = () => {
-  const [message, setMessage] = useState("");
-  const [name, setName] = useState("nameAction");
+  const fileId = useAppSelector(selectFiletId);
 
   const dispatchFile = async (dataName: string, files: {}) => {
     const patch = new Promise((sent, rejected) => {
-      axios.post("http://localhost:3001/optionalForm/", {
-        data: {
-          guid: "",
+      axios
+        .patch(`http://localhost:3001/optionalForm/${fileId}`, {
           [dataName]: files,
-          actionName: name,
-        },
-      });
-
-      rejected(console.log("لا اتصال"));
-
-      // const patch = new Promise((sent, rejected) => {
-      //   axios.get("http://localhost:3002/optionalForm/4").then((res) => {
-      //     const dataPush = res.data.name;
-      //   });
-      // });
+        })
+        .then((res) => {
+          if ((res.status = 200)) {
+            sent(console.log("File added", res.statusText));
+          }
+          if ((res.status = 511)) {
+            rejected(
+              console.log("Client not connected to internet", res.statusText)
+            );
+          } else {
+            rejected(console.log("Error", res.statusText));
+          }
+        })
+        .catch((error) => {
+          rejected(console.log(error));
+        });
     });
 
     await patch;
@@ -43,16 +48,17 @@ const FilesFields: FC = () => {
               const fileSize = event.target.files![0].size;
 
               if (fileSize > 300000) {
-                data.id.message = true;
-                setMessage("حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!");
               } else {
                 data.id.message = false;
-                setMessage("");
                 dispatchFile(data.id.value, file);
               }
             }}
           />
-          {data.id.message && <Typography>{message}</Typography>}
+          {data.id.message && (
+            <Typography>
+              حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!
+            </Typography>
+          )}
         </Fragment>
       ))}
     </Fragment>

@@ -16,7 +16,7 @@ export const dataArrayRequiredName = [
 ];
 
 export const dataArrayOptional = [
-  {
+  { 
     title: "برگ پاتولوژی",
     id: { value: "PathologyDoc", message: false },
   },

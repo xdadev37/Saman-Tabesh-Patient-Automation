@@ -5,10 +5,10 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TableFooter,
   Button,
 } from "@material-ui/core";
 import Pagination from "./Pagination/Pagination";
+import { Link } from "react-router-dom";
 
 const TableComponent: React.FC = () => {
   const tableHead = [
@@ -33,12 +33,12 @@ const TableComponent: React.FC = () => {
         <TableBody>
           <Pagination />
         </TableBody>
-        <TableFooter>
-          <Button color="primary" variant="contained">
-            اضافه کردن بیمار جدید
-          </Button>
-        </TableFooter>
       </Table>
+      <Link to="/addNewPatient">
+        <Button color="primary" variant="contained">
+          اضافه کردن بیمار جدید
+        </Button>
+      </Link>
       <hr />
     </TableContainer>
   );

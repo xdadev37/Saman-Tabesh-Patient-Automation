@@ -7,6 +7,9 @@ import NameFields from "./AddFormDescenders/nameFields";
 import NumericFields from "./AddFormDescenders/numericFields";
 import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
 import { FC, useState } from "react";
+import { useAppDispatch } from "../../Redux/hook";
+import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
+import { Link } from "react-router-dom";
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
@@ -14,11 +17,12 @@ const AddPatientPage: FC = () => {
   const { handleSubmit } = methods;
   const [avatar, setAvatar] = useState("");
   const [nationalIdDoc, setNationalIdDoc] = useState("");
+  const dispatch = useAppDispatch();
 
   const submit = async () => {
     const axiosPromise = new Promise((sent, rejected) => {
       axios
-        .post("http://localhost:3000/api/requiredForm", {
+        .post("http://localhost:3002/requiredForm", {
           Name: requiredField.Name,
           FamilyName: requiredField.FamilyName,
           NationalId: requiredField.NationalId,
@@ -29,13 +33,18 @@ const AddPatientPage: FC = () => {
         .then((res) => {
           console.log(res.data);
           if ((res.status = 201)) {
-            sent(console.log(res.statusText));
+            sent(() => {
+              console.log("Patient Added", res.statusText);
+              dispatch(setPatientId(res.data.id));
+              // <Link to="/" />;
+            });
           } else {
-            sent(console.log("Error"));
+            rejected(console.log(res.statusText));
           }
+        })
+        .catch((error) => {
+          console.log(error);
         });
-
-      rejected(console.log("ارتباط قطع می باشد!"));
     });
 
     await axiosPromise;
