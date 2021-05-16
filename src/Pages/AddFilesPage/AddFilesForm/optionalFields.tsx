@@ -1,17 +1,24 @@
 import { FC, ChangeEvent, Fragment, useState } from "react";
-import { InputLabel, Input, FormHelperText, Modal } from "@material-ui/core";
+import {
+  InputLabel,
+  Input,
+  FormHelperText,
+  Modal,
+  Button,
+  TextField,
+} from "@material-ui/core";
 import FilesFields from "./filesFields";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { setComment } from "../../Redux/Slicer/patientInfoSlice";
-import { selectOptionalField } from "../../Redux/Slicer/patientInfoSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { setComment } from "../../../Redux/Slicer/patientInfoSlice";
+import { selectOptionalField } from "../../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 import {
   selectPatientId,
   setFileId,
   selectFiletId,
-} from "../../Redux/Slicer/idPasserSlice";
+} from "../../../Redux/Slicer/idPasserSlice";
 
-const OptionalFields: FC = () => {
+const OptionalFields: FC = ({}) => {
   const dispatch = useAppDispatch();
   const optionalField = useAppSelector(selectOptionalField);
   const selectId = useAppSelector(selectPatientId);
@@ -27,43 +34,47 @@ const OptionalFields: FC = () => {
           Name: newActionName,
           PatientId: selectId,
         })
-        .then((res) => {
+        .then(async (res) => {
           if ((res.status = 201)) {
-            submitted(async () => {
-              setActionId(res.data.id);
-              const patientFiles = new Promise((created, failed) => {
-                axios
-                  .post("http://localhost:3001/optionalForm", {
-                    ActionId: actionId,
-                  })
-                  .then((res) => {
-                    if ((res.status = 201)) {
-                      created(() => {
-                        dispatch(setFileId(res.data.id));
-                        setSubmitNewAction(false);
-                      });
-                    } else {
-                      failed(
-                        console.log(
-                          "patientFile Creating Failed",
-                          res.statusText
-                        )
-                      );
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
+            // const fileFieldCreator = async () => {
+            console.log(res.data.id);
+            setActionId(res.data.id);
+            // const patientFiles = new Promise((created, failed) => {
+            await axios
+              .post("http://localhost:3001/optionalForm", {
+                ActionId: actionId,
+              })
+              .then((res) => {
+                if ((res.status = 201)) {
+                  console.log(res);
+                  dispatch(setFileId(res.data.id));
+                  setSubmitNewAction(false);
+                  // history.push({
+                  //   path = "/",
+                  // });
+                  // const postFile = () => {};
+                  // created(postFile);
+                } else {
+                  failed(
+                    console.log("patientFile Creating Failed", res.statusText)
+                  );
+                }
+              })
+              .catch((error) => {
+                // failed(console.log(error));
               });
+            // });
 
-              await patientFiles;
-            });
+            // await patientFiles;
+            // };
+
+            // submitted(fileFieldCreator);
           } else {
-            failed(console.log("newAction Failed", res.statusText));
+            // failed(console.log("newAction Failed", res.statusText));
           }
         })
         .catch((error) => {
-          console.log(error);
+          // failed(console.log(error));
         });
     });
 
@@ -88,9 +99,22 @@ const OptionalFields: FC = () => {
     await comment;
   };
 
+  const modalEntry = (
+    <Fragment>
+      <TextField
+        onSelect={(event: ChangeEvent<HTMLInputElement>) => {
+          setNewActionName(event.target.value);
+        }}
+      >
+        نام رویداد را وارد کنید
+      </TextField>
+      <Button onClick={newActionSubmit}>ثبت</Button>
+    </Fragment>
+  );
+
   return (
     <Fragment>
-      <Modal open={submitNewAction}>
+      <Modal open={submitNewAction} onClose={() => submitNewAction}>
         <form onSubmit={newActionSubmit}>
           <InputLabel htmlFor="newAction">نام رویداد</InputLabel>
           <Input
@@ -102,6 +126,7 @@ const OptionalFields: FC = () => {
           />
           <Input type="submit" value="ثبت نام رویداد" />
         </form>
+        {/* {modalEntry} */}
       </Modal>
 
       {/* Files */}

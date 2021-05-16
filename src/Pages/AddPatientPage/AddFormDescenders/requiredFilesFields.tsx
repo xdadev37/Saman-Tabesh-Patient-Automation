@@ -20,7 +20,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         inputProps={{
           accept: ".jpeg, .jpg",
         }}
-        onInput={(event: ChangeEvent<HTMLInputElement>) => {
+        onSelect={(event: ChangeEvent<HTMLInputElement>) => {
           const file = event.target.files![0];
           const fileSize = event.target.files![0].size;
 
@@ -42,7 +42,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         id="NationalIdDoc"
         type="file"
         inputProps={{ accept: ".pdf" }}
-        onInput={(event: ChangeEvent<HTMLInputElement>) => {
+        onSelect={(event: ChangeEvent<HTMLInputElement>) => {
           const file = event.target.files![0];
           const fileSize = event.target.files![0].size;
 

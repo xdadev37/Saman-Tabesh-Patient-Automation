@@ -1,9 +1,9 @@
 import { FC, Fragment, ChangeEvent } from "react";
-import { dataArrayOptional } from "../AddPatientPage/dataArray";
+import { dataArrayOptional } from "../../AddPatientPage/dataArray";
 import { InputLabel, Input, Typography } from "@material-ui/core";
 import axios from "axios";
-import { useAppSelector } from "../../Redux/hook";
-import { selectFiletId } from "../../Redux/Slicer/idPasserSlice";
+import { useAppSelector } from "../../../Redux/hook";
+import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
 
 const FilesFields: FC = () => {
   const fileId = useAppSelector(selectFiletId);

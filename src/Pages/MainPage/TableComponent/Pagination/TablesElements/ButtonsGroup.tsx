@@ -1,16 +1,15 @@
-import { FC, Fragment, useState } from "react";
-import { ButtonGroup, Button, TableCell, Modal } from "@material-ui/core";
+import { ButtonGroup, Button, TableCell } from "@material-ui/core";
 import { DeleteForever, Add } from "@material-ui/icons";
-import { useAppSelector } from "../../../../../Redux/hook";
-import { selectDataGrids } from "../../../../../Redux/Slicer/dataGridSlice";
 import axios from "axios";
-import NewActionForm from "../../../../AddFilesPage/optionalFields";
 import { useAppDispatch } from "../../../../../Redux/hook";
 import { setPatientId } from "../../../../../Redux/Slicer/idPasserSlice";
+import { Link } from "react-router-dom";
 
-const ButtonsGroup: FC = () => {
-  const selectId = useAppSelector(selectDataGrids);
-  const [openNewAction, setOpenNewAction] = useState(false);
+interface IProps {
+  id: number;
+}
+
+const ButtonsGroup: React.FC<IProps> = ({ id }) => {
   const dispatch = useAppDispatch();
   // const [openEdit, setOpenEdit] = useState(false);
 
@@ -29,45 +28,34 @@ const ButtonsGroup: FC = () => {
   };
 
   return (
-    <Fragment>
-      {selectId.map((data) => (
-        <TableCell key={data.patientId}>
-          <ButtonGroup>
-            <Button
-              onClick={() => {
-                dispatch(setPatientId(data.patientId));
-                setOpenNewAction(true);
-              }}
-              variant="contained"
-              color="primary"
-              startIcon={<Add />}
-            >
-              اقدام جدید
-            </Button>
-            <Modal
-              open={openNewAction}
-              onClose={() => {
-                setOpenNewAction(false);
-              }}
-            >
-              <NewActionForm />
-            </Modal>
-            {/* <Button onClick={()=>{setOpenEdit(true)}} variant="contained" color="primary" startIcon={<Edit />}>
+    <TableCell>
+      <ButtonGroup>
+        <Link to="/AddFiles">
+          <Button
+            onClick={() => {
+              dispatch(setPatientId(id));
+            }}
+            variant="contained"
+            color="primary"
+            startIcon={<Add />}
+          >
+            اقدام جدید
+          </Button>
+        </Link>
+        {/* <Button onClick={()=>{setOpenEdit(true)}} variant="contained" color="primary" startIcon={<Edit />}>
               ویرایش
             </Button>
             <Modal open={openEdit} onClose={()=>{setOpenEdit(false)}}></Modal> */}
-            <Button
-              onClick={() => deleteAction(data.patientId)}
-              variant="contained"
-              color="secondary"
-              startIcon={<DeleteForever />}
-            >
-              حذف
-            </Button>
-          </ButtonGroup>
-        </TableCell>
-      ))}
-    </Fragment>
+        <Button
+          onClick={() => deleteAction(id)}
+          variant="contained"
+          color="secondary"
+          startIcon={<DeleteForever />}
+        >
+          حذف
+        </Button>
+      </ButtonGroup>
+    </TableCell>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   TableCell,
   TableBody,
   Button,
+  Paper,
 } from "@material-ui/core";
 import Pagination from "./Pagination/Pagination";
 import { Link } from "react-router-dom";
@@ -20,7 +21,7 @@ const TableComponent: React.FC = () => {
   ];
 
   return (
-    <TableContainer>
+    <TableContainer component={Paper}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
@@ -39,7 +40,6 @@ const TableComponent: React.FC = () => {
           اضافه کردن بیمار جدید
         </Button>
       </Link>
-      <hr />
     </TableContainer>
   );
 };

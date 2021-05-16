@@ -37,7 +37,7 @@ const NumericFields: FC = () => {
             message: "مقدار کد ملی حداقل باید 11 عدد باشد!",
           },
         })}
-        onInput={() => {
+        onSelect={() => {
           dispatch(setNationalId(watch("NationalId")));
         }}
       />
@@ -55,7 +55,7 @@ const NumericFields: FC = () => {
         {...register("FileNumber", {
           required: "پر کردن این فیلد الزامی است!",
         })}
-        onInput={() => {
+        onSelect={() => {
           dispatch(setFileNumber(watch("FileNumber")));
         }}
       />

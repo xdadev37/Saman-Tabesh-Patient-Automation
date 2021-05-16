@@ -1,45 +1,34 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 import MainTable from "./TablesElements/MainTable";
-import MoreDetailsTable from "./TablesElements/MoreDetailsTable";
-import { useAppDispatch } from "../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
 import {
-  setPatientId,
-  setName,
-  setFamilyName,
-  setNationalId,
-  setFileNumber,
-  setAvatar,
-  setNationalIdDoc,
+  setDataGrid,
+  selectDataGrids,
 } from "../../../../Redux/Slicer/dataGridSlice";
 
 const Pagination: FC = () => {
   const dispatch = useAppDispatch();
+  const selectData = useAppSelector(selectDataGrids);
+
+  // useEffect(async () => {})
 
   window.onload = async () => {
     const getData = new Promise((got, failed) => {
       axios
         .get("http://localhost:3002/requiredForm")
         .then((res) => {
-          console.log(res);
-          if ((res.status = 200 | 304)) {
-            got(() => {
-              for (let i = 0; i < 10000; i++) {
-                dispatch(setPatientId(res.data[i].id));
-                dispatch(setName(res.data[i].Name));
-                dispatch(setFamilyName(res.data[i].FamilyName));
-                dispatch(setNationalId(res.data[i].NationalId));
-                dispatch(setFileNumber(res.data[i].FileNumber));
-                dispatch(setAvatar(res.data[i].Avatar));
-                dispatch(setNationalIdDoc(res.data[i].NationalIdDoc));
-              }
-            });
+          if ((res.status = 200)) {
+            for (let i = 0; i < res.data.length; i++) {
+              const saveData = dispatch(setDataGrid(res.data[i]));
+              got(saveData);
+            }
           } else {
             failed(console.log("Failed", res.statusText));
           }
         })
         .catch((error) => {
-          console.log(error);
+          failed(console.log(error));
         });
     });
 
@@ -48,8 +37,18 @@ const Pagination: FC = () => {
 
   return (
     <Fragment>
-      <MainTable />
-      <MoreDetailsTable />
+      {selectData.map((data) => (
+        <MainTable
+          key={data.id}
+          id={data.id}
+          Name={data.Name}
+          FamilyName={data.FamilyName}
+          NationalId={data.NationalId}
+          FileNumber={data.FileNumber}
+          Avatar={data.Avatar}
+          NationalIdDoc={data.NationalIdDoc}
+        />
+      ))}
     </Fragment>
   );
 };

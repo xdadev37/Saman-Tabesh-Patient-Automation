@@ -1,34 +1,49 @@
-import { FC, Fragment } from "react";
+import { FC, useState, Fragment } from "react";
 import { TableRow, TableCell, IconButton } from "@material-ui/core";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
-import { useAppDispatch, useAppSelector } from "../../../../../Redux/hook";
-import {
-  setOpen,
-  selectOpen,
-} from "../../../../../Redux/Slicer/collapsibleSlice";
-import { selectDataGrids } from "../../../../../Redux/Slicer/dataGridSlice";
+import MoreDetailsTable from "./MoreDetailsTable";
 
-const MainTable: FC = () => {
-  const dispatch = useAppDispatch();
-  const open = useAppSelector(selectOpen);
-  const selectGotDataGrid = useAppSelector(selectDataGrids);
+interface IProps {
+  id: number;
+  Name: string;
+  FamilyName: string;
+  NationalId: number;
+  FileNumber: number;
+  Avatar: string;
+  NationalIdDoc: string;
+}
+
+const MainTable: FC<IProps> = ({
+  id,
+  Name,
+  FamilyName,
+  NationalId,
+  FileNumber,
+  Avatar,
+  NationalIdDoc,
+}) => {
+  const [open, setOpen] = useState(false);
 
   return (
     <Fragment>
-      {selectGotDataGrid.map((data) => (
-        <TableRow key={data.patientId}>
-          <TableCell>
-            <IconButton size="small" onClick={() => dispatch(setOpen(!open))}>
-              {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-            </IconButton>
-          </TableCell>
-          <TableCell>{data.patientId}</TableCell>
-          <TableCell>{data.name}</TableCell>
-          <TableCell>{data.familyName}</TableCell>
-          <TableCell>{data.nationalId}</TableCell>
-          <TableCell>{data.fileNumber}</TableCell>
-        </TableRow>
-      ))}
+      <TableRow>
+        <TableCell>
+          <IconButton size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </IconButton>
+        </TableCell>
+        <TableCell>{id}</TableCell>
+        <TableCell>{Name}</TableCell>
+        <TableCell>{FamilyName}</TableCell>
+        <TableCell>{NationalId}</TableCell>
+        <TableCell>{FileNumber}</TableCell>
+      </TableRow>
+      <MoreDetailsTable
+        open={open}
+        id={id}
+        AvatarLink={Avatar}
+        NationalIdDoc={NationalIdDoc}
+      />
     </Fragment>
   );
 };

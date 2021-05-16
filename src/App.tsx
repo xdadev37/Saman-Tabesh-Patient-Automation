@@ -1,11 +1,11 @@
 import { createMuiTheme, Grid } from "@material-ui/core";
 import Header from "./Pages/Header/Header";
-import MainPage from "./Pages/MainPage/MainPage";
 import { ThemeProvider } from "@material-ui/core/styles";
 import RTLProvider from "./RTLProvider";
-import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
-// import AddFilesPage from "./Pages/AddFilesPage/optionalFields";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import MainPage from "./Pages/MainPage/MainPage";
+import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
+import AddFilesPage from "./Pages/AddFilesPage/AddFilesForm/optionalFields";
 
 const App: React.FC = () => {
   const theme = createMuiTheme({
@@ -20,13 +20,13 @@ const App: React.FC = () => {
             <Grid item xs={12} sm={12} lg={12}>
               <Header />
             </Grid>
-            <Switch>
-              <Grid item xs={12} sm={12} lg={12}>
-                <Route component={MainPage} path="/" />
+            <Grid item xs={12} sm={12} lg={12}>
+              <Switch>
+                <Route component={MainPage} exact path="/" />
                 <Route component={AddPatientPage} path="/addNewPatient" />
-                {/* <Route component={AddFilesPage} path="/AddFiles" /> */}
-              </Grid>
-            </Switch>
+                <Route component={AddFilesPage} path="/AddFiles" />
+              </Switch>
+            </Grid>
           </Grid>
         </BrowserRouter>
       </RTLProvider>
