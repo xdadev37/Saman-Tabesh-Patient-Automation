@@ -1,85 +1,16 @@
-import { FC, ChangeEvent, Fragment, useState } from "react";
-import {
-  InputLabel,
-  Input,
-  FormHelperText,
-  Modal,
-  Button,
-  TextField,
-} from "@material-ui/core";
+import { FC, ChangeEvent, Fragment } from "react";
+import { InputLabel, Input, FormHelperText } from "@material-ui/core";
 import FilesFields from "./filesFields";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { setComment } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectOptionalField } from "../../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
-import {
-  selectPatientId,
-  setFileId,
-  selectFiletId,
-} from "../../../Redux/Slicer/idPasserSlice";
+import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
 
-const OptionalFields: FC = ({}) => {
+const OptionalFields: FC = () => {
   const dispatch = useAppDispatch();
   const optionalField = useAppSelector(selectOptionalField);
-  const selectId = useAppSelector(selectPatientId);
-  const [submitNewAction, setSubmitNewAction] = useState(true);
-  const [newActionName, setNewActionName] = useState("");
-  const [actionId, setActionId] = useState();
   const fileId = useAppSelector(selectFiletId);
-
-  const newActionSubmit = async () => {
-    const submit = new Promise((submitted, failed) => {
-      axios
-        .post("http://localhost:3003/actionName", {
-          Name: newActionName,
-          PatientId: selectId,
-        })
-        .then(async (res) => {
-          if ((res.status = 201)) {
-            // const fileFieldCreator = async () => {
-            console.log(res.data.id);
-            setActionId(res.data.id);
-            // const patientFiles = new Promise((created, failed) => {
-            await axios
-              .post("http://localhost:3001/optionalForm", {
-                ActionId: actionId,
-              })
-              .then((res) => {
-                if ((res.status = 201)) {
-                  console.log(res);
-                  dispatch(setFileId(res.data.id));
-                  setSubmitNewAction(false);
-                  // history.push({
-                  //   path = "/",
-                  // });
-                  // const postFile = () => {};
-                  // created(postFile);
-                } else {
-                  failed(
-                    console.log("patientFile Creating Failed", res.statusText)
-                  );
-                }
-              })
-              .catch((error) => {
-                // failed(console.log(error));
-              });
-            // });
-
-            // await patientFiles;
-            // };
-
-            // submitted(fileFieldCreator);
-          } else {
-            // failed(console.log("newAction Failed", res.statusText));
-          }
-        })
-        .catch((error) => {
-          // failed(console.log(error));
-        });
-    });
-
-    await submit;
-  };
 
   const submitComment = async () => {
     const comment = new Promise((sent, rejected) => {
@@ -99,36 +30,21 @@ const OptionalFields: FC = ({}) => {
     await comment;
   };
 
-  const modalEntry = (
-    <Fragment>
-      <TextField
-        onSelect={(event: ChangeEvent<HTMLInputElement>) => {
-          setNewActionName(event.target.value);
-        }}
-      >
-        نام رویداد را وارد کنید
-      </TextField>
-      <Button onClick={newActionSubmit}>ثبت</Button>
-    </Fragment>
-  );
+  // const modalEntry = (
+  //   <Fragment>
+  //     <TextField
+  //       onSelect={(event: ChangeEvent<HTMLInputElement>) => {
+  //         setNewActionName(event.target.value);
+  //       }}
+  //     >
+  //       نام رویداد را وارد کنید
+  //     </TextField>
+  //     <Button onClick={newActionSubmit}>ثبت</Button>
+  //   </Fragment>
+  // );
 
   return (
     <Fragment>
-      <Modal open={submitNewAction} onClose={() => submitNewAction}>
-        <form onSubmit={newActionSubmit}>
-          <InputLabel htmlFor="newAction">نام رویداد</InputLabel>
-          <Input
-            id="newAction"
-            type="text"
-            onSelect={(event: ChangeEvent<HTMLInputElement>) => {
-              setNewActionName(event.target.value);
-            }}
-          />
-          <Input type="submit" value="ثبت نام رویداد" />
-        </form>
-        {/* {modalEntry} */}
-      </Modal>
-
       {/* Files */}
       <FilesFields />
       <form onSubmit={submitComment}>
