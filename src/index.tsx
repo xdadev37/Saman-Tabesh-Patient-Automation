@@ -1,17 +1,20 @@
+import { StrictMode, Suspense } from "react";
+import { Backdrop } from "@material-ui/core";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./Redux/store";
 import { Provider } from "react-redux";
-import React from "react";
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>,
-  // </React.StrictMode>,
+  <StrictMode>
+    <Suspense fallback={<Backdrop open={true} />}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Suspense>
+  </StrictMode>,
   document.getElementById("root")
 );
 

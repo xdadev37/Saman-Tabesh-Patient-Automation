@@ -3,7 +3,6 @@ import type { RootState } from "../store";
 
 interface IInitialState {
   requiredFields: IRequiredFields[];
-  optionalFields: IOptionalFields[];
 }
 
 const initialState: IInitialState = {
@@ -13,12 +12,6 @@ const initialState: IInitialState = {
       FamilyName: "",
       NationalId: 0,
       FileNumber: 0,
-    },
-  ],
-
-  optionalFields: [
-    {
-      Comment: "",
     },
   ],
 };
@@ -39,9 +32,6 @@ export const patientInfoSlice = createSlice({
     setFileNumber: (state, action: PayloadAction<number>) => {
       state.requiredFields[0].FileNumber = action.payload;
     },
-    setComment: (state, action: PayloadAction<string>) => {
-      state.optionalFields[0].Comment = action.payload;
-    },
   },
 });
 
@@ -50,12 +40,9 @@ export const {
   setFamilyName,
   setNationalId,
   setFileNumber,
-  setComment,
 } = patientInfoSlice.actions;
 
 export const selectRequiredField = (state: RootState) =>
   state.patientInfo.requiredFields[0];
-export const selectOptionalField = (state: RootState) =>
-  state.patientInfo.optionalFields[0];
-
+  
 export default patientInfoSlice.reducer;

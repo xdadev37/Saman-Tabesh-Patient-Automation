@@ -1,17 +1,38 @@
-import { FC, Fragment } from "react";
-import { Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Grid, makeStyles, createStyles, Theme } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import mainLogo from "./mainLogo.png";
 
-const HeaderTitle: FC = () => {
+const space = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        marginLeft: theme.spacing(5),
+      },
+    },
+  })
+);
+
+const HeaderTitle: React.FC = () => {
+  let history = useHistory();
+  const classes = space();
+
   return (
-    <Fragment>
-      <Typography variant="h6">
-        سامانه مدیریت اطلاعات بیماران رادیوتراپی - بیمارستان سلامت فردا
-      </Typography>
-      <Link to="/">
-        <Typography>خانه</Typography>
+    <Grid container alignItems="center" className={classes.root}>
+      <Link
+        underline="none"
+        style={{ color: "#fff", cursor: "pointer" }}
+        onClick={() => history.push("/")}
+      >
+        خانه
       </Link>
-    </Fragment>
+      <img
+        style={{ cursor: "pointer" }}
+        src={mainLogo}
+        alt="Logo"
+        width="100"
+        onClick={() => history.push("/")}
+      />
+    </Grid>
   );
 };
 

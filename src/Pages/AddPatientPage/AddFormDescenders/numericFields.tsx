@@ -27,14 +27,14 @@ const NumericFields: FC = () => {
       <InputLabel htmlFor="NationalId">کد ملی</InputLabel>
       <Input
         onKeyPress={numberType}
-        inputProps={{ maxLength: 11 }}
+        inputProps={{ maxLength: 10 }}
         placeholder="کد ملی بیمار"
         id="NationalId"
         {...register("NationalId", {
           required: "پر کردن این فیلد الزامی است!",
           minLength: {
-            value: 11,
-            message: "مقدار کد ملی حداقل باید 11 عدد باشد!",
+            value: 10,
+            message: "مقدار کد ملی حداقل باید 10 عدد باشد!",
           },
         })}
         onSelect={() => {

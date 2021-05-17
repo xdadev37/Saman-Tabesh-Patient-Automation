@@ -20,10 +20,13 @@ export const dataGridSlice = createSlice({
     setDataGrid: (state, action: PayloadAction<any>) => {
       state.push(action.payload);
     },
+    emptyData: (state) => {
+      state.splice(0, state.length);
+    },
   },
 });
 
-export const { setDataGrid } = dataGridSlice.actions;
+export const { setDataGrid, emptyData } = dataGridSlice.actions;
 
 export const selectDataGrids = (state: RootState) => state.dataGrid;
 

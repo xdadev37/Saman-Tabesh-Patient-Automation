@@ -7,11 +7,13 @@ import {
   TableBody,
   Button,
   Paper,
+  Box,
 } from "@material-ui/core";
 import Pagination from "./Pagination/Pagination";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const TableComponent: React.FC = () => {
+  let history = useHistory();
   const tableHead = [
     "ردیف",
     "نام",
@@ -35,11 +37,15 @@ const TableComponent: React.FC = () => {
           <Pagination />
         </TableBody>
       </Table>
-      <Link to="/addNewPatient">
-        <Button color="primary" variant="contained">
+      <Box margin={1}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => history.push("/addNewPatient")}
+        >
           اضافه کردن بیمار جدید
         </Button>
-      </Link>
+      </Box>
     </TableContainer>
   );
 };

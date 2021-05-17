@@ -1,22 +1,19 @@
-import { FC, ChangeEvent, Fragment } from "react";
+import { FC, ChangeEvent, Fragment, useState } from "react";
 import { InputLabel, Input, FormHelperText } from "@material-ui/core";
 import FilesFields from "./filesFields";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { setComment } from "../../../Redux/Slicer/patientInfoSlice";
-import { selectOptionalField } from "../../../Redux/Slicer/patientInfoSlice";
+import { useAppSelector } from "../../../Redux/hook";
 import axios from "axios";
 import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
 
 const OptionalFields: FC = () => {
-  const dispatch = useAppDispatch();
-  const optionalField = useAppSelector(selectOptionalField);
   const fileId = useAppSelector(selectFiletId);
+  const [userComment, setUserComment] = useState("");
 
   const submitComment = async () => {
     const comment = new Promise((sent, rejected) => {
       axios
         .patch(`http://localhost:3001/optionalForm/${fileId}`, {
-          Comment: optionalField.Comment,
+          Comment: userComment,
         })
         .then((res) => {
           if ((res.status = 201)) {
@@ -29,19 +26,6 @@ const OptionalFields: FC = () => {
 
     await comment;
   };
-
-  // const modalEntry = (
-  //   <Fragment>
-  //     <TextField
-  //       onSelect={(event: ChangeEvent<HTMLInputElement>) => {
-  //         setNewActionName(event.target.value);
-  //       }}
-  //     >
-  //       نام رویداد را وارد کنید
-  //     </TextField>
-  //     <Button onClick={newActionSubmit}>ثبت</Button>
-  //   </Fragment>
-  // );
 
   return (
     <Fragment>
@@ -56,7 +40,7 @@ const OptionalFields: FC = () => {
           rows={5}
           inputProps={{ maxLength: 800 }}
           onInput={(event: ChangeEvent<HTMLInputElement>) => {
-            dispatch(setComment(event.target.value));
+            setUserComment(event.target.value);
           }}
         />
         <Input type="submit" value="ثبت توضیحات" />

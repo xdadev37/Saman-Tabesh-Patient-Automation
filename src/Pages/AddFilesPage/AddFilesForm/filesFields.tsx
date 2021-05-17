@@ -7,6 +7,7 @@ import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
 
 const FilesFields: FC = () => {
   const fileId = useAppSelector(selectFiletId);
+  console.log(fileId);
 
   const dispatchFile = async (dataName: string, files: {}) => {
     const patch = new Promise((sent, rejected) => {
@@ -17,11 +18,6 @@ const FilesFields: FC = () => {
         .then((res) => {
           if ((res.status = 200)) {
             sent(console.log("File added", res.statusText));
-          }
-          if ((res.status = 511)) {
-            rejected(
-              console.log("Client not connected to internet", res.statusText)
-            );
           } else {
             rejected(console.log("Error", res.statusText));
           }

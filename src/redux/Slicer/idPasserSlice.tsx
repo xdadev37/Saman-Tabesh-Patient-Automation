@@ -15,7 +15,7 @@ export const idPasserSlice = createSlice({
     },
 
     setFileId: (state, action: PayloadAction<number>) => {
-      state.patientId = action.payload;
+      state.fileId = action.payload;
     },
   },
 });

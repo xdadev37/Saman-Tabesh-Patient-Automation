@@ -14,7 +14,7 @@ import NameFields from "./AddFormDescenders/nameFields";
 import NumericFields from "./AddFormDescenders/numericFields";
 import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
 import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +32,7 @@ const AddPatientPage: FC = () => {
   const [avatar, setAvatar] = useState("");
   const [nationalIdDoc, setNationalIdDoc] = useState("");
   const dispatch = useAppDispatch();
+  let history = useHistory();
 
   const submit = async () => {
     const axiosPromise = new Promise((sent, rejected) => {
@@ -47,13 +48,9 @@ const AddPatientPage: FC = () => {
         .then((res) => {
           console.log(res.data);
           if ((res.status = 201)) {
-            const patchFilesLink = () => {
-              console.log("Patient Added", res.statusText);
-              dispatch(setPatientId(res.data.id));
-              window.location.reload();
-              // <Link to="/" />;
-            };
-            sent(patchFilesLink);
+            console.log("Patient Added", res.statusText);
+            dispatch(setPatientId(res.data.id));
+            sent(history.push("/"));
           } else {
             rejected(console.log(res.statusText));
           }
@@ -74,7 +71,7 @@ const AddPatientPage: FC = () => {
       alignContent="center"
     >
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(submit)}>
+        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
           {/* Names */}
           <NameFields />
           {/* NumericFields */}

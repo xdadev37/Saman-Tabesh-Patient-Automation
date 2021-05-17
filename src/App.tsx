@@ -1,11 +1,14 @@
-import { createMuiTheme, Grid } from "@material-ui/core";
+import {
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+  Grid,
+} from "@material-ui/core";
 import Header from "./Pages/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import RTLProvider from "./RTLProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
-import AddFilesPage from "./Pages/AddFilesPage/AddFilesForm/optionalFields";
+import GetActionName from "./Pages/AddFilesPage/getActionName";
 
 const App: React.FC = () => {
   const theme = createMuiTheme({
@@ -24,7 +27,7 @@ const App: React.FC = () => {
               <Switch>
                 <Route component={MainPage} exact path="/" />
                 <Route component={AddPatientPage} path="/addNewPatient" />
-                <Route component={AddFilesPage} path="/AddFiles" />
+                <Route component={GetActionName} path="/createAction" />
               </Switch>
             </Grid>
           </Grid>
