@@ -1,13 +1,30 @@
-import { FC, ChangeEvent, Fragment, useState } from "react";
-import { InputLabel, Input, FormHelperText } from "@material-ui/core";
+import { FC, ChangeEvent, useState } from "react";
+import {
+  InputLabel,
+  Input,
+  FormHelperText,
+  Grid,
+  makeStyles,
+  createStyles,
+  Theme,
+} from "@material-ui/core";
 import FilesFields from "./filesFields";
 import { useAppSelector } from "../../../Redux/hook";
 import axios from "axios";
 import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
 
+const styles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      marginTop: theme.spacing(3),
+    },
+  })
+);
+
 const OptionalFields: FC = () => {
   const fileId = useAppSelector(selectFiletId);
   const [userComment, setUserComment] = useState("");
+  const classes = styles();
 
   const submitComment = async () => {
     const comment = new Promise((sent, rejected) => {
@@ -28,7 +45,12 @@ const OptionalFields: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid
+      container
+      className={classes.root}
+      alignContent="center"
+      justify="center"
+    >
       {/* Files */}
       <FilesFields />
       <form onSubmit={submitComment}>
@@ -46,7 +68,7 @@ const OptionalFields: FC = () => {
         <Input type="submit" value="ثبت توضیحات" />
         <FormHelperText>حداکثر تعداد کاراکتر مجاز : 800</FormHelperText>
       </form>
-    </Fragment>
+    </Grid>
   );
 };
 

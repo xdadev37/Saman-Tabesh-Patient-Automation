@@ -3,6 +3,7 @@ import { DeleteForever, Add, AmpStories } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch } from "../../../../../Redux/hook";
 import { setPatientId } from "../../../../../Redux/Slicer/idPasserSlice";
+import { setActionForm } from "../../../../../Redux/Slicer/createActionSlice";
 import { useHistory } from "react-router-dom";
 
 interface IProps {
@@ -35,7 +36,6 @@ const ButtonsGroup: React.FC<IProps> = ({ id }) => {
           style={{ backgroundColor: "#2196f3", color: "#fff" }}
           onClick={() => {
             // dispatch(setPatientId(id));
-            // history.push("/createAction");
           }}
           startIcon={<AmpStories />}
         >
@@ -44,7 +44,7 @@ const ButtonsGroup: React.FC<IProps> = ({ id }) => {
         <Button
           onClick={() => {
             dispatch(setPatientId(id));
-            history.push("/createAction");
+            dispatch(setActionForm(true));
           }}
           color="primary"
           startIcon={<Add />}

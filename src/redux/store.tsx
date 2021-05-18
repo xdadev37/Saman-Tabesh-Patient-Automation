@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import patientInfoReducer from "./Slicer/patientInfoSlice";
 import idPasserReducer from "./Slicer/idPasserSlice";
 import dataGridReducer from "./Slicer/dataGridSlice";
+import createActionFormReducer from "./Slicer/createActionSlice";
 
 export const store = configureStore({
   reducer: {
     patientInfo: patientInfoReducer,
     idPasser: idPasserReducer,
     dataGrid: dataGridReducer,
+    createActionForm: createActionFormReducer,
   },
 });
 

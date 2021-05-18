@@ -1,6 +1,7 @@
 {
     "svn.ignoreMissingSvnWarning": true,
     "cSpell.words": [
+        "browserslist",
         "unmount"
     ]
 }

@@ -1,4 +1,5 @@
-import { Link, Grid, makeStyles, createStyles, Theme } from "@material-ui/core";
+import { Link, Grid } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import mainLogo from "./mainLogo.png";
 

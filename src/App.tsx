@@ -8,7 +8,6 @@ import RTLProvider from "./RTLProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
-import GetActionName from "./Pages/AddFilesPage/getActionName";
 
 const App: React.FC = () => {
   const theme = createMuiTheme({
@@ -27,7 +26,6 @@ const App: React.FC = () => {
               <Switch>
                 <Route component={MainPage} exact path="/" />
                 <Route component={AddPatientPage} path="/addNewPatient" />
-                <Route component={GetActionName} path="/createAction" />
               </Switch>
             </Grid>
           </Grid>

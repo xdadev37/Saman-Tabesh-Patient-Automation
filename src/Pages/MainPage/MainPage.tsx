@@ -1,12 +1,15 @@
 import { FC, Fragment, useState, useEffect } from "react";
 import Options from "./Options/Options";
-import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
 import InfoCard from "./Card/InfoCard";
-import { useAppDispatch } from "../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
+import { selectActionForm } from "../../Redux/Slicer/createActionSlice";
 import axios from "axios";
+import GetActionName from "../AddFilesPage/getActionName";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +26,7 @@ const MainPage: FC = () => {
   const dispatch = useAppDispatch();
   const classes = useStyle();
   const [loading, setLoading] = useState(true);
+  const actionForm = useAppSelector(selectActionForm);
 
   const data = async () => {
     dispatch(emptyData());
@@ -52,7 +56,7 @@ const MainPage: FC = () => {
     data();
   });
 
-  return (
+  const MainPageRender = (
     <Fragment>
       {loading ? (
         <Grid
@@ -79,6 +83,8 @@ const MainPage: FC = () => {
       )}
     </Fragment>
   );
+
+  return <Fragment>{actionForm ? <GetActionName /> : MainPageRender}</Fragment>;
 };
 
 export default MainPage;
