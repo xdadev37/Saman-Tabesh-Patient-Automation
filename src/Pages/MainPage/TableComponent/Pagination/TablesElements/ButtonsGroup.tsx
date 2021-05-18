@@ -1,4 +1,12 @@
-import { ButtonGroup, Button, Grid } from "@material-ui/core";
+import { FC, useState } from "react";
+import {
+  ButtonGroup,
+  Button,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+} from "@material-ui/core";
 import { DeleteForever, Add, AmpStories } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch } from "../../../../../Redux/hook";
@@ -10,9 +18,10 @@ interface IProps {
   id: number;
 }
 
-const ButtonsGroup: React.FC<IProps> = ({ id }) => {
+const ButtonsGroup: FC<IProps> = ({ id }) => {
   const dispatch = useAppDispatch();
   let history = useHistory();
+  const [openAlert, setOpenAlert] = useState(false);
   // const [openEdit, setOpenEdit] = useState(false);
 
   const deleteAction = async (id: number) => {
@@ -28,6 +37,18 @@ const ButtonsGroup: React.FC<IProps> = ({ id }) => {
 
     await deletePromise;
   };
+
+  const deleteDialog = (
+    <Dialog open={openAlert} onClose={() => setOpenAlert(false)}>
+      <DialogTitle>از حذف اطلاعات بیمار مطمئن هستید؟</DialogTitle>
+      <DialogActions>
+        <Button onClick={() => setOpenAlert(false)}>لغو</Button>
+        <Button color="secondary" onClick={() => deleteAction(id)} autoFocus>
+          حذف
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <Grid component="td" container alignItems="center" justify="center">
@@ -56,12 +77,13 @@ const ButtonsGroup: React.FC<IProps> = ({ id }) => {
             </Button>
             <Modal open={openEdit} onClose={()=>{setOpenEdit(false)}}></Modal> */}
         <Button
-          onClick={() => deleteAction(id)}
+          onClick={() => setOpenAlert(true)}
           color="secondary"
           startIcon={<DeleteForever />}
         >
           حذف
         </Button>
+        {deleteDialog}
       </ButtonGroup>
     </Grid>
   );

@@ -2,13 +2,13 @@ import { setName, setFamilyName } from "../../Redux/Slicer/patientInfoSlice";
 
 export const dataArrayRequiredName = [
   {
-    title: "نام",
+    title: "نام *",
     placeholder: "نام بیمار",
     id: "Name",
     func: (arg: string) => setName(arg),
   },
   {
-    title: "نام خانوادگی",
+    title: "نام خانوادگی *",
     placeholder: "نام خانوادگی بیمار",
     id: "FamilyName",
     func: (arg: string) => setFamilyName(arg),
@@ -16,40 +16,40 @@ export const dataArrayRequiredName = [
 ];
 
 export const dataArrayOptional = [
-  { 
+  {
     title: "برگ پاتولوژی",
-    id: { value: "PathologyDoc", message: false },
+    id: "PathologyDoc",
   },
   {
     title: "کارت درمان",
-    id: { value: "TreatmentDoc", message: false },
+    id: "TreatmentDoc",
   },
   {
     title: "فرم رضایت بیمار",
-    id: { value: "CommitmentDoc", message: false },
+    id: "CommitmentDoc",
   },
   {
     title: "گزارش MRI",
-    id: { value: "MRIReportDoc", message: false },
+    id: "MRIReportDoc",
   },
   {
     title: "گزارش CT",
-    id: { value: "CTReportDoc", message: false },
+    id: "CTReportDoc",
   },
   {
     title: "گزارش PET",
-    id: { value: "PETReportDoc", message: false },
+    id: "PETReportDoc",
   },
   {
     title: "گزارش سونو",
-    id: { value: "SonoReportDoc", message: false },
+    id: "SonoReportDoc",
   },
   {
     title: "گزارش ماموگرافی",
-    id: { value: "MamoReportDoc", message: false },
+    id: "MamoReportDoc",
   },
   {
     title: "گزارشات آزمایشگاهی",
-    id: { value: "LabReportDoc", message: false },
+    id: "LabReportDoc",
   },
 ];

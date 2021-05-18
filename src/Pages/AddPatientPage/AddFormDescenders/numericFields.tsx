@@ -24,7 +24,7 @@ const NumericFields: FC = () => {
   return (
     <Fragment>
       {/* NationalId */}
-      <InputLabel htmlFor="NationalId">کد ملی</InputLabel>
+      <InputLabel htmlFor="NationalId">کد ملی *</InputLabel>
       <Input
         onKeyPress={numberType}
         inputProps={{ maxLength: 10 }}
@@ -46,7 +46,7 @@ const NumericFields: FC = () => {
       )}
 
       {/* FileNumber */}
-      <InputLabel htmlFor="FileNumber">شماره پرونده</InputLabel>
+      <InputLabel htmlFor="FileNumber">شماره پرونده *</InputLabel>
       <Input
         onKeyPress={numberType}
         id="FileNumber"

@@ -1,11 +1,6 @@
 import { FC, useState } from "react";
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  Button,
-  Grid,
-} from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
@@ -19,7 +14,8 @@ import { useHistory } from "react-router-dom";
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     marginTop: {
-      marginTop: theme.spacing(10),
+      padding: theme.spacing(10),
+      "& > *": { margin: theme.spacing(1) },
     },
   })
 );
@@ -64,14 +60,9 @@ const AddPatientPage: FC = () => {
   };
 
   return (
-    <Grid
-      container
-      className={classes.marginTop}
-      justify="center"
-      alignContent="center"
-    >
-      <FormProvider {...methods}>
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+    <FormProvider {...methods}>
+      <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <Grid container className={classes.marginTop} direction="column">
           {/* Names */}
           <NameFields />
           {/* NumericFields */}
@@ -82,10 +73,12 @@ const AddPatientPage: FC = () => {
             setNationalIdDoc={setNationalIdDoc}
           />
 
-          <Button type="submit">ثبت</Button>
-        </form>
-      </FormProvider>
-    </Grid>
+          <Button type="submit" variant="contained" color="primary">
+            ثبت
+          </Button>
+        </Grid>
+      </form>
+    </FormProvider>
   );
 };
 

@@ -1,7 +1,5 @@
-import {
-  unstable_createMuiStrictModeTheme as createMuiTheme,
-  Grid,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core/styles";
 import Header from "./Pages/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import RTLProvider from "./RTLProvider";

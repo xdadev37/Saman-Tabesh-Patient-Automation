@@ -1,8 +1,6 @@
 import { FC, ChangeEvent, useState, Fragment } from "react";
 import {
   Button,
-  Input,
-  InputLabel,
   Paper,
   Dialog,
   AppBar,
@@ -10,6 +8,8 @@ import {
   IconButton,
   Typography,
   List,
+  TextField,
+  Grid,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Close } from "@material-ui/icons";
@@ -52,6 +52,16 @@ const GetActionName: FC = () => {
               await axios
                 .post("http://localhost:3001/optionalForm", {
                   ActionId: actionId,
+                  PathologyDoc: "",
+                  TreatmentDoc: "",
+                  CommitmentDoc: "",
+                  MRIReportDoc: "",
+                  CTReportDoc: "",
+                  PETReportDoc: "",
+                  SonoReportDoc: "",
+                  MamoReportDoc: "",
+                  LabReportDoc: "",
+                  Comment: "",
                 })
                 .then((res) => {
                   if ((res.status = 201)) {
@@ -83,38 +93,41 @@ const GetActionName: FC = () => {
   };
 
   const modalEntry = (
-    // <Grid
-    //   container
-    //   justify="center"
-    //   component={Paper}
-    //   className={classes.modal}
-    //   alignItems="center"
-    // >
     <Fragment>
       <AppBar>
         <Toolbar>
-          <IconButton onClick={() => dispatch(setActionForm(false))}>
-            <Close />
-          </IconButton>
-          <Typography variant="h6">ایجاد اقدام جدید</Typography>
+          <Grid container justify="space-between">
+            <IconButton onClick={() => dispatch(setActionForm(false))}>
+              <Close />
+            </IconButton>
+            <Typography variant="h6">ایجاد اقدام جدید</Typography>
+            <Button
+              variant="contained"
+              onClick={() => dispatch(setActionForm(false))}
+              color="secondary"
+            >
+              خروج
+            </Button>
+          </Grid>
         </Toolbar>
       </AppBar>
       <List component={Paper}>
-        <form autoComplete="off" className={classes.modal}>
-          <InputLabel htmlFor="action">نام رویداد</InputLabel>
-          <Input
-            placeholder="نام رویداد را وارد کنید"
+        <Grid item direction="column" className={classes.modal}>
+          <TextField
+            label="نام رویداد"
             required
-            id="action"
+            variant="filled"
             onSelect={(event: ChangeEvent<HTMLInputElement>) => {
               setNewActionName(event.target.value);
             }}
           />
-          <Button onClick={newActionSubmit}>ثبت رویداد</Button>
-        </form>
+          <hr />
+          <Button variant="contained" color="primary" onClick={newActionSubmit}>
+            ثبت رویداد
+          </Button>
+        </Grid>
       </List>
     </Fragment>
-    // </Grid>
   );
 
   return (

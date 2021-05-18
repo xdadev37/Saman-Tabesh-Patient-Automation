@@ -4,9 +4,8 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  makeStyles,
-  createStyles,
 } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useState, ChangeEvent } from "react";
 
 const useStyle = makeStyles(() =>
@@ -22,7 +21,7 @@ const PageRecordSelector: React.FC = () => {
   const classes = useStyle();
   const [record, setRecord] = useState("");
   const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
-    setRecord(event.target.value as string);
+    setRecord(String(event.target.value));
   };
 
   return (
