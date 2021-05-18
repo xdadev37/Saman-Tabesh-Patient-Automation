@@ -14,10 +14,13 @@ import {
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Close } from "@material-ui/icons";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { selectPatientId, setFileId } from "../../Redux/Slicer/idPasserSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import {
+  selectPatientId,
+  setFileId,
+} from "../../../Redux/Slicer/idPasserSlice";
 import AddFiles from "./AddFilesForm/optionalFields";
-import { setActionForm } from "../../Redux/Slicer/createActionSlice";
+import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 
 const modal = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +55,7 @@ const GetActionName: FC = () => {
               await axios
                 .post("http://localhost:3001/optionalForm", {
                   ActionId: actionId,
+                  PatientId: selectId,
                   PathologyDoc: "",
                   TreatmentDoc: "",
                   CommitmentDoc: "",
@@ -97,13 +101,13 @@ const GetActionName: FC = () => {
       <AppBar>
         <Toolbar>
           <Grid container justify="space-between">
-            <IconButton onClick={() => dispatch(setActionForm(false))}>
+            <IconButton onClick={() => dispatch(setActionForm("mainPage"))}>
               <Close />
             </IconButton>
             <Typography variant="h6">ایجاد اقدام جدید</Typography>
             <Button
               variant="contained"
-              onClick={() => dispatch(setActionForm(false))}
+              onClick={() => dispatch(setActionForm("mainPage"))}
               color="secondary"
             >
               خروج
@@ -112,7 +116,7 @@ const GetActionName: FC = () => {
         </Toolbar>
       </AppBar>
       <List component={Paper}>
-        <Grid item direction="column" className={classes.modal}>
+        <Grid item className={classes.modal}>
           <TextField
             label="نام رویداد"
             required

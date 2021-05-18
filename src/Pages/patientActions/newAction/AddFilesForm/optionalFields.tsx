@@ -10,10 +10,10 @@ import {
 import { CheckCircle, Cancel } from "@material-ui/icons";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import FilesFields from "./filesFields";
-import { useAppSelector } from "../../../Redux/hook";
+import { useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
-import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
-import { dataArrayOptional } from "../../AddPatientPage/dataArray";
+import { selectFiletId } from "../../../../Redux/Slicer/idPasserSlice";
+import { dataArrayOptional } from "../../../AddPatientPage/dataArray";
 
 const styles = makeStyles((theme: Theme) =>
   createStyles({

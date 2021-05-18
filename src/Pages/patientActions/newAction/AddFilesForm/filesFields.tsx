@@ -2,8 +2,8 @@ import { FC, Fragment, ChangeEvent, useState } from "react";
 import { InputLabel, Input, Typography, Grid } from "@material-ui/core";
 import { CheckCircle, Cancel } from "@material-ui/icons";
 import axios from "axios";
-import { useAppSelector } from "../../../Redux/hook";
-import { selectFiletId } from "../../../Redux/Slicer/idPasserSlice";
+import { useAppSelector } from "../../../../Redux/hook";
+import { selectFiletId } from "../../../../Redux/Slicer/idPasserSlice";
 
 interface IProps {
   id: string;

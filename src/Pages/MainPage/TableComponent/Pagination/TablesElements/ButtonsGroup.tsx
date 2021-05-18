@@ -11,7 +11,7 @@ import { DeleteForever, Add, AmpStories } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch } from "../../../../../Redux/hook";
 import { setPatientId } from "../../../../../Redux/Slicer/idPasserSlice";
-import { setActionForm } from "../../../../../Redux/Slicer/createActionSlice";
+import { setActionForm } from "../../../../../Redux/Slicer/actionStatusSlice";
 import { useHistory } from "react-router-dom";
 
 interface IProps {
@@ -56,7 +56,8 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         <Button
           style={{ backgroundColor: "#2196f3", color: "#fff" }}
           onClick={() => {
-            // dispatch(setPatientId(id));
+            dispatch(setPatientId(id));
+            dispatch(setActionForm("checkAction"));
           }}
           startIcon={<AmpStories />}
         >
@@ -65,7 +66,7 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         <Button
           onClick={() => {
             dispatch(setPatientId(id));
-            dispatch(setActionForm(true));
+            dispatch(setActionForm("getActionName"));
           }}
           color="primary"
           startIcon={<Add />}
@@ -83,8 +84,8 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         >
           حذف
         </Button>
-        {deleteDialog}
       </ButtonGroup>
+      {deleteDialog}
     </Grid>
   );
 };

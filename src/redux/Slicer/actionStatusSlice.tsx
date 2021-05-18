@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 const initialState = {
-  actionForm: false,
+  actionForm: "",
 };
 
 export const createActionSlice = createSlice({
   name: "createActionSlice",
   initialState,
   reducers: {
-    setActionForm: (state, action: PayloadAction<boolean>) => {
+    setActionForm: (state, action: PayloadAction<string>) => {
       state.actionForm = action.payload;
     },
   },

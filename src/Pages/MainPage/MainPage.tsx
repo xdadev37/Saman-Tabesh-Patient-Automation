@@ -7,9 +7,10 @@ import TableComponent from "./TableComponent/TableComponent";
 import InfoCard from "./Card/InfoCard";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
-import { selectActionForm } from "../../Redux/Slicer/createActionSlice";
+import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import axios from "axios";
-import GetActionName from "../AddFilesPage/getActionName";
+import GetActionName from "../patientActions/newAction/getActionName";
+import CheckAction from "../patientActions/checkActions/checkActions";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,7 +85,25 @@ const MainPage: FC = () => {
     </Fragment>
   );
 
-  return <Fragment>{actionForm ? <GetActionName /> : MainPageRender}</Fragment>;
+  let Page = <Fragment></Fragment>;
+  switch (actionForm) {
+    case "getActionName":
+      Page = <GetActionName />;
+      break;
+
+    case "mainPage":
+      Page = MainPageRender;
+      break;
+
+    case "checkAction":
+      Page = <CheckAction />;
+      break;
+
+    default:
+      Page = MainPageRender;
+  }
+
+  return <Fragment>{Page}</Fragment>;
 };
 
 export default MainPage;

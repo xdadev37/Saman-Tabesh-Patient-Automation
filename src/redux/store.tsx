@@ -2,7 +2,8 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import patientInfoReducer from "./Slicer/patientInfoSlice";
 import idPasserReducer from "./Slicer/idPasserSlice";
 import dataGridReducer from "./Slicer/dataGridSlice";
-import createActionFormReducer from "./Slicer/createActionSlice";
+import createActionFormReducer from "./Slicer/actionStatusSlice";
+import checkActionReducer from "./Slicer/checkActionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     idPasser: idPasserReducer,
     dataGrid: dataGridReducer,
     createActionForm: createActionFormReducer,
+    checkAction: checkActionReducer,
   },
 });
 

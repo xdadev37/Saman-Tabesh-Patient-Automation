@@ -6,7 +6,7 @@ import LoginButton from "./Inputs/LoginButton";
 const label = makeStyles((theme: Theme) =>
   createStyles({
     labelBreakPoint: {
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down("sm")]: {
         display: "none",
       },
     },
