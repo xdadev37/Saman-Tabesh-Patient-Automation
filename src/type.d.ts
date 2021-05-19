@@ -4,7 +4,3 @@ interface IRequiredFields {
   NationalId: number;
   FileNumber: number;
 }
-
-interface IOptionalFields {
-  Comment: string;
-}

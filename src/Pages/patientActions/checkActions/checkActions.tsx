@@ -18,7 +18,6 @@ import {
 } from "../../../Redux/Slicer/checkActionSlice";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import TableMapper from "./TableBody/tableMapper";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 
@@ -36,7 +35,6 @@ const useStyle = makeStyles((theme: Theme) =>
 const CheckActions: FC = () => {
   const selectId = useAppSelector(selectPatientId);
   const [loading, setLoading] = useState(true);
-  let history = useHistory();
   const dispatch = useAppDispatch();
   const classes = useStyle();
 

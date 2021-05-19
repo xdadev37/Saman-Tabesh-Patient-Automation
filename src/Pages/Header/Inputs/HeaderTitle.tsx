@@ -1,7 +1,8 @@
 import { Link, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 import mainLogo from "./mainLogo.png";
+import { useAppDispatch } from "../../../Redux/hook";
+import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 
 const space = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,15 +15,15 @@ const space = makeStyles((theme: Theme) =>
 );
 
 const HeaderTitle: React.FC = () => {
-  let history = useHistory();
   const classes = space();
+  const dispatch = useAppDispatch();
 
   return (
     <Grid container alignItems="center" className={classes.root}>
       <Link
         underline="none"
         style={{ color: "#fff", cursor: "pointer" }}
-        onClick={() => history.push("/")}
+        onClick={() => dispatch(setActionForm("mainPage"))}
       >
         خانه
       </Link>
@@ -31,7 +32,7 @@ const HeaderTitle: React.FC = () => {
         src={mainLogo}
         alt="Logo"
         width="100"
-        onClick={() => history.push("/")}
+        onClick={() => dispatch(setActionForm("mainPage"))}
       />
     </Grid>
   );
