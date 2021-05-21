@@ -1,4 +1,3 @@
-import { FC, Fragment } from "react";
 import {
   Table,
   TableRow,
@@ -10,17 +9,7 @@ import {
   Link,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useAppDispatch, useAppSelector } from "../../../../../Redux/hook";
 import { dataArrayOptional } from "../../../../AddPatientPage/dataArray";
-import {
-  setFilter,
-  selectTempFiles,
-} from "../../../../../Redux/Slicer/checkActionSlice";
-
-interface IProps {
-  open: boolean;
-  id: number;
-}
 
 const useRowStyles = makeStyles({
   root: {
@@ -30,11 +19,34 @@ const useRowStyles = makeStyles({
   },
 });
 
-const MoreDetailsTable: FC<IProps> = ({ open, id }) => {
+interface IProps {
+  open: boolean;
+  PathologyDoc: string;
+  TreatmentDoc: string;
+  CommitmentDoc: string;
+  MRIReportDoc: string;
+  CTReportDoc: string;
+  PETReportDoc: string;
+  SonoReportDoc: string;
+  MamoReportDoc: string;
+  LabReportDoc: string;
+  Comment: string;
+}
+
+const MoreDetailsTable: React.FC<IProps> = ({
+  open,
+  PathologyDoc,
+  TreatmentDoc,
+  CommitmentDoc,
+  MRIReportDoc,
+  CTReportDoc,
+  PETReportDoc,
+  SonoReportDoc,
+  MamoReportDoc,
+  LabReportDoc,
+  Comment,
+}) => {
   const classes = useRowStyles();
-  const selectTemp = useAppSelector(selectTempFiles);
-  const dispatch = useAppDispatch();
-  dispatch(setFilter(id));
 
   return (
     <TableRow className={classes.root}>
@@ -51,93 +63,51 @@ const MoreDetailsTable: FC<IProps> = ({ open, id }) => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  {selectTemp.map((data) => {
-                    return (
-                      <Fragment key={id}>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.PathologyDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.TreatmentDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.CommitmentDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.MRIReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.CTReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.PETReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.SonoReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.MamoReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            target="_blank"
-                            href={data.LabReportDoc}
-                            rel="noreferrer"
-                          >
-                            مشاهده پی دی اف
-                          </Link>
-                        </TableCell>
-                      </Fragment>
-                    );
-                  })}
+                  <TableCell>
+                    <Link target="_blank" href={PathologyDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={TreatmentDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={CommitmentDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={MRIReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={CTReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={PETReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={SonoReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={MamoReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link target="_blank" href={LabReportDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>

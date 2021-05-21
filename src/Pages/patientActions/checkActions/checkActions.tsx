@@ -12,7 +12,6 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
-  setActionName,
   setFilesLinks,
   emptyData,
 } from "../../../Redux/Slicer/checkActionSlice";
@@ -40,31 +39,17 @@ const CheckActions: FC = () => {
 
   const data = async () => {
     dispatch(emptyData());
-    const getData = new Promise((got, failed) => {
+    const getActionFiles = new Promise((got, failed) => {
       axios
-        .get(`http://localhost:3003/actionName?PatientId=${selectId}`)
-        .then(async (res) => {
+        .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
+        .then((res) => {
           if ((res.status = 200)) {
-            console.log(res);
             for (let i = 0; i < res.data.length; i++) {
-              dispatch(setActionName(res.data[i]));
+              dispatch(setFilesLinks(res.data[i]));
+              got(setLoading(false));
             }
-            await axios
-              .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
-              .then((res) => {
-                console.log(res);
-                if ((res.status = 200)) {
-                  for (let i = 0; i < res.data.length; i++) {
-                    dispatch(setFilesLinks(res.data[i]));
-                    got(setLoading(false));
-                  }
-                } else {
-                  failed(console.log("Failed", res.statusText));
-                }
-              })
-              .catch((error) => {
-                failed(console.log(error));
-              });
+          } else {
+            failed(console.log("Failed", res.statusText));
           }
         })
         .catch((error) => {
@@ -72,7 +57,7 @@ const CheckActions: FC = () => {
         });
     });
 
-    await getData;
+    await getActionFiles;
   };
 
   useEffect(() => {

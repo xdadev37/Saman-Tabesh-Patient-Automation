@@ -50,10 +50,10 @@ const GetActionName: FC = () => {
           })
           .then(async (res) => {
             if ((res.status = 201)) {
-              console.log(res.data.id);
               setActionId(res.data.id);
               await axios
                 .post("http://localhost:3001/optionalForm", {
+                  Name: newActionName,
                   ActionId: actionId,
                   PatientId: selectId,
                   PathologyDoc: "",

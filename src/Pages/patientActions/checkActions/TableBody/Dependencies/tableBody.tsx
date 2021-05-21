@@ -6,9 +6,32 @@ import MoreDetailsTable from "./MoreDetailsTable";
 interface IProps {
   id: number;
   Name: string;
+  PathologyDoc: string;
+  TreatmentDoc: string;
+  CommitmentDoc: string;
+  MRIReportDoc: string;
+  CTReportDoc: string;
+  PETReportDoc: string;
+  SonoReportDoc: string;
+  MamoReportDoc: string;
+  LabReportDoc: string;
+  Comment: string;
 }
 
-const TableBody: FC<IProps> = ({ id, Name }) => {
+const TableBody: FC<IProps> = ({
+  id,
+  Name,
+  PathologyDoc,
+  TreatmentDoc,
+  CommitmentDoc,
+  MRIReportDoc,
+  CTReportDoc,
+  PETReportDoc,
+  SonoReportDoc,
+  MamoReportDoc,
+  LabReportDoc,
+  Comment,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -22,7 +45,19 @@ const TableBody: FC<IProps> = ({ id, Name }) => {
         <TableCell>{id}</TableCell>
         <TableCell>{Name}</TableCell>
       </TableRow>
-      <MoreDetailsTable open={open} id={id} />
+      <MoreDetailsTable
+        open={open}
+        PathologyDoc={PathologyDoc}
+        TreatmentDoc={TreatmentDoc}
+        CommitmentDoc={CommitmentDoc}
+        MRIReportDoc={MRIReportDoc}
+        CTReportDoc={CTReportDoc}
+        PETReportDoc={PETReportDoc}
+        SonoReportDoc={SonoReportDoc}
+        MamoReportDoc={MamoReportDoc}
+        LabReportDoc={LabReportDoc}
+        Comment={Comment}
+      />
     </Fragment>
   );
 };

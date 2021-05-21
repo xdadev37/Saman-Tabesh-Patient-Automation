@@ -34,12 +34,33 @@ const OptionalFields: FC = () => {
   const [userComment, setUserComment] = useState("");
   const classes = styles();
   const [sendStatus, setSendStatus] = useState(false);
+  const [PathologyDoc, setPathologyDoc] = useState({});
+  const [TreatmentDoc, setTreatmentDoc] = useState({});
+  const [CommitmentDoc, setCommitmentDoc] = useState({});
+  const [MRIReportDoc, setMRIReportDoc] = useState({});
+  const [CTReportDoc, setCTReportDoc] = useState({});
+  const [PETReportDoc, setPETReportDoc] = useState({});
+  const [SonoReportDoc, setSonoReportDoc] = useState({});
+  const [MamoReportDoc, setMamoReportDoc] = useState({});
+  const [LabReportDoc, setLabReportDoc] = useState({});
 
-  const submitComment = async () => {
+  const dispatchData = async () => {
     const comment = new Promise((sent, rejected) => {
       axios
-        .patch(`http://localhost:3001/optionalForm/${fileId}`, {
-          Comment: userComment,
+        .post("http://localhost:3001/optionalForm", {
+          // Name: newActionName,
+          // ActionId: actionId,
+          // PatientId: selectId,
+          PathologyDoc: "",
+          TreatmentDoc: "",
+          CommitmentDoc: "",
+          MRIReportDoc: "",
+          CTReportDoc: "",
+          PETReportDoc: "",
+          SonoReportDoc: "",
+          MamoReportDoc: "",
+          LabReportDoc: "",
+          Comment: "",
         })
         .then((res) => {
           if ((res.status = 201)) {
@@ -64,10 +85,15 @@ const OptionalFields: FC = () => {
       direction="column"
     >
       {/* Files */}
-      {dataArrayOptional.map((data) => (
-        <FilesFields key={data.id} id={data.id} title={data.title} />
-      ))}
-
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
+      <FilesFields id={id} title={title} func={func} />
       {/* Comment */}
       <Grid container direction="column">
         <TextField
@@ -93,9 +119,6 @@ const OptionalFields: FC = () => {
             ),
           }}
         />
-        <Button variant="contained" color="primary" onClick={submitComment}>
-          ثبت توضیحات
-        </Button>
         <FormHelperText>
           <Typography>حداکثر تعداد کاراکتر مجاز : 800</Typography>
           <Typography>
@@ -106,8 +129,8 @@ const OptionalFields: FC = () => {
       <Button
         className={classes.button}
         variant="contained"
-        onClick={() => window.location.reload()}
-        color="secondary"
+        onClick={dispatchData}
+        color="primary"
       >
         تمام
       </Button>
