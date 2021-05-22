@@ -15,10 +15,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Close } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import {
-  selectPatientId,
-  setFileId,
-} from "../../../Redux/Slicer/idPasserSlice";
+import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import AddFiles from "./AddFilesForm/optionalFields";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 
@@ -35,7 +32,7 @@ const modal = makeStyles((theme: Theme) =>
 const GetActionName: FC = () => {
   const dispatch = useAppDispatch();
   const [newActionName, setNewActionName] = useState("");
-  const [actionId, setActionId] = useState();
+  const [actionId, setActionId] = useState(0);
   const [completedStatus, setCompletedStatus] = useState(false);
   const selectId = useAppSelector(selectPatientId);
   const classes = modal();
@@ -48,48 +45,18 @@ const GetActionName: FC = () => {
             Name: newActionName,
             PatientId: selectId,
           })
-          .then(async (res) => {
+          .then((res) => {
             if ((res.status = 201)) {
               setActionId(res.data.id);
-              await axios
-                .post("http://localhost:3001/optionalForm", {
-                  Name: newActionName,
-                  ActionId: actionId,
-                  PatientId: selectId,
-                  PathologyDoc: "",
-                  TreatmentDoc: "",
-                  CommitmentDoc: "",
-                  MRIReportDoc: "",
-                  CTReportDoc: "",
-                  PETReportDoc: "",
-                  SonoReportDoc: "",
-                  MamoReportDoc: "",
-                  LabReportDoc: "",
-                  Comment: "",
-                })
-                .then((res) => {
-                  if ((res.status = 201)) {
-                    console.log(res.data.id);
-                    dispatch(setFileId(res.data.id));
-                    submitted(setCompletedStatus(true));
-                  } else {
-                    failed(
-                      console.log("patientFile Creating Failed", res.statusText)
-                    );
-                  }
-                })
-                .catch((error) => {
-                  failed(console.log(error));
-                });
+              submitted(setCompletedStatus(true));
             } else {
-              failed(console.log("newAction Failed", res.statusText));
+              failed(console.log("Action Creating Failed", res.statusText));
             }
           })
           .catch((error) => {
             failed(console.log(error));
           });
       });
-
       await submit;
     } else {
       return;
@@ -137,7 +104,7 @@ const GetActionName: FC = () => {
   return (
     <Fragment>
       {completedStatus ? (
-        <AddFiles />
+        <AddFiles newActionName={newActionName} actionId={actionId} />
       ) : (
         <Dialog fullScreen open={true}>
           {modalEntry}

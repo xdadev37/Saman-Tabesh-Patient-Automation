@@ -3,6 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import mainLogo from "./mainLogo.png";
 import { useAppDispatch } from "../../../Redux/hook";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { useHistory } from "react-router-dom";
 
 const space = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,13 +18,19 @@ const space = makeStyles((theme: Theme) =>
 const HeaderTitle: React.FC = () => {
   const classes = space();
   const dispatch = useAppDispatch();
+  let history = useHistory();
+
+  const home = () => {
+    dispatch(setActionForm("mainPage"));
+    history.push("/");
+  };
 
   return (
     <Grid container alignItems="center" className={classes.root}>
       <Link
         underline="none"
         style={{ color: "#fff", cursor: "pointer" }}
-        onClick={() => dispatch(setActionForm("mainPage"))}
+        onClick={home}
       >
         خانه
       </Link>
@@ -32,7 +39,7 @@ const HeaderTitle: React.FC = () => {
         src={mainLogo}
         alt="Logo"
         width="100"
-        onClick={() => dispatch(setActionForm("mainPage"))}
+        onClick={home}
       />
     </Grid>
   );

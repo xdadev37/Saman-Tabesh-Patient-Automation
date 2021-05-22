@@ -53,9 +53,17 @@ const MoreDetailsTable: React.FC<IProps> = ({
                     <Avatar alt="Avatar" src={AvatarLink} />
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={NationalIdDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {NationalIdDoc === "" ? (
+                      <p>ندارد</p>
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={NationalIdDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
 
                   {/* Buttons */}

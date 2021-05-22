@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-const initialState = [
+const initialState: IDataGrid[] = [
   {
     id: 0,
     Name: "",
@@ -17,7 +17,7 @@ export const dataGridSlice = createSlice({
   name: "dataGridSlice",
   initialState,
   reducers: {
-    setDataGrid: (state, action: PayloadAction<any>) => {
+    setDataGrid: (state, action: PayloadAction<IDataGrid>) => {
       state.push(action.payload);
     },
     emptyData: (state) => {

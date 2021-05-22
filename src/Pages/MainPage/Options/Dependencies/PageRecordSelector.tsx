@@ -6,7 +6,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { useState, ChangeEvent } from "react";
+import { FC, useState, ChangeEvent } from "react";
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -16,7 +16,7 @@ const useStyle = makeStyles(() =>
   })
 );
 
-const PageRecordSelector: React.FC = () => {
+const PageRecordSelector: FC = () => {
   const recordId = "recordId";
   const classes = useStyle();
   const [record, setRecord] = useState("");

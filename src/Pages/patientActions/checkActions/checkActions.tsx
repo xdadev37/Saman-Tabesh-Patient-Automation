@@ -25,9 +25,6 @@ const useStyle = makeStyles((theme: Theme) =>
     marginTop: {
       marginTop: theme.spacing(10),
     },
-    midMarginTop: {
-      marginTop: theme.spacing(3),
-    },
   })
 );
 
@@ -77,18 +74,20 @@ const CheckActions: FC = () => {
           <Skeleton width="95%" />
         </Grid>
       ) : (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableBody>
-              <TableMapper />
-            </TableBody>
-          </Table>
-          <Box margin={1}>
-            <Button onClick={() => dispatch(setActionForm("mainPage"))}>
-              برگشت
-            </Button>
-          </Box>
-        </TableContainer>
+        <Box marginTop={10} paddingX={3}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableBody>
+                <TableMapper />
+              </TableBody>
+            </Table>
+            <Box margin={1}>
+              <Button onClick={() => dispatch(setActionForm("mainPage"))}>
+                برگشت
+              </Button>
+            </Box>
+          </TableContainer>
+        </Box>
       )}
     </Fragment>
   );

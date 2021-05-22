@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-const initialState = [
+const initialState: IActionItems[] = [
   {
     id: 0,
     Name: "",
@@ -22,7 +22,7 @@ export const checkActionSlice = createSlice({
   name: "checkActionSlice",
   initialState,
   reducers: {
-    setFilesLinks: (state, action: PayloadAction<any>) => {
+    setFilesLinks: (state, action: PayloadAction<IActionItems>) => {
       state.push(action.payload);
     },
 

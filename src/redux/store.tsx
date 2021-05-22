@@ -4,6 +4,7 @@ import idPasserReducer from "./Slicer/idPasserSlice";
 import dataGridReducer from "./Slicer/dataGridSlice";
 import createActionFormReducer from "./Slicer/actionStatusSlice";
 import checkActionReducer from "./Slicer/checkActionSlice";
+import PaginationReducer from "./Slicer/paginationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     dataGrid: dataGridReducer,
     createActionForm: createActionFormReducer,
     checkAction: checkActionReducer,
+    pagination: PaginationReducer,
   },
 });
 

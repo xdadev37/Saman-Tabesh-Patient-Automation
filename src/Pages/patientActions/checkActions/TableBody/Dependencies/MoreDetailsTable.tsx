@@ -7,6 +7,7 @@ import {
   TableHead,
   TableBody,
   Link,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dataArrayOptional } from "../../../../AddPatientPage/dataArray";
@@ -47,6 +48,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   Comment,
 }) => {
   const classes = useRowStyles();
+  const none = <Typography>ندارد</Typography>;
 
   return (
     <TableRow className={classes.root}>
@@ -57,56 +59,127 @@ const MoreDetailsTable: React.FC<IProps> = ({
               <TableHead>
                 <TableRow>
                   {dataArrayOptional.map((data) => (
-                    <TableCell>{data.title}</TableCell>
+                    <TableCell key={data}>{data}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <Link target="_blank" href={PathologyDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {PathologyDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={PathologyDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={TreatmentDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {TreatmentDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={TreatmentDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={CommitmentDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {CommitmentDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={CommitmentDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={MRIReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {MRIReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={MRIReportDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={CTReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {CTReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link target="_blank" href={CTReportDoc} rel="noreferrer">
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={PETReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {PETReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={PETReportDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={SonoReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {SonoReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={SonoReportDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={MamoReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {MamoReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={MamoReportDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Link target="_blank" href={LabReportDoc} rel="noreferrer">
-                      مشاهده پی دی اف
-                    </Link>
+                    {LabReportDoc === "" ? (
+                      none
+                    ) : (
+                      <Link
+                        target="_blank"
+                        href={LabReportDoc}
+                        rel="noreferrer"
+                      >
+                        مشاهده پی دی اف
+                      </Link>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Typography>{Comment}</Typography>
                   </TableCell>
                 </TableRow>
               </TableBody>

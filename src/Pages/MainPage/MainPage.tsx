@@ -1,5 +1,6 @@
 import { FC, Fragment, useState, useEffect } from "react";
 import Options from "./Options/Options";
+import PageCounter from "./Options/PageCounter";
 import { Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
@@ -16,9 +17,11 @@ const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     marginTop: {
       marginTop: theme.spacing(10),
+      "& > *": { paddingInline: theme.spacing(3) },
     },
-    midMarginTop: {
+    midMargin: {
       marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
     },
   })
 );
@@ -71,13 +74,14 @@ const MainPage: FC = () => {
         </Grid>
       ) : (
         <Grid container className={classes.marginTop} justify="space-around">
-          <Grid item sm={6}>
+          <Grid item sm={12} md={7} lg={7}>
             <Options />
-            <Grid item className={classes.midMarginTop}>
+            <Grid item className={classes.midMargin}>
               <TableComponent />
             </Grid>
+            <PageCounter />
           </Grid>
-          <Grid item sm={5}>
+          <Grid item sm={12} md={5} lg={5} className={classes.midMargin}>
             <InfoCard />
           </Grid>
         </Grid>

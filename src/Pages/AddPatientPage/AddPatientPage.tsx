@@ -72,10 +72,12 @@ const AddPatientPage: FC = () => {
             setAvatar={setAvatar}
             setNationalIdDoc={setNationalIdDoc}
           />
-
-          <Button type="submit" variant="contained" color="primary">
-            ثبت
-          </Button>
+          <Grid container justify="space-around">
+            <Button onClick={() => history.push("/")}>برگشت</Button>
+            <Button type="submit" variant="contained" color="primary">
+              ثبت
+            </Button>
+          </Grid>
         </Grid>
       </form>
     </FormProvider>
