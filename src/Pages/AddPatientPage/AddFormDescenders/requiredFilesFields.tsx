@@ -22,7 +22,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   switch (pdfStatus) {
     case true:
       pdfStatusElement = (
-        <Typography>
+        <Typography color="secondary">
           حجم پی دی اف آپلود شده باید کمتر از 300 کیلوبایت باشد!
         </Typography>
       );
@@ -36,7 +36,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   switch (avatarStatus) {
     case true:
       avatarStatusElement = (
-        <Typography>
+        <Typography color="secondary">
           حجم پی دی اف آپلود شده باید کمتر از 100 کیلوبایت باشد!
         </Typography>
       );
@@ -91,7 +91,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         />
         {avatarStatusElement}
         <FormHelperText>
-          <Typography variant="subtitle2" component="span">
+          <Typography variant="subtitle2" component="span" color="secondary">
             حداکثر حجم فایل مجاز : 100 کیلوبایت
           </Typography>
         </FormHelperText>
@@ -143,7 +143,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         />
         {pdfStatusElement}
         <FormHelperText>
-          <Typography variant="subtitle2" component="span">
+          <Typography variant="subtitle2" component="span" color="secondary">
             حداکثر حجم فایل مجاز : 300 کیلوبایت
           </Typography>
         </FormHelperText>

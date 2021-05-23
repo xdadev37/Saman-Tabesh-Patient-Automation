@@ -42,7 +42,7 @@ const NameFields: FC = () => {
             }}
           />
           {errors[data.id] && (
-            <Typography>{errors[data.id].message}</Typography>
+            <Typography color="secondary">{errors[data.id].message}</Typography>
           )}
         </Fragment>
       ))}

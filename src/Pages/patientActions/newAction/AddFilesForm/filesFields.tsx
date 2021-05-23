@@ -16,7 +16,9 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
     case true:
       messageElement = (
         <Fragment>
-          <Typography>حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!</Typography>
+          <Typography color="secondary">
+            حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!
+          </Typography>
           <Cancel color="error" />
         </Fragment>
       );

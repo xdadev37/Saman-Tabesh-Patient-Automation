@@ -35,43 +35,46 @@ const AddPatientPage: FC = () => {
   const [nationalIdDoc, setNationalIdDoc] = useState("");
   const dispatch = useAppDispatch();
   let history = useHistory();
+  const [checkNIdAl, setCheckNIdAl] = useState(false);
 
   const submit = async () => {
-    const axiosPromise = new Promise((sent, rejected) => {
-      axios
-        .post("http://localhost:3002/requiredForm", {
-          Name: requiredField.Name,
-          FamilyName: requiredField.FamilyName,
-          NationalId: requiredField.NationalId,
-          FileNumber: requiredField.FileNumber,
-          Avatar: avatar,
-          NationalIdDoc: nationalIdDoc,
-        })
-        .then((res) => {
-          console.log(res.data);
-          if ((res.status = 201)) {
-            dispatch(setPatientId(res.data.id));
-            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
-            dispatch(setAlertStatus("success"));
-            history.push("/");
+    if (checkNIdAl === false) {
+      const axiosPromise = new Promise((sent, rejected) => {
+        axios
+          .post("http://localhost:3002/requiredForm", {
+            Name: requiredField.Name,
+            FamilyName: requiredField.FamilyName,
+            NationalId: requiredField.NationalId,
+            FileNumber: requiredField.FileNumber,
+            Avatar: avatar,
+            NationalIdDoc: nationalIdDoc,
+          })
+          .then((res) => {
+            console.log(res.data);
+            if ((res.status = 201)) {
+              dispatch(setPatientId(res.data.id));
+              dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+              dispatch(setAlertStatus("success"));
+              history.push("/");
 
-            sent(dispatch(setOpen(true)));
-          } else {
-            dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+              sent(dispatch(setOpen(true)));
+            } else {
+              dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+              dispatch(setAlertStatus("error"));
+
+              rejected(dispatch(setOpen(true)));
+            }
+          })
+          .catch((error) => {
+            dispatch(setAlertText(error));
             dispatch(setAlertStatus("error"));
 
             rejected(dispatch(setOpen(true)));
-          }
-        })
-        .catch((error) => {
-          dispatch(setAlertText(error));
-          dispatch(setAlertStatus("error"));
+          });
+      });
 
-          rejected(dispatch(setOpen(true)));
-        });
-    });
-
-    await axiosPromise;
+      await axiosPromise;
+    }
   };
 
   return (
@@ -81,7 +84,10 @@ const AddPatientPage: FC = () => {
           {/* Names */}
           <NameFields />
           {/* NumericFields */}
-          <NumericFields />
+          <NumericFields
+            checkNIdAl={checkNIdAl}
+            setCheckNIdAl={setCheckNIdAl}
+          />
           {/* requiredFilesFields */}
           <RequiredFilesFields
             setAvatar={setAvatar}

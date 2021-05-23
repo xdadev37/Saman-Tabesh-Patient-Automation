@@ -1,4 +1,4 @@
-import { FC, Fragment, KeyboardEvent, useState } from "react";
+import { FC, Fragment, KeyboardEvent } from "react";
 import { InputLabel, Input, Typography } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppDispatch } from "../../../Redux/hook";
@@ -7,15 +7,18 @@ import {
   setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
 
-const NumericFields: FC = () => {
+interface IProps {
+  checkNIdAl: boolean;
+  setCheckNIdAl: (arg: boolean) => void;
+}
+
+const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
   const dispatch = useAppDispatch();
   const numberType = (event: KeyboardEvent) => {
     if (event.which < 47 || event.which > 58) {
       event.preventDefault();
     }
   };
-
-  const [checkNIdAl, setCheckNIdAl] = useState(false);
 
   const {
     register,
@@ -88,9 +91,13 @@ const NumericFields: FC = () => {
           checkNationalIdAl(watch("NationalId"));
         }}
       />
-      {checkNIdAl && <Typography>الگوی کد ملی وارد شده نادرست است!</Typography>}
+      {checkNIdAl && (
+        <Typography color="secondary">
+          الگوی کد ملی وارد شده نادرست است!
+        </Typography>
+      )}
       {errors.NationalId && (
-        <Typography>{errors.NationalId.message}</Typography>
+        <Typography color="secondary">{errors.NationalId.message}</Typography>
       )}
 
       {/* FileNumber */}
@@ -110,7 +117,7 @@ const NumericFields: FC = () => {
         }}
       />
       {errors.FileNumber && (
-        <Typography>{errors.FileNumber.message}</Typography>
+        <Typography color="secondary">{errors.FileNumber.message}</Typography>
       )}
     </Fragment>
   );
