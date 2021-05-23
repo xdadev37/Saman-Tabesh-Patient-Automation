@@ -1,9 +1,10 @@
-import { Link, Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import mainLogo from "./mainLogo.png";
+// import mainLogo from "./mainLogo.png";
 import { useAppDispatch } from "../../../Redux/hook";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 import { useHistory } from "react-router-dom";
+import { Home } from "@material-ui/icons";
 
 const space = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,20 +28,21 @@ const HeaderTitle: React.FC = () => {
 
   return (
     <Grid container alignItems="center" className={classes.root}>
-      <Link
-        underline="none"
+      <Button
         style={{ color: "#fff", cursor: "pointer" }}
         onClick={home}
+        endIcon={<Home />}
+        size="large"
       >
         خانه
-      </Link>
-      <img
+      </Button>
+      {/* <img
         style={{ cursor: "pointer" }}
         src={mainLogo}
         alt="Logo"
         width="100"
         onClick={home}
-      />
+      /> */}
     </Grid>
   );
 };

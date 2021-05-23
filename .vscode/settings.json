@@ -2,6 +2,8 @@
     "svn.ignoreMissingSvnWarning": true,
     "cSpell.words": [
         "browserslist",
+        "clickaway",
+        "notistack",
         "unmount"
     ]
 }

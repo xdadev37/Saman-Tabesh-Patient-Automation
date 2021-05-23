@@ -2,9 +2,15 @@ import { FC, ChangeEvent, useState } from "react";
 import { FormHelperText, Grid, Button, TextField } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import FilesFields from "./filesFields";
-import { useAppSelector } from "../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
 import { selectPatientId } from "../../../../Redux/Slicer/idPasserSlice";
+import {
+  setAlertStatus,
+  setAlertText,
+  setOpen,
+} from "../../../../Redux/Slicer/alertMessageSlice";
+import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
 
 const styles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +33,7 @@ interface IProps {
 }
 
 const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
+  const dispatch = useAppDispatch();
   const classes = styles();
   const [userComment, setUserComment] = useState("");
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
@@ -60,11 +67,23 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
         })
         .then((res) => {
           if ((res.status = 201)) {
-            console.log("فایل رفت", res.statusText);
-            sent(window.location.reload());
+            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+            dispatch(setAlertStatus("success"));
+            dispatch(setActionForm("mainPage"));
+
+            sent(dispatch(setOpen(true)));
           } else {
-            rejected(console.log("فایل نرفت", res.statusText));
+            dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+            dispatch(setAlertStatus("error"));
+
+            rejected(dispatch(setOpen(true)));
           }
+        })
+        .catch((error) => {
+          dispatch(setAlertText(error));
+          dispatch(setAlertStatus("error"));
+
+          rejected(dispatch(setOpen(true)));
         });
     });
 

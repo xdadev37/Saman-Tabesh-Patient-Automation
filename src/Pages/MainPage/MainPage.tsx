@@ -12,6 +12,12 @@ import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import axios from "axios";
 import GetActionName from "../patientActions/newAction/getActionName";
 import CheckAction from "../patientActions/checkActions/checkActions";
+import AlertModal from "../../UI/AlertSnackbar";
+import {
+  selectAlertText,
+  selectAlertStatus,
+  selectOpen,
+} from "../../Redux/Slicer/alertMessageSlice";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,34 +37,37 @@ const MainPage: FC = () => {
   const classes = useStyle();
   const [loading, setLoading] = useState(true);
   const actionForm = useAppSelector(selectActionForm);
-
-  const data = async () => {
-    dispatch(emptyData());
-    const getData = new Promise((got, failed) => {
-      axios
-        .get("http://localhost:3002/requiredForm")
-        .then((res) => {
-          if ((res.status = 200)) {
-            for (let i = 0; i < res.data.length; i++) {
-              dispatch(setDataGrid(res.data[i]));
-            }
-
-            got(setLoading(false));
-          } else {
-            failed(console.log("Failed", res.statusText));
-          }
-        })
-        .catch((error) => {
-          failed(console.log(error));
-        });
-    });
-
-    await getData;
-  };
+  const alertText = useAppSelector(selectAlertText);
+  const alertStatus = useAppSelector(selectAlertStatus);
+  const open = useAppSelector(selectOpen);
 
   useEffect(() => {
+    const data = async () => {
+      dispatch(emptyData());
+      const getData = new Promise((got, failed) => {
+        axios
+          .get("http://localhost:3002/requiredForm")
+          .then((res) => {
+            if ((res.status = 200)) {
+              for (let i = 0; i < res.data.length; i++) {
+                dispatch(setDataGrid(res.data[i]));
+              }
+
+              got(setLoading(false));
+            } else {
+              failed(console.log("Failed", res.statusText));
+            }
+          })
+          .catch((error) => {
+            failed(console.log(error));
+          });
+      });
+
+      await getData;
+    };
+
     data();
-  });
+  }, [dispatch]);
 
   const MainPageRender = (
     <Fragment>
@@ -86,6 +95,9 @@ const MainPage: FC = () => {
           </Grid>
         </Grid>
       )}
+      <AlertModal open={open} alertStatus={alertStatus}>
+        {alertText}
+      </AlertModal>
     </Fragment>
   );
 

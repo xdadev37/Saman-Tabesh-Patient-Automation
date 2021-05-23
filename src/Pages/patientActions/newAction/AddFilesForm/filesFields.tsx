@@ -9,8 +9,26 @@ interface IProps {
 }
 
 const FilesFields: FC<IProps> = ({ id, title, func }) => {
-  const [message, setMessage] = useState(false);
-  const [sendStatus, setSendStatus] = useState(false);
+  const [message, setMessage] = useState<boolean | null>(null);
+
+  let messageElement;
+  switch (message) {
+    case true:
+      messageElement = (
+        <Fragment>
+          <Typography>حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!</Typography>
+          <Cancel color="error" />
+        </Fragment>
+      );
+      break;
+
+    case false:
+      messageElement = <CheckCircle color="primary" />;
+      break;
+
+    default:
+      messageElement = <Fragment></Fragment>;
+  }
 
   return (
     <Fragment>
@@ -29,19 +47,15 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
                 setMessage(true);
               } else {
                 setMessage(false);
-                setSendStatus(true);
                 func(file);
               }
             } else {
-              setSendStatus(false);
+              setMessage(null);
             }
           }}
         />
-      {sendStatus ? <CheckCircle color="primary" /> : <Cancel color="error" />}
       </Grid>
-      {message && (
-        <Typography>حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!</Typography>
-      )}
+      {messageElement}
     </Fragment>
   );
 };

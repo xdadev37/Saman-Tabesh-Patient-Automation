@@ -10,6 +10,12 @@ import NumericFields from "./AddFormDescenders/numericFields";
 import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
 import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
 import { useHistory } from "react-router-dom";
+import { Check, ChevronRight } from "@material-ui/icons";
+import {
+  setAlertStatus,
+  setAlertText,
+  setOpen,
+} from "../../Redux/Slicer/alertMessageSlice";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,15 +50,24 @@ const AddPatientPage: FC = () => {
         .then((res) => {
           console.log(res.data);
           if ((res.status = 201)) {
-            console.log("Patient Added", res.statusText);
             dispatch(setPatientId(res.data.id));
-            sent(history.push("/"));
+            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+            dispatch(setAlertStatus("success"));
+            history.push("/");
+
+            sent(dispatch(setOpen(true)));
           } else {
-            rejected(console.log(res.statusText));
+            dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+            dispatch(setAlertStatus("error"));
+
+            rejected(dispatch(setOpen(true)));
           }
         })
         .catch((error) => {
-          rejected(console.log(error));
+          dispatch(setAlertText(error));
+          dispatch(setAlertStatus("error"));
+
+          rejected(dispatch(setOpen(true)));
         });
     });
 
@@ -73,8 +88,20 @@ const AddPatientPage: FC = () => {
             setNationalIdDoc={setNationalIdDoc}
           />
           <Grid container justify="space-around">
-            <Button onClick={() => history.push("/")}>برگشت</Button>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<ChevronRight />}
+              onClick={() => history.push("/")}
+            >
+              برگشت
+            </Button>
+            <Button
+              type="submit"
+              startIcon={<Check />}
+              variant="contained"
+              color="primary"
+            >
               ثبت
             </Button>
           </Grid>

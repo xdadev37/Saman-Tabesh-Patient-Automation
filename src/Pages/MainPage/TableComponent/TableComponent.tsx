@@ -9,6 +9,7 @@ import {
   Paper,
   Box,
 } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import Pagination from "./Pagination/Pagination";
 import { useHistory } from "react-router-dom";
 
@@ -42,8 +43,9 @@ const TableComponent: React.FC = () => {
           color="primary"
           variant="contained"
           onClick={() => history.push("/addNewPatient")}
+          startIcon={<Add />}
         >
-          اضافه کردن بیمار جدید
+          ایجاد فرم بیمار جدید
         </Button>
       </Box>
     </TableContainer>

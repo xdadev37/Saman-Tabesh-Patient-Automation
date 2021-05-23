@@ -18,6 +18,11 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import AddFiles from "./AddFilesForm/optionalFields";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import {
+  setAlertStatus,
+  setAlertText,
+  setOpen,
+} from "../../../Redux/Slicer/alertMessageSlice";
 
 const modal = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,16 +55,20 @@ const GetActionName: FC = () => {
               setActionId(res.data.id);
               submitted(setCompletedStatus(true));
             } else {
-              failed(console.log("Action Creating Failed", res.statusText));
+              dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+              dispatch(setAlertStatus("error"));
+
+              failed(dispatch(setOpen(true)));
             }
           })
           .catch((error) => {
-            failed(console.log(error));
+            dispatch(setAlertText(error));
+            dispatch(setAlertStatus("error"));
+
+            failed(dispatch(setOpen(true)));
           });
       });
       await submit;
-    } else {
-      return;
     }
   };
 

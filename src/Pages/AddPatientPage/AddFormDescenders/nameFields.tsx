@@ -16,7 +16,9 @@ const NameFields: FC = () => {
     <Fragment>
       {dataArrayRequiredName.map((data) => (
         <Fragment key={data.id}>
-          <InputLabel htmlFor={data.id}>{data.title}</InputLabel>
+          <InputLabel style={{ color: "#000" }} htmlFor={data.id}>
+            {data.title}
+          </InputLabel>
           <Input
             onKeyPress={(event: KeyboardEvent) => {
               const ew = event.which;
