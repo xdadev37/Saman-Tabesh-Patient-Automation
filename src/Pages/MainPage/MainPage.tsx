@@ -122,6 +122,9 @@ const MainPage: FC = () => {
       <AlertSnackbar open={open} alertStatus={alertStatus}>
         {alertText}
       </AlertSnackbar>
+      {/* <Backdrop open={pending}>
+        <CircularProgress />
+      </Backdrop> */}
     </Fragment>
   );
 };

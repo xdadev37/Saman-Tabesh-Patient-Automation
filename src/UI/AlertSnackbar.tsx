@@ -63,7 +63,7 @@ const AlertSnackbar: FC<IProps> = ({ alertStatus, children, open }) => {
   }
 
   return (
-    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
       {AlertModel}
     </Snackbar>
   );

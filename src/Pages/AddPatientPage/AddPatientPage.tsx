@@ -63,39 +63,39 @@ const AddPatientPage: FC = () => {
       setPending(true);
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .post("http://localhost:3002/requiredForm", {
+          .post("https://localhost:5001/api/patients", {
             Name: requiredField.Name,
             FamilyName: requiredField.FamilyName,
             NationalId: requiredField.NationalId,
             FileNumber: requiredField.FileNumber,
-            Avatar: avatar,
-            NationalIdDoc: nationalIdDoc,
+            // Avatar: avatar,
+            // NationalIdDoc: nationalIdDoc,
+            Comment: "",
           })
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
             if ((res.status = 201)) {
               dispatch(setPatientId(res.data.id));
-              dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد."));
+              dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
               dispatch(setAlertStatus("success"));
               history.push("/");
 
               sent(dispatch(setOpen(true)));
             } else {
-              dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
+              dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
               dispatch(setAlertStatus("error"));
-              dispatch(setOpen(true));
 
-              rejected(setPending(false));
+              rejected(dispatch(setOpen(true)));
             }
           })
           .catch((error) => {
-            console.log(error);
-            dispatch(setAlertText("خطای سرور!"));
+            console.log(error.request);
+            dispatch(setAlertText(error.request.responseText));
             dispatch(setAlertStatus("error"));
-            dispatch(setOpen(true));
 
-            rejected(setPending(false));
-          });
+            rejected(dispatch(setOpen(true)));
+          })
+          .finally(() => setPending(false));
       });
 
       await axiosPromise;

@@ -25,7 +25,6 @@ const NameFields: FC = () => {
             {data.title}
           </InputLabel>
           <Input
-            autoComplete="off"
             onKeyPress={(event: KeyboardEvent) => {
               const ew = event.which;
 
@@ -39,11 +38,11 @@ const NameFields: FC = () => {
             }}
             inputProps={{ maxLength: 80 }}
             placeholder={data.placeholder}
+            type="search"
             id={data.id}
             {...register<string>(data.id, {
               required: "پر کردن این فیلد الزامی است!",
             })}
-            type="text"
             onSelect={() => {
               dispatch(data.func(watch(data.id)));
             }}
