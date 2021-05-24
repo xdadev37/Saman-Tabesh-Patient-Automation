@@ -82,7 +82,11 @@ const CheckActions: FC = () => {
               </TableBody>
             </Table>
             <Box margin={1}>
-              <Button onClick={() => dispatch(setActionForm("mainPage"))}>
+              <Button
+                onClick={() => dispatch(setActionForm("mainPage"))}
+                variant="outlined"
+                color="primary"
+              >
                 برگشت
               </Button>
             </Box>

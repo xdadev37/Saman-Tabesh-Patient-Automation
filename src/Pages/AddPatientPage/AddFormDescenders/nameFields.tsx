@@ -8,7 +8,6 @@ import {
 import { useFormContext } from "react-hook-form";
 import { dataArrayRequiredName } from "../../../dataArray";
 import { useAppDispatch } from "../../../Redux/hook";
-import { BorderColor } from "@material-ui/icons";
 
 const NameFields: FC = () => {
   const {
@@ -23,7 +22,6 @@ const NameFields: FC = () => {
       {dataArrayRequiredName.map((data) => (
         <Fragment key={data.id}>
           <InputLabel style={{ color: "#000" }} htmlFor={data.id}>
-            {/* <BorderColor fontSize="small" /> */}
             {data.title}
           </InputLabel>
           <Input

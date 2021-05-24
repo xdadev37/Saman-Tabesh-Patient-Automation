@@ -6,9 +6,11 @@ import {
   TextField,
   InputLabel,
   Typography,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import FilesFields from "./filesFields";
+import FileMapper from "./FileMapper/FileMapper";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
 import { selectPatientId } from "../../../../Redux/Slicer/idPasserSlice";
@@ -56,8 +58,10 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
   const [MamoReportDoc, setMamoReportDoc] = useState<object | string>("");
   const [LabReportDoc, setLabReportDoc] = useState<object | string>("");
   const selectId = useAppSelector(selectPatientId);
+  const [pending, setPending] = useState(false);
 
   const dispatchData = async () => {
+    setPending(true);
     const comment = new Promise((sent, rejected) => {
       axios
         .post("http://localhost:3001/optionalForm", {
@@ -85,16 +89,18 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           } else {
             dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
             dispatch(setAlertStatus("error"));
+            dispatch(setOpen(true));
 
-            rejected(dispatch(setOpen(true)));
+            rejected(setPending(false));
           }
         })
         .catch((error) => {
           console.log(error);
           dispatch(setAlertText("خطای سرور!"));
           dispatch(setAlertStatus("error"));
+          dispatch(setOpen(true));
 
-          rejected(dispatch(setOpen(true)));
+          rejected(setPending(false));
         });
     });
 
@@ -109,55 +115,17 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
       justify="center"
     >
       {/* Files */}
-      <Grid item sm={6} md={6} lg={6}>
-        <FilesFields
-          id="PathologyDoc"
-          title="> برگ پاتولوژی :"
-          func={setPathologyDoc}
-        />
-        <FilesFields
-          id="TreatmentDoc"
-          title="> کارت درمان :"
-          func={setTreatmentDoc}
-        />
-        <FilesFields
-          id="CommitmentDoc"
-          title="> فرم رضایت بیمار :"
-          func={setCommitmentDoc}
-        />
-        <FilesFields
-          id="MRIReportDoc"
-          title="> گزارش MRI :"
-          func={setMRIReportDoc}
-        />
-        <FilesFields
-          id="CTReportDoc"
-          title="> گزارش CT :"
-          func={setCTReportDoc}
-        />
-      </Grid>
-      <Grid item sm={6} md={6} lg={6}>
-        <FilesFields
-          id="PETReportDoc"
-          title="> گزارش PET :"
-          func={setPETReportDoc}
-        />
-        <FilesFields
-          id="SonoReportDoc"
-          title="> گزارش سونو :"
-          func={setSonoReportDoc}
-        />
-        <FilesFields
-          id="MamoReportDoc"
-          title="> گزارش ماموگرافی :"
-          func={setMamoReportDoc}
-        />
-        <FilesFields
-          id="LabReportDoc"
-          title="> گزارشات آزمایشگاهی :"
-          func={setLabReportDoc}
-        />
-      </Grid>
+      <FileMapper
+        setPathologyDoc={setPathologyDoc}
+        setTreatmentDoc={setTreatmentDoc}
+        setCommitmentDoc={setCommitmentDoc}
+        setMRIReportDoc={setMRIReportDoc}
+        setCTReportDoc={setCTReportDoc}
+        setPETReportDoc={setPETReportDoc}
+        setSonoReportDoc={setSonoReportDoc}
+        setMamoReportDoc={setMamoReportDoc}
+        setLabReportDoc={setLabReportDoc}
+      />
 
       {/* Comment */}
       <Grid item sm={12} md={12} lg={12}>
@@ -203,6 +171,9 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           ثبت
         </Button>
       </Grid>
+      <Backdrop open={pending}>
+        <CircularProgress />
+      </Backdrop>
     </Grid>
   );
 };

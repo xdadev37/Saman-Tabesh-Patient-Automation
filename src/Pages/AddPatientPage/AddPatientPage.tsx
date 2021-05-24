@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Backdrop, CircularProgress } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
@@ -56,9 +56,11 @@ const AddPatientPage: FC = () => {
   const alertText = useAppSelector(selectAlertText);
   const alertStatus = useAppSelector(selectAlertStatus);
   const open = useAppSelector(selectOpen);
+  const [pending, setPending] = useState(false);
 
   const submit = async () => {
     if (checkNIdAl === false) {
+      setPending(true);
       const axiosPromise = new Promise((sent, rejected) => {
         axios
           .post("http://localhost:3002/requiredForm", {
@@ -81,16 +83,18 @@ const AddPatientPage: FC = () => {
             } else {
               dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
               dispatch(setAlertStatus("error"));
+              dispatch(setOpen(true));
 
-              rejected(dispatch(setOpen(true)));
+              rejected(setPending(false));
             }
           })
           .catch((error) => {
             console.log(error);
             dispatch(setAlertText("خطای سرور!"));
             dispatch(setAlertStatus("error"));
+            dispatch(setOpen(true));
 
-            rejected(dispatch(setOpen(true)));
+            rejected(setPending(false));
           });
       });
 
@@ -103,7 +107,6 @@ const AddPatientPage: FC = () => {
       <form autoComplete="off" onSubmit={handleSubmit(submit)}>
         <Button
           variant="outlined"
-          color="secondary"
           startIcon={<ChevronRight />}
           onClick={() => history.push("/")}
           className={classes.marginTop}
@@ -111,7 +114,7 @@ const AddPatientPage: FC = () => {
           برگشت
         </Button>
 
-        <Grid item className={classes.form} direction="column">
+        <Grid item className={classes.form}>
           {/* Names */}
           <NameFields />
 
@@ -142,6 +145,9 @@ const AddPatientPage: FC = () => {
       <AlertSnackbar open={open} alertStatus={alertStatus}>
         {alertText}
       </AlertSnackbar>
+      <Backdrop open={pending}>
+        <CircularProgress />
+      </Backdrop>
     </FormProvider>
   );
 };

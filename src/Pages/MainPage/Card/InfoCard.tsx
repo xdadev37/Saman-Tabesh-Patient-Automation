@@ -4,7 +4,7 @@ const InfoCard: React.FC = () => {
   return (
     <Card>
       <CardContent>
-        <Typography>{`تعداد کل بیماران: `}</Typography>
+        <Typography>{`تعداد کل بیماران : `}</Typography>
       </CardContent>
     </Card>
   );
