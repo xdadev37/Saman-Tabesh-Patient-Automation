@@ -1,7 +1,7 @@
 import { FC, useState, Fragment } from "react";
 import { TableRow, TableCell, IconButton } from "@material-ui/core";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
-import MoreDetailsTable from "./MoreDetailsTable";
+import MoreDetailsTable from "./MoreDetailsTable/MoreDetailsTable";
 
 interface IProps {
   id: number;

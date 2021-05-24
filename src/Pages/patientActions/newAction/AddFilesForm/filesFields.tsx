@@ -1,6 +1,13 @@
 import { FC, Fragment, ChangeEvent, useState } from "react";
-import { InputLabel, Input, Typography, Grid } from "@material-ui/core";
-import { CheckCircle, Cancel } from "@material-ui/icons";
+import {
+  InputLabel,
+  Input,
+  Typography,
+  Grid,
+  Button,
+  Box,
+} from "@material-ui/core";
+import { CheckCircle, Error, NoteAdd } from "@material-ui/icons";
 
 interface IProps {
   id: string;
@@ -15,17 +22,11 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
   switch (message) {
     case true:
       messageElement = (
-        <Fragment>
-          <Typography color="secondary">
-            حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!
-          </Typography>
-          <Cancel color="error" />
-        </Fragment>
+        <Typography color="secondary">
+          <Error color="error" />
+          حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!
+        </Typography>
       );
-      break;
-
-    case false:
-      messageElement = <CheckCircle color="primary" />;
       break;
 
     default:
@@ -35,27 +36,45 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
   return (
     <Fragment>
       <Grid item>
-        <InputLabel htmlFor={id}>{title}</InputLabel>
-        <Input
-          id={id}
-          type="file"
-          inputProps={{ accept: ".pdf" }}
-          onInput={(event: ChangeEvent<HTMLInputElement>) => {
-            if (event.target.value !== "") {
-              const file = event.target.files![0];
-              const fileSize = event.target.files![0].size;
+        <InputLabel htmlFor={id} style={{ width: "320px", color: "#000" }}>
+          {title}
+          <Box marginX={10} marginY={2}>
+            <Button
+              variant="outlined"
+              color="primary"
+              component="span"
+              startIcon={<NoteAdd />}
+            >
+              {message === false ? (
+                <CheckCircle color="primary" />
+              ) : (
+                "انتخاب فایل ..."
+              )}
+            </Button>
+          </Box>
+          <Input
+            hidden
+            style={{ display: "none" }}
+            id={id}
+            type="file"
+            inputProps={{ accept: ".pdf" }}
+            onInput={(event: ChangeEvent<HTMLInputElement>) => {
+              if (event.target.value !== "") {
+                const file = event.target.files![0];
+                const fileSize = event.target.files![0].size;
 
-              if (fileSize > 300000) {
-                setMessage(true);
+                if (fileSize > 300000) {
+                  setMessage(true);
+                } else {
+                  setMessage(false);
+                  func(file);
+                }
               } else {
-                setMessage(false);
-                func(file);
+                setMessage(null);
               }
-            } else {
-              setMessage(null);
-            }
-          }}
-        />
+            }}
+          />
+        </InputLabel>
       </Grid>
       {messageElement}
     </Fragment>

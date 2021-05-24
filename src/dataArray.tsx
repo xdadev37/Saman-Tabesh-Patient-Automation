@@ -1,14 +1,14 @@
-import { setName, setFamilyName } from "../../Redux/Slicer/patientInfoSlice";
+import { setName, setFamilyName } from "./Redux/Slicer/patientInfoSlice";
 
 export const dataArrayRequiredName = [
   {
-    title: "نام *",
+    title: "> نام *",
     placeholder: "نام بیمار",
     id: "Name",
     func: (arg: string) => setName(arg),
   },
   {
-    title: "نام خانوادگی *",
+    title: "> نام خانوادگی *",
     placeholder: "نام خانوادگی بیمار",
     id: "FamilyName",
     func: (arg: string) => setFamilyName(arg),

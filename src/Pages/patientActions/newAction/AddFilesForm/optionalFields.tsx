@@ -1,5 +1,12 @@
 import { FC, ChangeEvent, useState } from "react";
-import { FormHelperText, Grid, Button, TextField } from "@material-ui/core";
+import {
+  FormHelperText,
+  Grid,
+  Button,
+  TextField,
+  InputLabel,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import FilesFields from "./filesFields";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
@@ -11,18 +18,21 @@ import {
   setOpen,
 } from "../../../../Redux/Slicer/alertMessageSlice";
 import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
+import { Check, BorderColor } from "@material-ui/icons";
 
 const styles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(10),
-      "& > * > *": {
+      "& > * > label": {
         marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
       },
     },
     button: {
       margin: theme.spacing(5),
       float: "right",
+      width: "30%",
     },
   })
 );
@@ -67,7 +77,7 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
         })
         .then((res) => {
           if ((res.status = 201)) {
-            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+            dispatch(setAlertText("رویداد با موفقیت ثبت شد."));
             dispatch(setAlertStatus("success"));
             dispatch(setActionForm("mainPage"));
 
@@ -80,7 +90,8 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           }
         })
         .catch((error) => {
-          dispatch(setAlertText(error));
+          console.log(error);
+          dispatch(setAlertText("خطای سرور!"));
           dispatch(setAlertStatus("error"));
 
           rejected(dispatch(setOpen(true)));
@@ -101,54 +112,63 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
       <Grid item sm={6} md={6} lg={6}>
         <FilesFields
           id="PathologyDoc"
-          title="برگ پاتولوژی"
+          title="> برگ پاتولوژی :"
           func={setPathologyDoc}
         />
         <FilesFields
           id="TreatmentDoc"
-          title="کارت درمان"
+          title="> کارت درمان :"
           func={setTreatmentDoc}
         />
         <FilesFields
           id="CommitmentDoc"
-          title="فرم رضایت بیمار"
+          title="> فرم رضایت بیمار :"
           func={setCommitmentDoc}
         />
         <FilesFields
           id="MRIReportDoc"
-          title="گزارش MRI"
+          title="> گزارش MRI :"
           func={setMRIReportDoc}
         />
-        <FilesFields id="CTReportDoc" title="گزارش CT" func={setCTReportDoc} />
+        <FilesFields
+          id="CTReportDoc"
+          title="> گزارش CT :"
+          func={setCTReportDoc}
+        />
       </Grid>
       <Grid item sm={6} md={6} lg={6}>
         <FilesFields
           id="PETReportDoc"
-          title="گزارش PET"
+          title="> گزارش PET :"
           func={setPETReportDoc}
         />
         <FilesFields
           id="SonoReportDoc"
-          title="گزارش سونو"
+          title="> گزارش سونو :"
           func={setSonoReportDoc}
         />
         <FilesFields
           id="MamoReportDoc"
-          title="گزارش ماموگرافی"
+          title="> گزارش ماموگرافی :"
           func={setMamoReportDoc}
         />
         <FilesFields
           id="LabReportDoc"
-          title="گزارشات آزمایشگاهی"
+          title="> گزارشات آزمایشگاهی :"
           func={setLabReportDoc}
         />
       </Grid>
+
       {/* Comment */}
       <Grid item sm={12} md={12} lg={12}>
         <hr />
+        <InputLabel style={{ width: "320px", color: "#000" }}>
+          <BorderColor />
+          <span style={{ marginInline: "10px" }}>توضیحات</span>
+        </InputLabel>
         <TextField
           autoComplete="off"
-          label="توضیحات"
+          label="توضیحات تکمیلی"
           variant="filled"
           multiline
           rows={7}
@@ -159,9 +179,17 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           }}
         />
         <FormHelperText>
-          حداکثر تعداد کاراکتر مجاز : 800
-          <br />
-          در آخر برای ثبت نهایی دکمه ثبت را بفشارید
+          <Typography
+            variant="subtitle2"
+            component="span"
+            style={{ width: "320px", color: "#000" }}
+          >
+            راهنما :
+            <br />
+            حداکثر تعداد کاراکتر مجاز : 800
+            <br />
+            در آخر برای ثبت نهایی دکمه ثبت را بفشارید
+          </Typography>
         </FormHelperText>
       </Grid>
       <Grid item sm={10} md={10} lg={10}>
@@ -170,6 +198,7 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           variant="contained"
           onClick={dispatchData}
           color="primary"
+          startIcon={<Check />}
         >
           ثبت
         </Button>

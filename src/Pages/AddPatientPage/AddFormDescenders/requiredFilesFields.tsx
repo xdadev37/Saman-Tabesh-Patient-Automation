@@ -7,7 +7,7 @@ import {
   FormHelperText,
   Box,
 } from "@material-ui/core";
-import { CheckCircle, Image, NoteAdd } from "@material-ui/icons";
+import { CheckCircle, Image, NoteAdd, Error } from "@material-ui/icons";
 
 interface IFiles {
   setAvatar: (arg: any) => void;
@@ -37,6 +37,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
     case true:
       avatarStatusElement = (
         <Typography color="secondary">
+          <Error color="error" />
           حجم پی دی اف آپلود شده باید کمتر از 100 کیلوبایت باشد!
         </Typography>
       );
@@ -50,7 +51,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
     <Fragment>
       {/* Avatar */}
       <InputLabel htmlFor="Avatar" style={{ width: "320px", color: "#000" }}>
-        عکس پرسنلی بیمار :
+        {">"} عکس پرسنلی بیمار :
         <Box marginX={10} marginY={2}>
           <Button
             variant="outlined"
@@ -91,7 +92,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         />
         {avatarStatusElement}
         <FormHelperText>
-          <Typography variant="subtitle2" component="span" color="secondary">
+          <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 100 کیلوبایت
           </Typography>
         </FormHelperText>
@@ -104,7 +105,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         htmlFor="NationalIdDoc"
         style={{ width: "320px", color: "#000" }}
       >
-        کارت ملی :
+        {">"} کارت ملی :
         <Box marginX={10} marginY={2} padding={0}>
           <Button
             variant="outlined"
@@ -143,7 +144,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         />
         {pdfStatusElement}
         <FormHelperText>
-          <Typography variant="subtitle2" component="span" color="secondary">
+          <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 300 کیلوبایت
           </Typography>
         </FormHelperText>

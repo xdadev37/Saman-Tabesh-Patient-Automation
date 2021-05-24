@@ -9,7 +9,7 @@ interface IProps {
   open: boolean;
 }
 
-const AlertModals: FC<IProps> = ({ alertStatus, children, open }) => {
+const AlertSnackbar: FC<IProps> = ({ alertStatus, children, open }) => {
   const dispatch = useAppDispatch();
 
   const handleClose = (event?: SyntheticEvent, reason?: string) => {
@@ -69,4 +69,4 @@ const AlertModals: FC<IProps> = ({ alertStatus, children, open }) => {
   );
 };
 
-export default AlertModals;
+export default AlertSnackbar;

@@ -12,7 +12,7 @@ import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import axios from "axios";
 import GetActionName from "../patientActions/newAction/getActionName";
 import CheckAction from "../patientActions/checkActions/checkActions";
-import AlertModal from "../../UI/AlertSnackbar";
+import AlertSnackbar from "../../UI/AlertSnackbar";
 import {
   selectAlertText,
   selectAlertStatus,
@@ -95,9 +95,6 @@ const MainPage: FC = () => {
           </Grid>
         </Grid>
       )}
-      <AlertModal open={open} alertStatus={alertStatus}>
-        {alertText}
-      </AlertModal>
     </Fragment>
   );
 
@@ -119,7 +116,14 @@ const MainPage: FC = () => {
       Page = MainPageRender;
   }
 
-  return <Fragment>{Page}</Fragment>;
+  return (
+    <Fragment>
+      {Page}
+      <AlertSnackbar open={open} alertStatus={alertStatus}>
+        {alertText}
+      </AlertSnackbar>
+    </Fragment>
+  );
 };
 
 export default MainPage;

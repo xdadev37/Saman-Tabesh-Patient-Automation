@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { dataArrayOptional } from "../../../../AddPatientPage/dataArray";
+import { dataArrayOptional } from "../../../../../../dataArray";
 
 const useRowStyles = makeStyles({
   root: {
@@ -53,7 +53,12 @@ const MoreDetailsTable: React.FC<IProps> = ({
   return (
     <TableRow className={classes.root}>
       <TableCell colSpan={6}>
-        <Collapse in={open} mountOnEnter unmountOnExit>
+        <Collapse
+          style={{ backgroundColor: "#fafafa", borderRadius: "18px" }}
+          in={open}
+          mountOnEnter
+          unmountOnExit
+        >
           <Box margin={1}>
             <Table size="small">
               <TableHead>

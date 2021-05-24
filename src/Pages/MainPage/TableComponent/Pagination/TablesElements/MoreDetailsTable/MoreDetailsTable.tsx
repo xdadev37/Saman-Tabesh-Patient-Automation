@@ -10,7 +10,7 @@ import {
   Link,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ButtonsGroup from "./ButtonsGroup";
+import ButtonsGroup from "./ButtonsGroup/ButtonsGroup";
 
 interface IProps {
   open: boolean;
@@ -38,7 +38,12 @@ const MoreDetailsTable: React.FC<IProps> = ({
   return (
     <TableRow className={classes.root}>
       <TableCell colSpan={6}>
-        <Collapse in={open} mountOnEnter unmountOnExit>
+        <Collapse
+          in={open}
+          mountOnEnter
+          unmountOnExit
+          style={{ backgroundColor: "#fafafa", borderRadius: "18px" }}
+        >
           <Box margin={1}>
             <Table size="small">
               <TableHead>

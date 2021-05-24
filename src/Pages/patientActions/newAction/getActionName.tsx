@@ -62,7 +62,8 @@ const GetActionName: FC = () => {
             }
           })
           .catch((error) => {
-            dispatch(setAlertText(error));
+            console.log(error);
+            dispatch(setAlertText("خطای سرور!"));
             dispatch(setAlertStatus("error"));
 
             failed(dispatch(setOpen(true)));

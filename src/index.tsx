@@ -1,5 +1,5 @@
 import { StrictMode, Suspense } from "react";
-import { Backdrop } from "@material-ui/core";
+import { Backdrop, CircularProgress } from "@material-ui/core";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -9,7 +9,13 @@ import { Provider } from "react-redux";
 
 ReactDOM.render(
   <StrictMode>
-    <Suspense fallback={<Backdrop open={true} />}>
+    <Suspense
+      fallback={
+        <Backdrop open={true}>
+          <CircularProgress color="secondary" />
+        </Backdrop>
+      }
+    >
       <Provider store={store}>
         <App />
       </Provider>

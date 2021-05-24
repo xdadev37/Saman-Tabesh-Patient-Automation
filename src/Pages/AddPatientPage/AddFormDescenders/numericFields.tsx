@@ -72,7 +72,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
     <Fragment>
       {/* NationalId */}
       <InputLabel htmlFor="NationalId" style={{ color: "#000" }}>
-        کد ملی *
+        {">"} کد ملی *
       </InputLabel>
       <Input
         onKeyPress={numberType}
@@ -102,7 +102,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
 
       {/* FileNumber */}
       <InputLabel htmlFor="FileNumber" style={{ color: "#000" }}>
-        شماره پرونده *
+        {">"} شماره پرونده *
       </InputLabel>
       <Input
         onKeyPress={numberType}
