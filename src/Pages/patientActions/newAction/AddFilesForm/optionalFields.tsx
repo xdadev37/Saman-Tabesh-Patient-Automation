@@ -62,7 +62,7 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
 
   const dispatchData = async () => {
     setPending(true);
-    const comment = new Promise((sent, rejected) => {
+    const dispatcher = new Promise((sent, rejected) => {
       axios
         .post("http://localhost:3001/optionalForm", {
           Name: newActionName,
@@ -89,22 +89,21 @@ const OptionalFields: FC<IProps> = ({ newActionName, actionId }) => {
           } else {
             dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
             dispatch(setAlertStatus("error"));
-            dispatch(setOpen(true));
 
-            rejected(setPending(false));
+            rejected(dispatch(setOpen(true)));
           }
         })
         .catch((error) => {
-          console.log(error);
-          dispatch(setAlertText("خطای سرور!"));
+          console.log(error.request);
+          dispatch(setAlertText(error.request.responseText));
           dispatch(setAlertStatus("error"));
-          dispatch(setOpen(true));
 
-          rejected(setPending(false));
-        });
+          rejected(dispatch(setOpen(true)));
+        })
+        .finally(() => setPending(false));
     });
 
-    await comment;
+    await dispatcher;
   };
 
   return (

@@ -10,6 +10,7 @@ const initialState: IDataGrid[] = [
     FileNumber: 0,
     Avatar: "",
     NationalIdDoc: "",
+    Comment: "",
   },
 ];
 

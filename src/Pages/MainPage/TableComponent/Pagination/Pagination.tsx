@@ -18,6 +18,7 @@ const Pagination: FC = () => {
           FileNumber={data.FileNumber}
           Avatar={data.Avatar}
           NationalIdDoc={data.NationalIdDoc}
+          Comment={data.Comment}
         />
       ))}
     </Fragment>

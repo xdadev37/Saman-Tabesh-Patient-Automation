@@ -6,17 +6,27 @@ import {
   Button,
   FormHelperText,
   Box,
+  TextField,
 } from "@material-ui/core";
-import { CheckCircle, Image, NoteAdd, Error } from "@material-ui/icons";
+import {
+  CheckCircle,
+  Image,
+  NoteAdd,
+  Error,
+  BorderColor,
+} from "@material-ui/icons";
+import { useAppDispatch } from "../../../Redux/hook";
+import { setComment } from "../../../Redux/Slicer/patientInfoSlice";
 
 interface IFiles {
-  setAvatar: (arg: any) => void;
-  setNationalIdDoc: (arg: any) => void;
+  setAvatar: (arg: Blob) => void;
+  setNationalIdDoc: (arg: Blob) => void;
 }
 
 const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   const [avatarStatus, setAvatarStatus] = useState<boolean | null>(null);
   const [pdfStatus, setPdfStatus] = useState<boolean | null>(null);
+  const dispatch = useAppDispatch();
 
   let pdfStatusElement;
   switch (pdfStatus) {
@@ -149,6 +159,40 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
           </Typography>
         </FormHelperText>
       </InputLabel>
+
+      {/* Comment */}
+      <hr />
+      <InputLabel
+        style={{ width: "320px", color: "#000", marginBottom: "10px" }}
+      >
+        <BorderColor />
+        <span style={{ marginInline: "10px" }}>توضیحات</span>
+      </InputLabel>
+      <TextField
+        autoComplete="off"
+        label="توضیحات تکمیلی"
+        variant="filled"
+        multiline
+        rows={4}
+        fullWidth
+        inputProps={{ maxLength: 800 }}
+        onInput={(event: ChangeEvent<HTMLInputElement>) => {
+          dispatch(setComment(event.target.value));
+        }}
+      />
+      <FormHelperText>
+        <Typography
+          variant="subtitle2"
+          component="span"
+          style={{ width: "320px", color: "#000" }}
+        >
+          راهنما :
+          <br />
+          حداکثر تعداد کاراکتر مجاز : 800
+          <br />
+          در آخر برای ثبت نهایی دکمه ثبت را بفشارید
+        </Typography>
+      </FormHelperText>
     </Fragment>
   );
 };

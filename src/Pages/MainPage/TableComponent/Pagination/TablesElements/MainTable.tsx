@@ -11,6 +11,7 @@ interface IProps {
   FileNumber: number;
   Avatar: string;
   NationalIdDoc: string;
+  Comment: string;
 }
 
 const MainTable: FC<IProps> = ({
@@ -21,6 +22,7 @@ const MainTable: FC<IProps> = ({
   FileNumber,
   Avatar,
   NationalIdDoc,
+  Comment,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -43,6 +45,7 @@ const MainTable: FC<IProps> = ({
         id={id}
         AvatarLink={Avatar}
         NationalIdDoc={NationalIdDoc}
+        Comment={Comment}
       />
     </Fragment>
   );

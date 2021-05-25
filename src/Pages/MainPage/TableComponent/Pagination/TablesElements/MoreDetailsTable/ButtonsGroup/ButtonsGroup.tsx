@@ -7,7 +7,7 @@ import {
   DialogActions,
   DialogTitle,
 } from "@material-ui/core";
-import { DeleteForever, Add, AmpStories } from "@material-ui/icons";
+import { DeleteForever, Add, AmpStories, Edit } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch } from "../../../../../../../Redux/hook";
 import { setPatientId } from "../../../../../../../Redux/Slicer/idPasserSlice";
@@ -49,6 +49,7 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
       </DialogActions>
     </Dialog>
   );
+  dispatch(setPatientId(id));
 
   return (
     <Grid component="td" container alignItems="center" justify="center">
@@ -57,7 +58,6 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         <Button
           style={{ backgroundColor: "#2196f3", color: "#fff" }}
           onClick={() => {
-            dispatch(setPatientId(id));
             dispatch(setActionForm("checkAction"));
           }}
           startIcon={<AmpStories />}
@@ -67,7 +67,6 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         {/* )} */}
         <Button
           onClick={() => {
-            dispatch(setPatientId(id));
             dispatch(setActionForm("getActionName"));
           }}
           color="primary"
@@ -75,10 +74,15 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         >
           اقدام جدید
         </Button>
-        {/* <Button onClick={()=>{setOpenEdit(true)}} variant="contained" color="primary" startIcon={<Edit />}>
-              ویرایش
-            </Button>
-            <Modal open={openEdit} onClose={()=>{setOpenEdit(false)}}></Modal> */}
+        <Button
+          onClick={() => {
+            dispatch(setActionForm("editUser"));
+          }}
+          color="default"
+          startIcon={<Edit />}
+        >
+          ویرایش
+        </Button>
         <Button
           onClick={() => setOpenAlert(true)}
           color="secondary"

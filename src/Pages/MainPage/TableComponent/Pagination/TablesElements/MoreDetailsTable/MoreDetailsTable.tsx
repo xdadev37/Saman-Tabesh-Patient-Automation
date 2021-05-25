@@ -17,6 +17,7 @@ interface IProps {
   id: number;
   AvatarLink: string;
   NationalIdDoc: string;
+  Comment: string;
 }
 
 const useRowStyles = makeStyles({
@@ -32,6 +33,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   id,
   AvatarLink,
   NationalIdDoc,
+  Comment,
 }) => {
   const classes = useRowStyles();
 
@@ -50,6 +52,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                 <TableRow>
                   <TableCell>عکس پرسنلی بیمار</TableCell>
                   <TableCell>کپی کارت ملی بیمار</TableCell>
+                  <TableCell>توضیحات</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -70,6 +73,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                       </Link>
                     )}
                   </TableCell>
+                  <TableCell>{Comment}</TableCell>
 
                   {/* Buttons */}
                   <ButtonsGroup id={id} />

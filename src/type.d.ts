@@ -3,6 +3,7 @@ interface IRequiredFields {
   FamilyName: string;
   NationalId: number;
   FileNumber: number;
+  Comment: string;
 }
 
 interface IDataGrid {
@@ -13,6 +14,7 @@ interface IDataGrid {
   FileNumber: number;
   Avatar: string;
   NationalIdDoc: string;
+  Comment: string;
 }
 
 interface IActionItems {

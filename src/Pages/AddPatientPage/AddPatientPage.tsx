@@ -8,7 +8,6 @@ import axios from "axios";
 import NameFields from "./AddFormDescenders/nameFields";
 import NumericFields from "./AddFormDescenders/numericFields";
 import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
-import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
 import { useHistory } from "react-router-dom";
 import { Check, ChevronRight } from "@material-ui/icons";
 import AlertSnackbar from "../../UI/AlertSnackbar";
@@ -16,8 +15,6 @@ import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../Redux/Slicer/alertMessageSlice";
-import {
   selectAlertText,
   selectAlertStatus,
   selectOpen,
@@ -48,8 +45,8 @@ const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
   const { handleSubmit } = methods;
-  const [avatar, setAvatar] = useState("");
-  const [nationalIdDoc, setNationalIdDoc] = useState("");
+  const [avatar, setAvatar] = useState<Blob | string>("");
+  const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const dispatch = useAppDispatch();
   let history = useHistory();
   const [checkNIdAl, setCheckNIdAl] = useState(false);
@@ -57,25 +54,25 @@ const AddPatientPage: FC = () => {
   const alertStatus = useAppSelector(selectAlertStatus);
   const open = useAppSelector(selectOpen);
   const [pending, setPending] = useState(false);
+  const dataGrid = new FormData();
 
   const submit = async () => {
+    dataGrid.append("Name", requiredField.Name);
+    dataGrid.append("FamilyName", requiredField.FamilyName);
+    dataGrid.append("NationalId", String(requiredField.NationalId));
+    dataGrid.append("FileNumber", String(requiredField.FileNumber));
+    dataGrid.append("Avatar", avatar);
+    dataGrid.append("NationalIdDoc", nationalIdDoc);
+    dataGrid.append("Comment", requiredField.Comment);
+
     if (checkNIdAl === false) {
       setPending(true);
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .post("https://localhost:5001/api/patients", {
-            Name: requiredField.Name,
-            FamilyName: requiredField.FamilyName,
-            NationalId: requiredField.NationalId,
-            FileNumber: requiredField.FileNumber,
-            // Avatar: avatar,
-            // NationalIdDoc: nationalIdDoc,
-            Comment: "",
-          })
+          .post("https://localhost:5001/api/patients", dataGrid)
           .then((res) => {
             console.log(res);
-            if ((res.status = 201)) {
-              dispatch(setPatientId(res.data.id));
+            if ((res.status = 204)) {
               dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
               dispatch(setAlertStatus("success"));
               history.push("/");
@@ -90,9 +87,13 @@ const AddPatientPage: FC = () => {
           })
           .catch((error) => {
             console.log(error.request);
-            dispatch(setAlertText(error.request.responseText));
-            dispatch(setAlertStatus("error"));
+            if (error.request.responseText === "") {
+              dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+            } else {
+              dispatch(setAlertText(error.request.responseText));
+            }
 
+            dispatch(setAlertStatus("error"));
             rejected(dispatch(setOpen(true)));
           })
           .finally(() => setPending(false));
