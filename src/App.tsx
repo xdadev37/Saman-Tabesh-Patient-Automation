@@ -10,6 +10,11 @@ import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
 const App: React.FC = () => {
   const theme = createMuiTheme({
     direction: "rtl",
+    palette: {
+      primary: {
+        main: "#2962ff",
+      },
+    },
   });
 
   return (

@@ -21,9 +21,10 @@ import {
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
-    marginTop: {
+    marginY: {
       marginTop: theme.spacing(10),
       "& > *": { paddingInline: theme.spacing(3) },
+      marginBottom: theme.spacing(3),
     },
     midMargin: {
       marginTop: theme.spacing(3),
@@ -74,7 +75,7 @@ const MainPage: FC = () => {
       {loading ? (
         <Grid
           container
-          className={classes.marginTop}
+          className={classes.marginY}
           alignItems="center"
           direction="column"
         >
@@ -82,17 +83,22 @@ const MainPage: FC = () => {
           <Skeleton width="95%" />
         </Grid>
       ) : (
-        <Grid container className={classes.marginTop} justify="space-around">
-          <Grid item sm={12} md={7} lg={7}>
+        <Grid
+          container
+          className={classes.marginY}
+          justify="center"
+          alignItems="baseline"
+        >
+          <Grid item sm={12} md={8} lg={8}>
             <Options />
-            <Grid item className={classes.midMargin}>
-              <TableComponent />
-            </Grid>
-            <PageCounter />
           </Grid>
-          <Grid item sm={12} md={5} lg={5} className={classes.midMargin}>
+          <Grid item sm={12} md={4} lg={4} className={classes.midMargin}>
             <InfoCard />
           </Grid>
+          <Grid item className={classes.midMargin} sm={12} md={12} lg={12}>
+            <TableComponent />
+          </Grid>
+          <PageCounter />
         </Grid>
       )}
     </Fragment>

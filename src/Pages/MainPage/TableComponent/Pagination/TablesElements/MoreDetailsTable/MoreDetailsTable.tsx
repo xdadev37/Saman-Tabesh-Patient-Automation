@@ -62,7 +62,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                   </TableCell>
                   <TableCell>
                     {NationalIdDoc === "" ? (
-                      <p>ندارد</p>
+                      "ندارد"
                     ) : (
                       <Link
                         target="_blank"

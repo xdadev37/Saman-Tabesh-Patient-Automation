@@ -3,6 +3,7 @@ import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useAppDispatch } from "../Redux/hook";
 import { setOpen } from "../Redux/Slicer/alertMessageSlice";
+import { SnackbarOrigin } from "@material-ui/core/Snackbar";
 
 interface IProps {
   alertStatus: string;
@@ -63,7 +64,12 @@ const AlertSnackbar: FC<IProps> = ({ alertStatus, children, open }) => {
   }
 
   return (
-    <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+    <Snackbar
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      open={open}
+      autoHideDuration={5000}
+      onClose={handleClose}
+    >
       {AlertModel}
     </Snackbar>
   );

@@ -4,7 +4,9 @@ import HeaderTitle from "./Inputs/HeaderTitle";
 const Header: React.FC = () => {
   return (
     <AppBar
-      style={{ backgroundImage: "linear-gradient(65deg,#007aff,#00b8d9)" }}
+      style={{
+        backgroundImage: "linear-gradient(65deg ,#2962ff 30%, #448aff 70%)",
+      }}
     >
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">

@@ -19,6 +19,7 @@ const Search: React.FC = () => {
             <SearchIcon />
           </InputAdornment>
         }
+        style={{ width: "400px" }}
       />
     </FormControl>
   );

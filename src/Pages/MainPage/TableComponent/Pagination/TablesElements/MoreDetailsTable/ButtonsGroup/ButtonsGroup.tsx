@@ -53,7 +53,7 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
 
   return (
     <Grid component="td" container alignItems="center" justify="center">
-      <ButtonGroup variant="contained">
+      <ButtonGroup variant="contained" size="small">
         {/* {noneFiles && ( */}
         <Button
           style={{ backgroundColor: "#2196f3", color: "#fff" }}
