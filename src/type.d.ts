@@ -1,8 +1,8 @@
 interface IRequiredFields {
   Name: string;
   FamilyName: string;
-  NationalId: number;
-  FileNumber: number;
+  NationalId: string;
+  FileNumber: string;
   Comment: string;
 }
 

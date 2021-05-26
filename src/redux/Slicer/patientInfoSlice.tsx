@@ -10,8 +10,8 @@ const initialState: IInitialState = {
     {
       Name: "",
       FamilyName: "",
-      NationalId: 0,
-      FileNumber: 0,
+      NationalId: "",
+      FileNumber: "",
       Comment: "",
     },
   ],
@@ -29,11 +29,11 @@ export const patientInfoSlice = createSlice({
       state.requiredFields[0].FamilyName = action.payload;
     },
 
-    setNationalId: (state, action: PayloadAction<number>) => {
+    setNationalId: (state, action: PayloadAction<string>) => {
       state.requiredFields[0].NationalId = action.payload;
     },
 
-    setFileNumber: (state, action: PayloadAction<number>) => {
+    setFileNumber: (state, action: PayloadAction<string>) => {
       state.requiredFields[0].FileNumber = action.payload;
     },
 

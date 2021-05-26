@@ -59,8 +59,8 @@ const AddPatientPage: FC = () => {
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
     dataGrid.append("FamilyName", requiredField.FamilyName);
-    dataGrid.append("NationalId", String(requiredField.NationalId));
-    dataGrid.append("FileNumber", String(requiredField.FileNumber));
+    dataGrid.append("NationalId", requiredField.NationalId);
+    dataGrid.append("FileNumber", requiredField.FileNumber);
     dataGrid.append("Avatar", avatar);
     dataGrid.append("NationalIdDoc", nationalIdDoc);
     dataGrid.append("Comment", requiredField.Comment);

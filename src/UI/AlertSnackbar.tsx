@@ -3,7 +3,6 @@ import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useAppDispatch } from "../Redux/hook";
 import { setOpen } from "../Redux/Slicer/alertMessageSlice";
-import { SnackbarOrigin } from "@material-ui/core/Snackbar";
 
 interface IProps {
   alertStatus: string;
