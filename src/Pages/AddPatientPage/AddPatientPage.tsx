@@ -1,9 +1,15 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, Grid, Backdrop, CircularProgress } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
+import {
+  selectRequiredField,
+  setName,
+  setFamilyName,
+  setNationalId,
+  setFileNumber,
+} from "../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 import NameFields from "./AddFormDescenders/nameFields";
 import NumericFields from "./AddFormDescenders/numericFields";
@@ -23,10 +29,11 @@ import {
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     form: {
-      padding: theme.spacing(10),
+      paddingTop: theme.spacing(15),
+      paddingBottom: theme.spacing(15),
       width: "70%",
       "& > *": {
-        marginInline: theme.spacing(3),
+        marginInline: theme.spacing(10),
       },
       "& > label": {
         marginTop: theme.spacing(3),
@@ -44,7 +51,7 @@ const AddPatientPage: FC = () => {
   const classes = useStyle();
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
   const [avatar, setAvatar] = useState<Blob | string>("");
   const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const dispatch = useAppDispatch();
@@ -55,6 +62,14 @@ const AddPatientPage: FC = () => {
   const open = useAppSelector(selectOpen);
   const [pending, setPending] = useState(false);
   const dataGrid = new FormData();
+
+  useEffect(() => {
+    dispatch(setOpen(false));
+    dispatch(setName(""));
+    dispatch(setFamilyName(""));
+    dispatch(setNationalId(""));
+    dispatch(setFileNumber(""));
+  }, [dispatch]);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
@@ -117,7 +132,20 @@ const AddPatientPage: FC = () => {
 
         <Grid item className={classes.form}>
           {/* Names */}
-          <NameFields />
+          <NameFields
+            id="Name"
+            title="نام"
+            placeholder="نام بیمار"
+            setState={(arg) => dispatch(setName(watch(arg)))}
+            defaultState={requiredField.Name}
+          />
+          <NameFields
+            id="FamilyName"
+            title="نام خانوادگی"
+            placeholder="نام خانوادگی بیمار"
+            setState={(arg) => dispatch(setFamilyName(watch(arg)))}
+            defaultState={requiredField.FamilyName}
+          />
 
           {/* NumericFields */}
           <NumericFields

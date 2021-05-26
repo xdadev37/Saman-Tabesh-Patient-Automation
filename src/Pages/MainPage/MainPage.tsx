@@ -18,6 +18,7 @@ import {
   selectAlertStatus,
   selectOpen,
 } from "../../Redux/Slicer/alertMessageSlice";
+import EditUser from "../Edit/EditUser/EditUser";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -116,6 +117,10 @@ const MainPage: FC = () => {
 
     case "checkAction":
       Page = <CheckAction />;
+      break;
+
+    case "editUser":
+      Page = <EditUser />;
       break;
 
     default:

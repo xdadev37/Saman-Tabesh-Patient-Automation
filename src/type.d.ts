@@ -4,14 +4,16 @@ interface IRequiredFields {
   NationalId: string;
   FileNumber: string;
   Comment: string;
+  AvatarLink: string;
+  NationalIdDoc: string;
 }
 
 interface IDataGrid {
   id: number;
   Name: string;
   FamilyName: string;
-  NationalId: number;
-  FileNumber: number;
+  NationalId: string;
+  FileNumber: string;
   Avatar: string;
   NationalIdDoc: string;
   Comment: string;

@@ -15,6 +15,10 @@ import ButtonsGroup from "./ButtonsGroup/ButtonsGroup";
 interface IProps {
   open: boolean;
   id: number;
+  Name: string;
+  FamilyName: string;
+  NationalId: string;
+  FileNumber: string;
   AvatarLink: string;
   NationalIdDoc: string;
   Comment: string;
@@ -31,6 +35,10 @@ const useRowStyles = makeStyles({
 const MoreDetailsTable: React.FC<IProps> = ({
   open,
   id,
+  Name,
+  FamilyName,
+  NationalId,
+  FileNumber,
   AvatarLink,
   NationalIdDoc,
   Comment,
@@ -76,7 +84,16 @@ const MoreDetailsTable: React.FC<IProps> = ({
                   <TableCell>{Comment}</TableCell>
 
                   {/* Buttons */}
-                  <ButtonsGroup id={id} />
+                  <ButtonsGroup
+                    id={id}
+                    Name={Name}
+                    FamilyName={FamilyName}
+                    NationalId={NationalId}
+                    FileNumber={FileNumber}
+                    AvatarLink={AvatarLink}
+                    NationalIdDoc={NationalIdDoc}
+                    Comment={Comment}
+                  />
                 </TableRow>
               </TableBody>
             </Table>

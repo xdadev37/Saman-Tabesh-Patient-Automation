@@ -15,8 +15,11 @@ import {
   Error,
   BorderColor,
 } from "@material-ui/icons";
-import { useAppDispatch } from "../../../Redux/hook";
-import { setComment } from "../../../Redux/Slicer/patientInfoSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import {
+  setComment,
+  selectRequiredField,
+} from "../../../Redux/Slicer/patientInfoSlice";
 
 interface IFiles {
   setAvatar: (arg: Blob) => void;
@@ -24,16 +27,27 @@ interface IFiles {
 }
 
 const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
-  const [avatarStatus, setAvatarStatus] = useState<boolean | null>(null);
-  const [pdfStatus, setPdfStatus] = useState<boolean | null>(null);
+  const [avatarStatus, setAvatarStatus] = useState<string>("null");
+  const [pdfStatus, setPdfStatus] = useState<string>("null");
   const dispatch = useAppDispatch();
+  const commentValue = useAppSelector(selectRequiredField);
 
   let pdfStatusElement;
   switch (pdfStatus) {
-    case true:
+    case "size":
       pdfStatusElement = (
-        <Typography color="secondary">
+        <Typography color="secondary" variant="body2">
+          <Error color="error" />
           حجم پی دی اف آپلود شده باید کمتر از 300 کیلوبایت باشد!
+        </Typography>
+      );
+      break;
+
+    case "fileFormat":
+      pdfStatusElement = (
+        <Typography color="secondary" variant="body2">
+          <Error color="error" />
+          فرمت فایل آپلود شده قابل قبول نیست! (فرمت قابل قبول : PDF)
         </Typography>
       );
       break;
@@ -44,11 +58,20 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
 
   let avatarStatusElement;
   switch (avatarStatus) {
-    case true:
+    case "size":
       avatarStatusElement = (
-        <Typography color="secondary">
+        <Typography color="secondary" variant="body2">
           <Error color="error" />
           حجم پی دی اف آپلود شده باید کمتر از 100 کیلوبایت باشد!
+        </Typography>
+      );
+      break;
+
+    case "fileFormat":
+      avatarStatusElement = (
+        <Typography color="secondary" variant="body2">
+          <Error color="error" />
+          فرمت عکس آپلود شده قابل قبول نیست! (فرمت قابل قبول : JPG, JPEG)
         </Typography>
       );
       break;
@@ -60,8 +83,8 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   return (
     <Fragment>
       {/* Avatar */}
-      <InputLabel htmlFor="Avatar" style={{ width: "320px", color: "#000" }}>
-        {">"} عکس پرسنلی بیمار :
+      <InputLabel htmlFor="Avatar" style={{ width: "320px", color: "#2962ff" }}>
+        عکس پرسنلی بیمار :
         <Box marginX={10} marginY={2}>
           <Button
             variant="outlined"
@@ -69,10 +92,10 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
             component="span"
             startIcon={<Image />}
           >
-            {avatarStatus === false ? (
+            {avatarStatus === "ok" ? (
               <CheckCircle color="primary" />
             ) : (
-              "انتخاب عکس ..."
+              "انتخاب عکس"
             )}
           </Button>
         </Box>
@@ -88,15 +111,19 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
             if (event.target.value !== "") {
               const file = event.target.files![0];
               const fileSize = event.target.files![0].size;
+              const fileType = event.target.files![0].type;
 
               if (fileSize > 100000) {
-                setAvatarStatus(true);
+                setAvatarStatus("size");
+              }
+              if (fileType !== "image/jpeg") {
+                setAvatarStatus("fileFormat");
               } else {
-                setAvatarStatus(false);
+                setAvatarStatus("ok");
                 setAvatar(file);
               }
             } else {
-              setAvatarStatus(null);
+              setAvatarStatus("null");
             }
           }}
         />
@@ -104,6 +131,8 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         <FormHelperText>
           <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 100 کیلوبایت
+            <br />
+            فرمت عکس قابل قبول : JPG, JPEG
           </Typography>
         </FormHelperText>
       </InputLabel>
@@ -113,9 +142,9 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
       {/* NationalIdDoc */}
       <InputLabel
         htmlFor="NationalIdDoc"
-        style={{ width: "320px", color: "#000" }}
+        style={{ width: "320px", color: "#2962ff" }}
       >
-        {">"} کارت ملی :
+        کارت ملی :
         <Box marginX={10} marginY={2} padding={0}>
           <Button
             variant="outlined"
@@ -123,10 +152,10 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
             component="span"
             startIcon={<NoteAdd />}
           >
-            {pdfStatus === false ? (
+            {pdfStatus === "ok" ? (
               <CheckCircle color="primary" />
             ) : (
-              "انتخاب فایل ..."
+              "انتخاب فایل"
             )}
           </Button>
         </Box>
@@ -140,15 +169,20 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
             if (event.target.value !== "") {
               const file = event.target.files![0];
               const fileSize = event.target.files![0].size;
+              const fileType = event.target.files![0].type;
 
               if (fileSize > 300000) {
-                setPdfStatus(true);
+                setPdfStatus("size");
               } else {
-                setPdfStatus(false);
-                setNationalIdDoc(file);
+                if (fileType !== "application/pdf") {
+                  setPdfStatus("fileFormat");
+                } else {
+                  setPdfStatus("ok");
+                  setNationalIdDoc(file);
+                }
               }
             } else {
-              setPdfStatus(null);
+              setPdfStatus("null");
             }
           }}
         />
@@ -156,6 +190,8 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         <FormHelperText>
           <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 300 کیلوبایت
+            <br />
+            فرمت فایل قابل قبول : PDF
           </Typography>
         </FormHelperText>
       </InputLabel>
@@ -163,12 +199,13 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
       {/* Comment */}
       <hr />
       <InputLabel
-        style={{ width: "320px", color: "#000", marginBottom: "10px" }}
+        style={{ width: "320px", color: "#2962ff", marginBottom: "10px" }}
       >
         <BorderColor />
-        <span style={{ marginInline: "10px" }}>توضیحات</span>
+        &nbsp; توضیحات
       </InputLabel>
       <TextField
+        defaultValue={commentValue.Comment}
         autoComplete="off"
         label="توضیحات تکمیلی"
         variant="filled"
@@ -188,7 +225,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         >
           راهنما :
           <br />
-          حداکثر تعداد کاراکتر مجاز : 800
+          حداکثر تعداد برای توضیحات کاراکتر مجاز : 800
           <br />
           در آخر برای ثبت نهایی دکمه ثبت را بفشارید
         </Typography>

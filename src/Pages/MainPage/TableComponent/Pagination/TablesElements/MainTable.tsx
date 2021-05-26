@@ -7,8 +7,8 @@ interface IProps {
   id: number;
   Name: string;
   FamilyName: string;
-  NationalId: number;
-  FileNumber: number;
+  NationalId: string;
+  FileNumber: string;
   Avatar: string;
   NationalIdDoc: string;
   Comment: string;
@@ -43,6 +43,10 @@ const MainTable: FC<IProps> = ({
       <MoreDetailsTable
         open={open}
         id={id}
+        Name={Name}
+        FamilyName={FamilyName}
+        NationalId={NationalId}
+        FileNumber={FileNumber}
         AvatarLink={Avatar}
         NationalIdDoc={NationalIdDoc}
         Comment={Comment}

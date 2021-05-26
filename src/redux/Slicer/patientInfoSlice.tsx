@@ -13,6 +13,8 @@ const initialState: IInitialState = {
       NationalId: "",
       FileNumber: "",
       Comment: "",
+      AvatarLink: "",
+      NationalIdDoc: "",
     },
   ],
 };
@@ -40,6 +42,14 @@ export const patientInfoSlice = createSlice({
     setComment: (state, action: PayloadAction<string>) => {
       state.requiredFields[0].Comment = action.payload;
     },
+
+    setAvatarLink: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].AvatarLink = action.payload;
+    },
+
+    setNationalIdDoc: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].NationalIdDoc = action.payload;
+    },
   },
 });
 
@@ -49,6 +59,8 @@ export const {
   setNationalId,
   setFileNumber,
   setComment,
+  setAvatarLink,
+  setNationalIdDoc,
 } = patientInfoSlice.actions;
 
 export const selectRequiredField = (state: RootState) =>

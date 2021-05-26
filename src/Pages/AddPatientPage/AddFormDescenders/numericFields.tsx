@@ -1,11 +1,12 @@
 import { FC, Fragment, KeyboardEvent } from "react";
-import { InputLabel, Input, Typography } from "@material-ui/core";
+import { InputLabel, Input, Typography, Box } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
-import { useAppDispatch } from "../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setNationalId,
   setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
+import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
   checkNIdAl: boolean;
@@ -19,6 +20,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       event.preventDefault();
     }
   };
+  const defaultState = useAppSelector(selectRequiredField);
 
   const {
     register,
@@ -70,10 +72,12 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
   return (
     <Fragment>
       {/* NationalId */}
-      <InputLabel htmlFor="NationalId" style={{ color: "#000" }}>
-        {">"} کد ملی *
+      <InputLabel htmlFor="NationalId" style={{ color: "#2962ff" }}>
+        کد ملی
+        <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Input
+        defaultValue={defaultState.NationalId}
         onKeyPress={numberType}
         inputProps={{ maxLength: 10 }}
         placeholder="کد ملی بیمار"
@@ -98,23 +102,29 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       {errors.NationalId && (
         <Typography color="secondary">{errors.NationalId.message}</Typography>
       )}
-
       {/* FileNumber */}
-      <InputLabel htmlFor="FileNumber" style={{ color: "#000" }}>
-        {">"} شماره پرونده *
+      <InputLabel htmlFor="FileNumber" style={{ color: "#2962ff" }}>
+        شماره پرونده<span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
-      <Input
-        onKeyPress={numberType}
-        id="FileNumber"
-        inputProps={{ maxLength: 20 }}
-        placeholder="شماره پرونده بیمار"
-        {...register("FileNumber", {
-          required: "پر کردن این فیلد الزامی است!",
-        })}
-        onSelect={() => {
-          dispatch(setFileNumber(watch("FileNumber")));
-        }}
-      />
+      <Box display="flex" padding="10px">
+        <Input
+          defaultValue={defaultState.FileNumber}
+          onKeyPress={numberType}
+          id="FileNumber"
+          inputProps={{ maxLength: 6 }}
+          placeholder="ادامه شماره"
+          {...register("FileNumber", {
+            required: "پر کردن این فیلد الزامی است!",
+          })}
+          onSelect={() => {
+            dispatch(setFileNumber(watch("FileNumber")));
+          }}
+          style={{ width: "80px" }}
+        />
+        <Typography variant="h5">
+          <sub>_R_000</sub>
+        </Typography>
+      </Box>
       {errors.FileNumber && (
         <Typography color="secondary">{errors.FileNumber.message}</Typography>
       )}

@@ -13,12 +13,37 @@ import { useAppDispatch } from "../../../../../../../Redux/hook";
 import { setPatientId } from "../../../../../../../Redux/Slicer/idPasserSlice";
 import { setActionForm } from "../../../../../../../Redux/Slicer/actionStatusSlice";
 import { useHistory } from "react-router-dom";
+import {
+  setName,
+  setFamilyName,
+  setNationalId,
+  setFileNumber,
+  setComment,
+  setAvatarLink,
+  setNationalIdDoc,
+} from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
   id: number;
+  Name: string;
+  FamilyName: string;
+  NationalId: string;
+  FileNumber: string;
+  AvatarLink: string;
+  NationalIdDoc: string;
+  Comment: string;
 }
 
-const ButtonsGroup: FC<IProps> = ({ id }) => {
+const ButtonsGroup: FC<IProps> = ({
+  id,
+  Name,
+  FamilyName,
+  NationalId,
+  FileNumber,
+  AvatarLink,
+  NationalIdDoc,
+  Comment,
+}) => {
   const dispatch = useAppDispatch();
   let history = useHistory();
   const [openAlert, setOpenAlert] = useState(false);
@@ -76,6 +101,13 @@ const ButtonsGroup: FC<IProps> = ({ id }) => {
         </Button>
         <Button
           onClick={() => {
+            dispatch(setName(Name));
+            dispatch(setFamilyName(FamilyName));
+            dispatch(setNationalId(NationalId));
+            dispatch(setFileNumber(FileNumber));
+            dispatch(setComment(Comment));
+            dispatch(setAvatarLink(AvatarLink));
+            dispatch(setNationalIdDoc(NationalIdDoc));
             dispatch(setActionForm("editUser"));
           }}
           color="default"
