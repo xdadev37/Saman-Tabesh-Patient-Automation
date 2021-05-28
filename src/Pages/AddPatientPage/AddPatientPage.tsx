@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { Button, Grid, Backdrop, CircularProgress } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useForm, FormProvider } from "react-hook-form";
@@ -7,8 +7,6 @@ import {
   selectRequiredField,
   setName,
   setFamilyName,
-  setNationalId,
-  setFileNumber,
 } from "../../Redux/Slicer/patientInfoSlice";
 import axios from "axios";
 import NameFields from "./AddFormDescenders/nameFields";
@@ -62,14 +60,6 @@ const AddPatientPage: FC = () => {
   const open = useAppSelector(selectOpen);
   const [pending, setPending] = useState(false);
   const dataGrid = new FormData();
-
-  useEffect(() => {
-    dispatch(setOpen(false));
-    dispatch(setName(""));
-    dispatch(setFamilyName(""));
-    dispatch(setNationalId(""));
-    dispatch(setFileNumber(""));
-  }, [dispatch]);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);

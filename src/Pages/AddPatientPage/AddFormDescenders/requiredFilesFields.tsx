@@ -35,21 +35,13 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   let pdfStatusElement;
   switch (pdfStatus) {
     case "size":
-      pdfStatusElement = (
-        <Typography color="secondary" variant="body2">
-          <Error color="error" />
-          حجم پی دی اف آپلود شده باید کمتر از 300 کیلوبایت باشد!
-        </Typography>
-      );
+      pdfStatusElement =
+        "حجم پی دی اف آپلود شده باید کمتر از 300 کیلوبایت باشد!";
       break;
 
     case "fileFormat":
-      pdfStatusElement = (
-        <Typography color="secondary" variant="body2">
-          <Error color="error" />
-          فرمت فایل آپلود شده قابل قبول نیست! (فرمت قابل قبول : PDF)
-        </Typography>
-      );
+      pdfStatusElement =
+        "فرمت فایل آپلود شده قابل قبول نیست! (فرمت قابل قبول : PDF)";
       break;
 
     default:
@@ -59,21 +51,12 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   let avatarStatusElement;
   switch (avatarStatus) {
     case "size":
-      avatarStatusElement = (
-        <Typography color="secondary" variant="body2">
-          <Error color="error" />
-          حجم پی دی اف آپلود شده باید کمتر از 100 کیلوبایت باشد!
-        </Typography>
-      );
+      avatarStatusElement = "حجم عکس آپلود شده باید کمتر از 100 کیلوبایت باشد!";
       break;
 
     case "fileFormat":
-      avatarStatusElement = (
-        <Typography color="secondary" variant="body2">
-          <Error color="error" />
-          فرمت عکس آپلود شده قابل قبول نیست! (فرمت قابل قبول : JPG, JPEG)
-        </Typography>
-      );
+      avatarStatusElement =
+        "فرمت عکس آپلود شده قابل قبول نیست! (فرمت قابل قبول : JPG, JPEG)";
       break;
 
     default:
@@ -83,7 +66,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   return (
     <Fragment>
       {/* Avatar */}
-      <InputLabel htmlFor="Avatar" style={{ width: "320px", color: "#2962ff" }}>
+      <InputLabel htmlFor="Avatar" style={{ width: "340px", color: "#2962ff" }}>
         عکس پرسنلی بیمار :
         <Box marginX={10} marginY={2}>
           <Button
@@ -113,21 +96,38 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
               const fileSize = event.target.files![0].size;
               const fileType = event.target.files![0].type;
 
-              if (fileSize > 100000) {
-                setAvatarStatus("size");
-              }
               if (fileType !== "image/jpeg") {
                 setAvatarStatus("fileFormat");
               } else {
-                setAvatarStatus("ok");
-                setAvatar(file);
+                if (fileSize > 100000) {
+                  setAvatarStatus("size");
+                } else {
+                  setAvatarStatus("null");
+                  setAvatar(file);
+                }
               }
             } else {
               setAvatarStatus("null");
             }
           }}
         />
-        {avatarStatusElement}
+        {avatarStatus !== "null" && (
+          <Box
+            display="flex"
+            border="2px solid red"
+            borderRadius="18px"
+            alignItems="center"
+            // justifyContent="center"
+            padding="10px"
+            // width="150%"
+          >
+            <Error color="error" />
+            &nbsp;
+            <Typography color="secondary" variant="body2">
+              {avatarStatusElement}
+            </Typography>
+          </Box>
+        )}
         <FormHelperText>
           <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 100 کیلوبایت
@@ -142,7 +142,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
       {/* NationalIdDoc */}
       <InputLabel
         htmlFor="NationalIdDoc"
-        style={{ width: "320px", color: "#2962ff" }}
+        style={{ width: "350px", color: "#2962ff" }}
       >
         کارت ملی :
         <Box marginX={10} marginY={2} padding={0}>
@@ -171,13 +171,13 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
               const fileSize = event.target.files![0].size;
               const fileType = event.target.files![0].type;
 
-              if (fileSize > 300000) {
-                setPdfStatus("size");
+              if (fileType !== "application/pdf") {
+                setPdfStatus("fileFormat");
               } else {
-                if (fileType !== "application/pdf") {
-                  setPdfStatus("fileFormat");
+                if (fileSize > 300000) {
+                  setPdfStatus("size");
                 } else {
-                  setPdfStatus("ok");
+                  setPdfStatus("null");
                   setNationalIdDoc(file);
                 }
               }
@@ -186,7 +186,23 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
             }
           }}
         />
-        {pdfStatusElement}
+        {pdfStatus !== "null" && (
+          <Box
+            display="flex"
+            border="2px solid red"
+            borderRadius="18px"
+            alignItems="center"
+            // justifyContent="center"
+            padding="10px"
+            // width="150%"
+          >
+            <Error color="error" />
+            &nbsp;
+            <Typography color="secondary" variant="body2">
+              {pdfStatusElement}
+            </Typography>
+          </Box>
+        )}
         <FormHelperText>
           <Typography variant="subtitle2" component="span">
             حداکثر حجم فایل مجاز : 300 کیلوبایت

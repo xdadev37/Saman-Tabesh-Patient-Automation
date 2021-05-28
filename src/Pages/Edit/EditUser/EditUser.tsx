@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
@@ -26,6 +26,8 @@ import {
   selectRequiredField,
   setName,
   setFamilyName,
+  setNationalId,
+  setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
 import NameFields from "../../AddPatientPage/AddFormDescenders/nameFields";
 import NumericFields from "../../AddPatientPage/AddFormDescenders/numericFields";
@@ -65,6 +67,14 @@ const EditUser: FC = () => {
   const [pending, setPending] = useState(false);
   const dataGrid = new FormData();
   const patientId = useAppSelector(selectPatientId);
+
+  useEffect(() => {
+    dispatch(setOpen(false));
+    dispatch(setName(""));
+    dispatch(setFamilyName(""));
+    dispatch(setNationalId(""));
+    dispatch(setFileNumber(""));
+  }, [dispatch]);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
