@@ -26,6 +26,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
     register,
     watch,
     formState: { errors },
+    setValue,
   } = useFormContext();
 
   const checkNationalIdAl = (value: string) => {
@@ -71,7 +72,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
 
   return (
     <Fragment>
-      {/* NationalId */}
+      {/* ------------------------ NationalId ------------------------ */}
       <InputLabel htmlFor="NationalId" style={{ color: "#2962ff" }}>
         کد ملی
         <span style={{ color: "#ff0000" }}>*</span> :
@@ -89,7 +90,8 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
             message: "مقدار کد ملی حداقل باید 10 عدد باشد!",
           },
         })}
-        onSelect={() => {
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setValue("NationalId", event.target.value);
           dispatch(setNationalId(watch("NationalId")));
           checkNationalIdAl(watch("NationalId"));
         }}
@@ -102,7 +104,8 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       {errors.NationalId && (
         <Typography color="secondary">{errors.NationalId.message}</Typography>
       )}
-      {/* FileNumber */}
+
+      {/* ------------------------ FileNumber ------------------------ */}
       <InputLabel htmlFor="FileNumber" style={{ color: "#2962ff" }}>
         شماره پرونده<span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
@@ -115,8 +118,13 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
           placeholder="ادامه شماره"
           {...register("FileNumber", {
             required: "پر کردن این فیلد الزامی است!",
+            minLength: {
+              value: 6,
+              message: "مقدار شماره پرونده حداقل باید 6 عدد باشد!",
+            },
           })}
-          onSelect={() => {
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setValue("FileNumber", event.target.value);
             dispatch(setFileNumber(watch("FileNumber")));
           }}
           style={{ width: "80px" }}

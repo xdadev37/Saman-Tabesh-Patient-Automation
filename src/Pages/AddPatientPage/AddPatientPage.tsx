@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, Grid, Backdrop, CircularProgress } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useForm, FormProvider } from "react-hook-form";
@@ -61,6 +61,10 @@ const AddPatientPage: FC = () => {
   const [pending, setPending] = useState(false);
   const dataGrid = new FormData();
 
+  useEffect(() => {
+    setOpen(false);
+  });
+
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
     dataGrid.append("FamilyName", requiredField.FamilyName);
@@ -121,7 +125,7 @@ const AddPatientPage: FC = () => {
         </Button>
 
         <Grid item className={classes.form}>
-          {/* Names */}
+          {/* ------------------------ Names ------------------------ */}
           <NameFields
             id="Name"
             title="نام"
@@ -137,13 +141,13 @@ const AddPatientPage: FC = () => {
             defaultState={requiredField.FamilyName}
           />
 
-          {/* NumericFields */}
+          {/* ------------------------ NumericFields ------------------------ */}
           <NumericFields
             checkNIdAl={checkNIdAl}
             setCheckNIdAl={setCheckNIdAl}
           />
 
-          {/* requiredFilesFields */}
+          {/* ------------------------ requiredFilesFields ------------------------ */}
           <RequiredFilesFields
             setAvatar={setAvatar}
             setNationalIdDoc={setNationalIdDoc}

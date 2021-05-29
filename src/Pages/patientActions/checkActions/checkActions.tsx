@@ -19,6 +19,7 @@ import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { setOpen } from "../../../Redux/Slicer/alertMessageSlice";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +59,7 @@ const CheckActions: FC = () => {
   };
 
   useEffect(() => {
+    dispatch(setOpen(false));
     data();
   });
 

@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, Fragment } from "react";
+import { FC, ChangeEvent, useState, Fragment, useEffect } from "react";
 import {
   Button,
   Paper,
@@ -41,6 +41,10 @@ const GetActionName: FC = () => {
   const [completedStatus, setCompletedStatus] = useState(false);
   const selectId = useAppSelector(selectPatientId);
   const classes = modal();
+
+  useEffect(() => {
+    dispatch(setOpen(false));
+  });
 
   const newActionSubmit = async () => {
     if (newActionName !== "") {

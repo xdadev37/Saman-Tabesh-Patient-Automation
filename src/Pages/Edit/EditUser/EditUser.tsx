@@ -2,13 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
-import {
-  Button,
-  Grid,
-  Backdrop,
-  CircularProgress,
-  Avatar,
-} from "@material-ui/core";
+import { Button, Grid, Avatar } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Check, ChevronRight, Assignment } from "@material-ui/icons";
@@ -16,18 +10,12 @@ import {
   setAlertStatus,
   setAlertText,
   setOpen,
-  selectAlertStatus,
-  selectAlertText,
-  selectOpen,
 } from "../../../Redux/Slicer/alertMessageSlice";
 import axios from "axios";
-import AlertSnackbar from "../../../UI/AlertSnackbar";
 import {
   selectRequiredField,
   setName,
   setFamilyName,
-  setNationalId,
-  setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
 import NameFields from "../../AddPatientPage/AddFormDescenders/nameFields";
 import NumericFields from "../../AddPatientPage/AddFormDescenders/numericFields";
@@ -45,36 +33,45 @@ const useStyle = makeStyles((theme: Theme) =>
         marginTop: theme.spacing(3),
       },
     },
+
     marginTop: {
       marginTop: theme.spacing(10),
       marginBottom: theme.spacing(10),
     },
+
+    avatar: {
+      width: theme.spacing(6),
+      height: theme.spacing(6),
+      backgroundColor: "#ff5722",
+      fontSize: "xx-large",
+      alignItems: "flex-start",
+    },
   })
 );
 
-const EditUser: FC = () => {
+interface IProps {
+  setPending: (arg: boolean) => void;
+}
+
+const EditUser: FC<IProps> = ({ setPending }) => {
   const classes = useStyle();
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch, setValue } = methods;
   const [avatar, setAvatar] = useState<Blob | string>("");
   const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const dispatch = useAppDispatch();
   const [checkNIdAl, setCheckNIdAl] = useState(false);
-  const alertText = useAppSelector(selectAlertText);
-  const alertStatus = useAppSelector(selectAlertStatus);
-  const open = useAppSelector(selectOpen);
-  const [pending, setPending] = useState(false);
   const dataGrid = new FormData();
   const patientId = useAppSelector(selectPatientId);
 
   useEffect(() => {
     dispatch(setOpen(false));
-    dispatch(setName(""));
-    dispatch(setFamilyName(""));
-    dispatch(setNationalId(""));
-    dispatch(setFileNumber(""));
-  }, [dispatch]);
+    setValue("Name", requiredField.Name);
+    setValue("FamilyName", requiredField.FamilyName);
+    setValue("NationalId", requiredField.NationalId);
+    setValue("FileNumber", requiredField.FileNumber);
+  }, [setValue, requiredField, dispatch]);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
@@ -123,11 +120,20 @@ const EditUser: FC = () => {
     }
   };
 
+  const avatarFirstLetter = requiredField.FamilyName.charAt(0);
+
   return (
     <FormProvider {...methods}>
       <form autoComplete="off" onSubmit={handleSubmit(submit)}>
         <Grid container justify="space-around" className={classes.marginTop}>
-          <Avatar alt="Avatar" src={requiredField.AvatarLink} />
+          <Avatar
+            variant="rounded"
+            alt="Avatar"
+            src={requiredField.AvatarLink}
+            className={classes.avatar}
+          >
+            {avatarFirstLetter}
+          </Avatar>
           <Button
             target="_blank"
             href={requiredField.NationalIdDoc}
@@ -135,6 +141,7 @@ const EditUser: FC = () => {
             startIcon={<Assignment />}
             size="large"
             color="primary"
+            variant="outlined"
           >
             کپی کارت ملی ثبت شده
           </Button>
@@ -148,7 +155,7 @@ const EditUser: FC = () => {
         </Grid>
 
         <Grid item className={classes.form}>
-          {/* Names */}
+          {/* ------------------------ Names ------------------------ */}
           <NameFields
             id="Name"
             title="نام"
@@ -164,13 +171,13 @@ const EditUser: FC = () => {
             defaultState={requiredField.FamilyName}
           />
 
-          {/* NumericFields */}
+          {/* ------------------------ NumericFields ------------------------ */}
           <NumericFields
             checkNIdAl={checkNIdAl}
             setCheckNIdAl={setCheckNIdAl}
           />
 
-          {/* requiredFilesFields */}
+          {/* ------------------------ requiredFilesFields ------------------------ */}
           <RequiredFilesFields
             setAvatar={setAvatar}
             setNationalIdDoc={setNationalIdDoc}
@@ -188,12 +195,6 @@ const EditUser: FC = () => {
           </Grid>
         </Grid>
       </form>
-      <AlertSnackbar open={open} alertStatus={alertStatus}>
-        {alertText}
-      </AlertSnackbar>
-      <Backdrop open={pending}>
-        <CircularProgress />
-      </Backdrop>
     </FormProvider>
   );
 };

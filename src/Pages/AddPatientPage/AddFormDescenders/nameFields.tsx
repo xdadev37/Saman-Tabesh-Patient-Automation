@@ -25,6 +25,7 @@ const NameFields: FC<IProps> = ({
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext();
 
   return (
@@ -53,7 +54,8 @@ const NameFields: FC<IProps> = ({
         {...register<string>(id, {
           required: "پر کردن این فیلد الزامی است!",
         })}
-        onSelect={() => {
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(id, event.target.value);
           setState(id);
         }}
       />

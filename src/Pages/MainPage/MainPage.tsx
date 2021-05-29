@@ -1,7 +1,7 @@
 import { FC, Fragment, useState, useEffect } from "react";
 import Options from "./Options/Options";
 import PageCounter from "./Options/PageCounter";
-import { Grid } from "@material-ui/core";
+import { Grid, Backdrop, CircularProgress } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
@@ -42,6 +42,7 @@ const MainPage: FC = () => {
   const alertText = useAppSelector(selectAlertText);
   const alertStatus = useAppSelector(selectAlertStatus);
   const open = useAppSelector(selectOpen);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     const data = async () => {
@@ -120,7 +121,7 @@ const MainPage: FC = () => {
       break;
 
     case "editUser":
-      Page = <EditUser />;
+      Page = <EditUser setPending={setPending} />;
       break;
 
     default:
@@ -133,9 +134,9 @@ const MainPage: FC = () => {
       <AlertSnackbar open={open} alertStatus={alertStatus}>
         {alertText}
       </AlertSnackbar>
-      {/* <Backdrop open={pending}>
+      <Backdrop open={pending} style={{ zIndex: 10000 }}>
         <CircularProgress />
-      </Backdrop> */}
+      </Backdrop>
     </Fragment>
   );
 };

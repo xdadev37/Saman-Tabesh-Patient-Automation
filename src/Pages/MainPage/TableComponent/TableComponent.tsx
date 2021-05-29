@@ -12,6 +12,13 @@ import {
 import { Add } from "@material-ui/icons";
 import Pagination from "./Pagination/Pagination";
 import { useHistory } from "react-router-dom";
+import {
+  setName,
+  setFamilyName,
+  setNationalId,
+  setFileNumber,
+} from "../../../Redux/Slicer/patientInfoSlice";
+import { useAppDispatch } from "../../../Redux/hook";
 
 const TableComponent: React.FC = () => {
   let history = useHistory();
@@ -22,6 +29,7 @@ const TableComponent: React.FC = () => {
     "شماره ملی",
     "شماره پرونده",
   ];
+  const dispatch = useAppDispatch();
 
   return (
     <TableContainer component={Paper}>
@@ -42,7 +50,13 @@ const TableComponent: React.FC = () => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => history.push("/addNewPatient")}
+          onClick={() => {
+            dispatch(setName(""));
+            dispatch(setFamilyName(""));
+            dispatch(setNationalId(""));
+            dispatch(setFileNumber(""));
+            history.push("/addNewPatient");
+          }}
           startIcon={<Add />}
         >
           ایجاد فرم بیمار جدید
