@@ -16,14 +16,17 @@ import { Close, Check } from "@material-ui/icons";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
-import AddFiles from "./AddFilesForm/optionalFields";
+import {
+  selectActionId,
+  selectActionName,
+} from "../../../Redux/Slicer/editActionSlice";
+import EditFiles from "./EditActionFiles/EditActionFiles";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
 } from "../../../Redux/Slicer/alertMessageSlice";
-import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 
 const modal = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,11 +44,11 @@ interface IProps {
 
 const GetActionName: FC<IProps> = ({ setPending }) => {
   const dispatch = useAppDispatch();
-  const [newActionName, setNewActionName] = useState("");
-  const [actionId, setActionId] = useState(0);
   const [completedStatus, setCompletedStatus] = useState(false);
   const selectId = useAppSelector(selectPatientId);
-  const tempData = useAppSelector(selectRequiredField);
+  const actionId = useAppSelector(selectActionId);
+  const actionName = useAppSelector(selectActionName);
+  const [newActionName, setNewActionName] = useState(actionName);
   const classes = modal();
 
   useEffect(() => {
@@ -56,13 +59,12 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
     if (newActionName !== "") {
       const submit = new Promise((submitted, failed) => {
         axios
-          .post("http://localhost:3003/actionName", {
+          .patch(`http://localhost:3003/actionName/${actionId}`, {
             Name: newActionName,
             PatientId: selectId,
           })
           .then((res) => {
-            if ((res.status = 201)) {
-              setActionId(res.data.id);
+            if ((res.status = 200)) {
               submitted(setCompletedStatus(true));
             } else {
               dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
@@ -88,13 +90,13 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
       <AppBar>
         <Toolbar>
           <Grid container justify="space-between">
-            <IconButton onClick={() => dispatch(setActionForm("mainPage"))}>
+            <IconButton onClick={() => dispatch(setActionForm("checkAction"))}>
               <Close />
             </IconButton>
-            <Typography variant="h6">{`ایجاد اقدام جدید برای ${tempData.Name} ${tempData.FamilyName}`}</Typography>
+            <Typography variant="h6">{`تغییر اقدام ${actionName}`}</Typography>
             <Button
               variant="contained"
-              onClick={() => dispatch(setActionForm("mainPage"))}
+              onClick={() => dispatch(setActionForm("checkAction"))}
               color="secondary"
             >
               خروج
@@ -108,6 +110,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
             label="نام رویداد"
             required
             variant="filled"
+            defaultValue={actionName}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               setNewActionName(event.target.value);
             }}
@@ -129,7 +132,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
   return (
     <Fragment>
       {completedStatus ? (
-        <AddFiles
+        <EditFiles
           newActionName={newActionName}
           actionId={actionId}
           setPending={setPending}

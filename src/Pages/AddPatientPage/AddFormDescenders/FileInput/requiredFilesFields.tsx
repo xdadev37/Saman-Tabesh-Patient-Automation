@@ -6,11 +6,11 @@ import {
   TextField,
 } from "@material-ui/core";
 import { BorderColor } from "@material-ui/icons";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import {
   setComment,
   selectRequiredField,
-} from "../../../Redux/Slicer/patientInfoSlice";
+} from "../../../../Redux/Slicer/patientInfoSlice";
 import ImageValidating from "./filesValidating/imageValidating";
 import PDFValidating from "./filesValidating/pdfValidating";
 

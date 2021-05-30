@@ -39,6 +39,8 @@ const MainTable: FC<IProps> = ({
         <TableCell>{FamilyName}</TableCell>
         <TableCell>{NationalId}</TableCell>
         <TableCell>{FileNumber}</TableCell>
+        <TableCell>{`تاریخ`}</TableCell>
+        <TableCell>{`تاریخ`}</TableCell>
       </TableRow>
       <MoreDetailsTable
         open={open}

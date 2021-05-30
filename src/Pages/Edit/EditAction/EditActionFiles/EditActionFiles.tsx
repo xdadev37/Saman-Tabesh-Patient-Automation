@@ -9,10 +9,11 @@ import {
   Avatar,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import FileMapper from "./FileMapper/FileMapper";
+import FileMapper from "../../../patientActions/newAction/AddFilesForm/FileMapper/FileMapper";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
 import { selectPatientId } from "../../../../Redux/Slicer/idPasserSlice";
+import { selectActionComment } from "../../../../Redux/Slicer/editActionSlice";
 import {
   setAlertStatus,
   setAlertText,
@@ -51,9 +52,11 @@ const OptionalFields: FC<IProps> = ({
   setPending,
 }) => {
   const dispatch = useAppDispatch();
-  const tempData = useAppSelector(selectRequiredField);
   const classes = styles();
-  const [userComment, setUserComment] = useState("");
+  const selectId = useAppSelector(selectPatientId);
+  const actionComment = useAppSelector(selectActionComment);
+  const [userComment, setUserComment] = useState(actionComment);
+  const tempData = useAppSelector(selectRequiredField);
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
   const [TreatmentDoc, setTreatmentDoc] = useState<object | string>("");
   const [CommitmentDoc, setCommitmentDoc] = useState<object | string>("");
@@ -63,13 +66,12 @@ const OptionalFields: FC<IProps> = ({
   const [SonoReportDoc, setSonoReportDoc] = useState<object | string>("");
   const [MamoReportDoc, setMamoReportDoc] = useState<object | string>("");
   const [LabReportDoc, setLabReportDoc] = useState<object | string>("");
-  const selectId = useAppSelector(selectPatientId);
 
   const dispatchData = async () => {
     setPending(true);
     const dispatcher = new Promise((sent, rejected) => {
       axios
-        .post("http://localhost:3001/optionalForm", {
+        .patch(`http://localhost:3001/optionalForm/${actionId}`, {
           Name: newActionName,
           ActionId: actionId,
           PatientId: selectId,
@@ -85,8 +87,8 @@ const OptionalFields: FC<IProps> = ({
           Comment: userComment,
         })
         .then((res) => {
-          if ((res.status = 201)) {
-            dispatch(setAlertText("رویداد با موفقیت ثبت شد"));
+          if ((res.status = 200)) {
+            dispatch(setAlertText("تغییرات با موفقیت ثبت شد"));
             dispatch(setAlertStatus("success"));
             dispatch(setActionForm("checkAction"));
 
@@ -169,6 +171,7 @@ const OptionalFields: FC<IProps> = ({
           multiline
           rows={7}
           fullWidth
+          defaultValue={actionComment}
           inputProps={{ maxLength: 800 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setUserComment(event.target.value);

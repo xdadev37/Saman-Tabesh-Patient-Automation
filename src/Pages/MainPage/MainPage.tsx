@@ -19,6 +19,7 @@ import {
   selectOpen,
 } from "../../Redux/Slicer/alertMessageSlice";
 import EditUser from "../Edit/EditUser/EditUser";
+import EditFiles from "../Edit/EditAction/EditActionName";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,7 +110,7 @@ const MainPage: FC = () => {
   let Page = <Fragment></Fragment>;
   switch (actionForm) {
     case "getActionName":
-      Page = <GetActionName />;
+      Page = <GetActionName setPending={setPending} />;
       break;
 
     case "mainPage":
@@ -122,6 +123,10 @@ const MainPage: FC = () => {
 
     case "editUser":
       Page = <EditUser setPending={setPending} />;
+      break;
+
+    case "editAction":
+      Page = <EditFiles setPending={setPending} />;
       break;
 
     default:

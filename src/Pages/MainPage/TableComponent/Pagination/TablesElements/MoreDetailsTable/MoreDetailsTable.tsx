@@ -47,7 +47,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
 
   return (
     <TableRow className={classes.root}>
-      <TableCell colSpan={6}>
+      <TableCell colSpan={8}>
         <Collapse
           in={open}
           mountOnEnter
@@ -81,7 +81,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                       </Link>
                     )}
                   </TableCell>
-                  <TableCell>{Comment}</TableCell>
+                  <TableCell>{Comment === "" ? "ندارد" : Comment}</TableCell>
 
                   {/* Buttons */}
                   <ButtonsGroup

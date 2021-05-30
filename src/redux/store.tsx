@@ -6,6 +6,7 @@ import createActionFormReducer from "./Slicer/actionStatusSlice";
 import checkActionReducer from "./Slicer/checkActionSlice";
 import PaginationReducer from "./Slicer/paginationSlice";
 import AlertMessageReducer from "./Slicer/alertMessageSlice";
+import EditActionReducer from "./Slicer/editActionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     checkAction: checkActionReducer,
     pagination: PaginationReducer,
     alertMessage: AlertMessageReducer,
+    editAction: EditActionReducer,
   },
 });
 

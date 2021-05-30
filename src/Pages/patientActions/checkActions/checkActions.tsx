@@ -5,8 +5,11 @@ import {
   Table,
   TableBody,
   Box,
+  ButtonGroup,
   Button,
   Grid,
+  Avatar,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
@@ -19,7 +22,8 @@ import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
-import { setOpen } from "../../../Redux/Slicer/alertMessageSlice";
+import { Add, ChevronRight } from "@material-ui/icons";
+import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,37 +35,40 @@ const useStyle = makeStyles((theme: Theme) =>
 
 const CheckActions: FC = () => {
   const selectId = useAppSelector(selectPatientId);
+  const tempData = useAppSelector(selectRequiredField);
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const classes = useStyle();
 
-  const data = async () => {
-    dispatch(emptyData());
-    const getActionFiles = new Promise((got, failed) => {
-      axios
-        .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
-        .then((res) => {
-          if ((res.status = 200)) {
-            for (let i = 0; i < res.data.length; i++) {
-              dispatch(setFilesLinks(res.data[i]));
-              got(setLoading(false));
-            }
-          } else {
-            failed(console.log("Failed", res.statusText));
-          }
-        })
-        .catch((error) => {
-          failed(console.log(error));
-        });
-    });
-
-    await getActionFiles;
-  };
-
   useEffect(() => {
-    dispatch(setOpen(false));
+    dispatch(emptyData());
+
+    const data = async () => {
+      const getActionFiles = new Promise((got, failed) => {
+        axios
+          .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
+          .then((res) => {
+            if ((res.status = 200)) {
+              for (let i = 0; i < res.data.length; i++) {
+                dispatch(setFilesLinks(res.data[i]));
+                got(setLoading(false));
+              }
+            } else {
+              failed(console.log("Failed", res.statusText));
+            }
+          })
+          .catch((error) => {
+            failed(console.log(error));
+          });
+      });
+
+      await getActionFiles;
+    };
+
     data();
-  });
+  }, [dispatch, selectId]);
+
+  const avatarFirstLetter = tempData.FamilyName.charAt(0);
 
   return (
     <Fragment>
@@ -77,6 +84,20 @@ const CheckActions: FC = () => {
         </Grid>
       ) : (
         <Box marginTop={10} paddingX={3}>
+          <Box
+            display="flex"
+            marginY={3}
+            paddingX={3}
+            justifyContent="space-around"
+          >
+            <Avatar alt="Avatar" src={tempData.AvatarLink}>
+              {avatarFirstLetter}
+            </Avatar>
+            <Typography>{tempData.Name}</Typography>
+            <Typography>{tempData.FamilyName}</Typography>
+            <Typography>{tempData.NationalId}</Typography>
+            <Typography>{tempData.FileNumber}</Typography>
+          </Box>
           <TableContainer component={Paper}>
             <Table>
               <TableBody>
@@ -84,13 +105,22 @@ const CheckActions: FC = () => {
               </TableBody>
             </Table>
             <Box margin={1}>
-              <Button
-                onClick={() => dispatch(setActionForm("mainPage"))}
-                variant="outlined"
-                color="primary"
-              >
-                برگشت
-              </Button>
+              <ButtonGroup variant="contained">
+                <Button
+                  onClick={() => dispatch(setActionForm("getActionName"))}
+                  color="primary"
+                  startIcon={<Add />}
+                >
+                  اقدام جدید
+                </Button>
+                <Button
+                  onClick={() => dispatch(setActionForm("mainPage"))}
+                  color="default"
+                  startIcon={<ChevronRight />}
+                >
+                  برگشت
+                </Button>
+              </ButtonGroup>
             </Box>
           </TableContainer>
         </Box>

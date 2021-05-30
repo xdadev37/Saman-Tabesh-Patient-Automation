@@ -16,39 +16,41 @@ interface IProps {
 }
 
 const FilesFields: FC<IProps> = ({ id, title, func }) => {
-  const [message, setMessage] = useState<boolean | null>(null);
+  const [pdfStatus, setPdfStatus] = useState<string>("null");
+  const pdfReader = new FileReader();
 
-  let messageElement;
-  switch (message) {
-    case true:
-      messageElement = (
-        <Typography color="secondary">
-          <Error color="error" />
-          حجم پی دی اف باید کمتر از 300 کیلوبایت باشد!
-        </Typography>
-      );
+  let pdfStatusElement;
+  switch (pdfStatus) {
+    case "size":
+      pdfStatusElement =
+        "حجم پی دی اف آپلود شده باید کمتر از 300 کیلوبایت باشد!";
+      break;
+
+    case "fileFormat":
+      pdfStatusElement =
+        "فرمت فایل آپلود شده قابل قبول نیست! (فرمت قابل قبول : PDF)";
       break;
 
     default:
-      messageElement = <Fragment></Fragment>;
+      pdfStatusElement = <Fragment></Fragment>;
   }
 
   return (
     <Fragment>
       <Grid item>
-        <InputLabel htmlFor={id} style={{ width: "320px", color: "#000" }}>
+        <InputLabel htmlFor={id} style={{ width: "44%", color: "#000" }}>
           {title}
           <Box marginX={10} marginY={2}>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               component="span"
               startIcon={<NoteAdd />}
             >
-              {message === false ? (
-                <CheckCircle color="primary" />
+              {pdfStatus === "ok" ? (
+                <CheckCircle style={{ color: "#fff" }} />
               ) : (
-                "انتخاب فایل ..."
+                "انتخاب فایل"
               )}
             </Button>
           </Box>
@@ -62,21 +64,56 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
               if (event.target.value !== "") {
                 const file = event.target.files![0];
                 const fileSize = event.target.files![0].size;
+                const fileType = event.target.files![0].type;
+                pdfReader.readAsDataURL(file);
 
-                if (fileSize > 300000) {
-                  setMessage(true);
-                } else {
-                  setMessage(false);
-                  func(file);
-                }
+                pdfReader.onloadend = () => {
+                  if (fileType !== "application/pdf") {
+                    setPdfStatus("fileFormat");
+                  } else {
+                    const pdf = atob(String(pdfReader.result).slice(28));
+
+                    if (pdf.match(/PDF/) === null) {
+                      setPdfStatus("fileFormat");
+                    } else {
+                      if (!pdf.match(/PDF/)![0]) {
+                        setPdfStatus("fileFormat");
+                      } else {
+                        if (fileSize > 300000) {
+                          setPdfStatus("size");
+                        } else {
+                          setPdfStatus("ok");
+                          func(file);
+                        }
+                      }
+                    }
+                  }
+                };
               } else {
-                setMessage(null);
+                setPdfStatus("null");
               }
             }}
           />
         </InputLabel>
       </Grid>
-      {messageElement}
+      {pdfStatus !== "null" && pdfStatus !== "ok" && (
+        <Box
+          display="flex"
+          border="2px solid #f50057"
+          borderRadius="18px"
+          alignItems="center"
+          justifyContent="center"
+          padding="10px"
+          width="65%"
+          marginY={2}
+        >
+          <Error color="error" />
+          &nbsp;
+          <Typography color="secondary" variant="body2">
+            {pdfStatusElement}
+          </Typography>
+        </Box>
+      )}
     </Fragment>
   );
 };

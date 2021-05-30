@@ -31,7 +31,6 @@ interface IProps {
   SonoReportDoc: string;
   MamoReportDoc: string;
   LabReportDoc: string;
-  Comment: string;
 }
 
 const MoreDetailsTable: React.FC<IProps> = ({
@@ -45,7 +44,6 @@ const MoreDetailsTable: React.FC<IProps> = ({
   SonoReportDoc,
   MamoReportDoc,
   LabReportDoc,
-  Comment,
 }) => {
   const classes = useRowStyles();
   const none = <Typography>ندارد</Typography>;
@@ -182,9 +180,6 @@ const MoreDetailsTable: React.FC<IProps> = ({
                         مشاهده پی دی اف
                       </Link>
                     )}
-                  </TableCell>
-                  <TableCell>
-                    <Typography>{Comment}</Typography>
                   </TableCell>
                 </TableRow>
               </TableBody>

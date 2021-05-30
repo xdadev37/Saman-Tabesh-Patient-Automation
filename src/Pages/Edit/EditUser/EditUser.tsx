@@ -19,7 +19,7 @@ import {
 } from "../../../Redux/Slicer/patientInfoSlice";
 import NameFields from "../../AddPatientPage/AddFormDescenders/nameFields";
 import NumericFields from "../../AddPatientPage/AddFormDescenders/numericFields";
-import RequiredFilesFields from "../../AddPatientPage/AddFormDescenders/requiredFilesFields";
+import RequiredFilesFields from "../../AddPatientPage/AddFormDescenders/FileInput/requiredFilesFields";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({

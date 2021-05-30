@@ -28,6 +28,8 @@ const TableComponent: React.FC = () => {
     "نام خانوادگی",
     "شماره ملی",
     "شماره پرونده",
+    "تاریخ ایجاد",
+    "تاریخ ویرایش",
   ];
   const dispatch = useAppDispatch();
 

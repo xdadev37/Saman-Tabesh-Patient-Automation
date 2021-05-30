@@ -47,7 +47,6 @@ const ButtonsGroup: FC<IProps> = ({
   const dispatch = useAppDispatch();
   let history = useHistory();
   const [openAlert, setOpenAlert] = useState(false);
-  // const [openEdit, setOpenEdit] = useState(false);
 
   const deleteAction = async (id: number) => {
     const deletePromise = new Promise((deleted, failed) => {
@@ -74,7 +73,16 @@ const ButtonsGroup: FC<IProps> = ({
       </DialogActions>
     </Dialog>
   );
+
   dispatch(setPatientId(id));
+
+  const tempData = () => {
+    dispatch(setName(Name));
+    dispatch(setFamilyName(FamilyName));
+    dispatch(setNationalId(NationalId));
+    dispatch(setFileNumber(FileNumber));
+    dispatch(setAvatarLink(AvatarLink));
+  };
 
   return (
     <Grid component="td" container alignItems="center" justify="center">
@@ -83,6 +91,7 @@ const ButtonsGroup: FC<IProps> = ({
         <Button
           style={{ backgroundColor: "#2196f3", color: "#fff" }}
           onClick={() => {
+            tempData();
             dispatch(setActionForm("checkAction"));
           }}
           startIcon={<AmpStories />}
@@ -92,6 +101,7 @@ const ButtonsGroup: FC<IProps> = ({
         {/* )} */}
         <Button
           onClick={() => {
+            tempData();
             dispatch(setActionForm("getActionName"));
           }}
           color="primary"
@@ -101,12 +111,8 @@ const ButtonsGroup: FC<IProps> = ({
         </Button>
         <Button
           onClick={() => {
-            dispatch(setName(Name));
-            dispatch(setFamilyName(FamilyName));
-            dispatch(setNationalId(NationalId));
-            dispatch(setFileNumber(FileNumber));
+            tempData();
             dispatch(setComment(Comment));
-            dispatch(setAvatarLink(AvatarLink));
             dispatch(setNationalIdDoc(NationalIdDoc));
             dispatch(setActionForm("editUser"));
           }}

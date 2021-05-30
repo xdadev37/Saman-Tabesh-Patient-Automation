@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import NameFields from "./AddFormDescenders/nameFields";
 import NumericFields from "./AddFormDescenders/numericFields";
-import RequiredFilesFields from "./AddFormDescenders/requiredFilesFields";
+import RequiredFilesFields from "./AddFormDescenders/FileInput/requiredFilesFields";
 import { useHistory } from "react-router-dom";
 import { Check, ChevronRight } from "@material-ui/icons";
 import AlertSnackbar from "../../UI/AlertSnackbar";
@@ -63,7 +63,7 @@ const AddPatientPage: FC = () => {
 
   useEffect(() => {
     setOpen(false);
-  });
+  }, []);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
