@@ -15,6 +15,7 @@ interface Props {
 
 const ImageValidating: FC<Props> = ({ setAvatar }) => {
   const [avatarStatus, setAvatarStatus] = useState<string>("null");
+  const imageReader = new FileReader();
 
   let avatarStatusElement;
   switch (avatarStatus) {
@@ -42,7 +43,7 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
           startIcon={<Image />}
         >
           {avatarStatus === "ok" ? (
-            <CheckCircle color="primary" />
+            <CheckCircle style={{ color: "#fff" }} />
           ) : (
             "انتخاب عکس"
           )}
@@ -61,17 +62,30 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
             const file = event.target.files![0];
             const fileSize = event.target.files![0].size;
             const fileType = event.target.files![0].type;
+            imageReader.readAsDataURL(file);
 
-            if (fileType !== "image/jpeg") {
-              setAvatarStatus("fileFormat");
-            } else {
-              if (fileSize > 100000) {
-                setAvatarStatus("size");
+            imageReader.onloadend = () => {
+              if (fileType !== "image/jpeg") {
+                setAvatarStatus("fileFormat");
               } else {
-                setAvatarStatus("ok");
-                setAvatar(file);
+                const image = atob(String(imageReader.result).slice(23));
+
+                if (image.match(/JFIF/) === null) {
+                  setAvatarStatus("fileFormat");
+                } else {
+                  if (!image.match(/JFIF/)![0]) {
+                    setAvatarStatus("fileFormat");
+                  } else {
+                    if (fileSize > 100000) {
+                      setAvatarStatus("size");
+                    } else {
+                      setAvatarStatus("ok");
+                      setAvatar(file);
+                    }
+                  }
+                }
               }
-            }
+            };
           } else {
             setAvatarStatus("null");
           }

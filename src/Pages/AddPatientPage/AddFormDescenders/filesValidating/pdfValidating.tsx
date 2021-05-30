@@ -15,6 +15,7 @@ interface IProps {
 
 const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
   const [pdfStatus, setPdfStatus] = useState<string>("null");
+  const pdfReader = new FileReader();
 
   let pdfStatusElement;
   switch (pdfStatus) {
@@ -45,7 +46,11 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
           component="span"
           startIcon={<NoteAdd />}
         >
-          {pdfStatus === "ok" ? <CheckCircle color="primary" /> : "انتخاب فایل"}
+          {pdfStatus === "ok" ? (
+            <CheckCircle style={{ color: "#fff" }} />
+          ) : (
+            "انتخاب فایل"
+          )}
         </Button>
       </Box>
       <Input
@@ -59,17 +64,30 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
             const file = event.target.files![0];
             const fileSize = event.target.files![0].size;
             const fileType = event.target.files![0].type;
+            pdfReader.readAsDataURL(file);
 
-            if (fileType !== "application/pdf") {
-              setPdfStatus("fileFormat");
-            } else {
-              if (fileSize > 300000) {
-                setPdfStatus("size");
+            pdfReader.onloadend = () => {
+              if (fileType !== "application/pdf") {
+                setPdfStatus("fileFormat");
               } else {
-                setPdfStatus("ok");
-                setNationalIdDoc(file);
+                const pdf = atob(String(pdfReader.result).slice(28));
+
+                if (pdf.match(/PDF/) === null) {
+                  setPdfStatus("fileFormat");
+                } else {
+                  if (!pdf.match(/PDF/)![0]) {
+                    setPdfStatus("fileFormat");
+                  } else {
+                    if (fileSize > 300000) {
+                      setPdfStatus("size");
+                    } else {
+                      setPdfStatus("ok");
+                      setNationalIdDoc(file);
+                    }
+                  }
+                }
               }
-            }
+            };
           } else {
             setPdfStatus("null");
           }
