@@ -49,7 +49,7 @@ const AddPatientPage: FC = () => {
       setPending(true);
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .post("https://10.111.111.102:5001/api/patients", dataGrid)
+          .post("http://10.111.111.102:5000/api/patients", dataGrid)
           .then((res) => {
             console.log(res);
             if ((res.status = 204)) {
@@ -109,7 +109,7 @@ const AddPatientPage: FC = () => {
       <AlertSnackbar open={open} alertStatus={alertStatus}>
         {alertText}
       </AlertSnackbar>
-      <Backdrop open={pending}>
+      <Backdrop open={pending} style={{ zIndex: 1000 }}>
         <CircularProgress />
       </Backdrop>
     </FormProvider>

@@ -1,7 +1,19 @@
-import { AppBar, Toolbar, Grid, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
+import { Brightness4 } from "@material-ui/icons";
 import HeaderTitle from "./Inputs/HeaderTitle";
 
-const Header: React.FC = () => {
+interface IProps {
+  setDarkMode: (arg: boolean) => void;
+  darkMode: boolean;
+}
+
+const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
   return (
     <AppBar
       style={{
@@ -12,6 +24,20 @@ const Header: React.FC = () => {
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             <HeaderTitle />
+          </Grid>
+          <Grid item>
+            <IconButton
+              edge="start"
+              onClick={() => {
+                if (darkMode) {
+                  setDarkMode(false);
+                } else {
+                  setDarkMode(true);
+                }
+              }}
+            >
+              <Brightness4 />
+            </IconButton>
           </Grid>
           <Grid item>
             <Typography>
