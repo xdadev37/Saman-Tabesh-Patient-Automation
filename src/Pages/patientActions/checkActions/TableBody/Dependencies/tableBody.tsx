@@ -85,7 +85,7 @@ const TableBody: FC<IProps> = ({
 
   const deleteDialog = (
     <Dialog open={openAlert} onClose={() => setOpenAlert(false)}>
-      <DialogTitle>از حذف اطلاعات بیمار مطمئن هستید؟</DialogTitle>
+      <DialogTitle>{`از حذف اقدام ${Name} مطمئن هستید؟`}</DialogTitle>
       <DialogActions>
         <Button onClick={() => setOpenAlert(false)}>لغو</Button>
         <Button color="secondary" onClick={() => deleteAction(id)} autoFocus>

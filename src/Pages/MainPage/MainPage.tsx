@@ -50,7 +50,7 @@ const MainPage: FC = () => {
       dispatch(emptyData());
       const getData = new Promise((got, failed) => {
         axios
-          .get("http://localhost:3002/requiredForm")
+          .get("http://10.111.111.102:3002/requiredForm")
           .then((res) => {
             if ((res.status = 200)) {
               for (let i = 0; i < res.data.length; i++) {

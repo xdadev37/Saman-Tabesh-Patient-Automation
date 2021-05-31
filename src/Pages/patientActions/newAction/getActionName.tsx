@@ -54,9 +54,10 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
 
   const newActionSubmit = async () => {
     if (newActionName !== "") {
+      setPending(true);
       const submit = new Promise((submitted, failed) => {
         axios
-          .post("http://localhost:3003/actionName", {
+          .post("http://10.111.111.102:3003/actionName", {
             Name: newActionName,
             PatientId: selectId,
           })
@@ -77,7 +78,8 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
             dispatch(setAlertStatus("error"));
 
             failed(dispatch(setOpen(true)));
-          });
+          })
+          .finally(() => setPending(false));
       });
       await submit;
     }
@@ -133,6 +135,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
           newActionName={newActionName}
           actionId={actionId}
           setPending={setPending}
+          setCompletedStatus={setCompletedStatus}
         />
       ) : (
         <Dialog fullScreen open={true}>

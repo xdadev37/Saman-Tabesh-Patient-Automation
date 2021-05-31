@@ -1,4 +1,4 @@
-import { FC, Fragment, KeyboardEvent } from "react";
+import { FC, Fragment, KeyboardEvent, ChangeEvent } from "react";
 import {
   InputLabel,
   Input,
@@ -54,7 +54,7 @@ const NameFields: FC<IProps> = ({
         {...register<string>(id, {
           required: "پر کردن این فیلد الزامی است!",
         })}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
           setValue(id, event.target.value);
           setState(id);
         }}

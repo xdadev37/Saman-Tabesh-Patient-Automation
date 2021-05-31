@@ -2,59 +2,24 @@ import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
-import { Button, Grid, Avatar } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Check, ChevronRight, Assignment } from "@material-ui/icons";
+import { ChevronRight, Assignment } from "@material-ui/icons";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
 } from "../../../Redux/Slicer/alertMessageSlice";
 import axios from "axios";
-import {
-  selectRequiredField,
-  setName,
-  setFamilyName,
-} from "../../../Redux/Slicer/patientInfoSlice";
-import NameFields from "../../AddPatientPage/AddFormDescenders/nameFields";
-import NumericFields from "../../AddPatientPage/AddFormDescenders/numericFields";
-import RequiredFilesFields from "../../AddPatientPage/AddFormDescenders/FileInput/requiredFilesFields";
-
-const useStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    form: {
-      marginBottom: theme.spacing(10),
-      width: "70%",
-      "& > *": {
-        marginInline: theme.spacing(10),
-      },
-      "& > label": {
-        marginTop: theme.spacing(3),
-      },
-    },
-
-    marginTop: {
-      marginTop: theme.spacing(10),
-      marginBottom: theme.spacing(10),
-    },
-
-    avatar: {
-      width: theme.spacing(6),
-      height: theme.spacing(6),
-      backgroundColor: "#ff5722",
-      fontSize: "xx-large",
-      alignItems: "flex-start",
-    },
-  })
-);
+import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import { MyAvatar } from "../../../UI/Avatar";
+import AddPatientUI from "../../../UI/AddPatientUI";
 
 interface IProps {
   setPending: (arg: boolean) => void;
 }
 
 const EditUser: FC<IProps> = ({ setPending }) => {
-  const classes = useStyle();
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
   const { handleSubmit, watch, setValue } = methods;
@@ -86,7 +51,10 @@ const EditUser: FC<IProps> = ({ setPending }) => {
       setPending(true);
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .patch(`https://localhost:5001/api/patients/${patientId}`, dataGrid)
+          .patch(
+            `https://10.111.111.102:5001/api/patients/${patientId}`,
+            dataGrid
+          )
           .then((res) => {
             console.log(res);
             if ((res.status = 204)) {
@@ -125,15 +93,14 @@ const EditUser: FC<IProps> = ({ setPending }) => {
   return (
     <FormProvider {...methods}>
       <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <Grid container justify="space-around" className={classes.marginTop}>
-          <Avatar
+        <Grid container justify="space-around" style={{ marginTop: 90 }}>
+          <MyAvatar
             variant="rounded"
             alt="Avatar"
             src={requiredField.AvatarLink}
-            className={classes.avatar}
           >
             {avatarFirstLetter}
-          </Avatar>
+          </MyAvatar>
           <Button
             target="_blank"
             href={requiredField.NationalIdDoc}
@@ -154,46 +121,14 @@ const EditUser: FC<IProps> = ({ setPending }) => {
           </Button>
         </Grid>
 
-        <Grid item className={classes.form}>
-          {/* ------------------------ Names ------------------------ */}
-          <NameFields
-            id="Name"
-            title="نام"
-            placeholder="نام بیمار"
-            setState={(arg) => dispatch(setName(watch(arg)))}
-            defaultState={requiredField.Name}
-          />
-          <NameFields
-            id="FamilyName"
-            title="نام خانوادگی"
-            placeholder="نام خانوادگی بیمار"
-            setState={(arg) => dispatch(setFamilyName(watch(arg)))}
-            defaultState={requiredField.FamilyName}
-          />
-
-          {/* ------------------------ NumericFields ------------------------ */}
-          <NumericFields
-            checkNIdAl={checkNIdAl}
-            setCheckNIdAl={setCheckNIdAl}
-          />
-
-          {/* ------------------------ requiredFilesFields ------------------------ */}
-          <RequiredFilesFields
-            setAvatar={setAvatar}
-            setNationalIdDoc={setNationalIdDoc}
-          />
-          <Grid container justify="flex-end">
-            <Button
-              type="submit"
-              startIcon={<Check />}
-              variant="contained"
-              color="primary"
-              style={{ width: "30%" }}
-            >
-              ویرایش
-            </Button>
-          </Grid>
-        </Grid>
+        <AddPatientUI
+          requiredField={requiredField}
+          watch={watch}
+          setAvatar={setAvatar}
+          setNationalIdDoc={setNationalIdDoc}
+          checkNIdAl={checkNIdAl}
+          setCheckNIdAl={setCheckNIdAl}
+        />
       </form>
     </FormProvider>
   );

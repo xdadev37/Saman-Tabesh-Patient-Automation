@@ -8,8 +8,6 @@ import {
   ButtonGroup,
   Button,
   Grid,
-  Avatar,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
@@ -23,7 +21,7 @@ import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 import { Add, ChevronRight } from "@material-ui/icons";
-import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import InfoBar from "../../../UI/InfoBar";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +33,6 @@ const useStyle = makeStyles((theme: Theme) =>
 
 const CheckActions: FC = () => {
   const selectId = useAppSelector(selectPatientId);
-  const tempData = useAppSelector(selectRequiredField);
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const classes = useStyle();
@@ -46,7 +43,7 @@ const CheckActions: FC = () => {
     const data = async () => {
       const getActionFiles = new Promise((got, failed) => {
         axios
-          .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
+          .get(`http://10.111.111.102:3001/optionalForm?PatientId=${selectId}`)
           .then((res) => {
             if ((res.status = 200)) {
               for (let i = 0; i < res.data.length; i++) {
@@ -68,8 +65,6 @@ const CheckActions: FC = () => {
     data();
   }, [dispatch, selectId]);
 
-  const avatarFirstLetter = tempData.FamilyName.charAt(0);
-
   return (
     <Fragment>
       {loading ? (
@@ -90,13 +85,7 @@ const CheckActions: FC = () => {
             paddingX={3}
             justifyContent="space-around"
           >
-            <Avatar alt="Avatar" src={tempData.AvatarLink}>
-              {avatarFirstLetter}
-            </Avatar>
-            <Typography>{tempData.Name}</Typography>
-            <Typography>{tempData.FamilyName}</Typography>
-            <Typography>{tempData.NationalId}</Typography>
-            <Typography>{tempData.FileNumber}</Typography>
+            <InfoBar />
           </Box>
           <TableContainer component={Paper}>
             <Table>
