@@ -1,5 +1,15 @@
 import { FC, useState, Fragment } from "react";
-import { TableRow, TableCell, IconButton } from "@material-ui/core";
+import {
+  TableRow,
+  TableCell,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from "@material-ui/core";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
 import MoreDetailsTable from "./MoreDetailsTable/MoreDetailsTable";
 
@@ -25,6 +35,29 @@ const MainTable: FC<IProps> = ({
   Comment,
 }) => {
   const [open, setOpen] = useState(false);
+  const [commentAlert, setCommentAlert] = useState(false);
+
+  const commentDialog = (
+    <Dialog open={commentAlert} onClose={() => setCommentAlert(false)}>
+      <DialogTitle>
+        <span style={{ color: "#ccc" }}>توضیحات تکمیلی : </span>
+        &nbsp;
+        <span>{`${Name} ${FamilyName}`}</span>
+      </DialogTitle>
+      <DialogContent dividers={true}>
+        <DialogContentText>{Comment}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setCommentAlert(false)}
+        >
+          بستن
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <Fragment>
@@ -52,7 +85,9 @@ const MainTable: FC<IProps> = ({
         AvatarLink={Avatar}
         NationalIdDoc={NationalIdDoc}
         Comment={Comment}
+        setCommentAlert={setCommentAlert}
       />
+      {commentDialog}
     </Fragment>
   );
 };

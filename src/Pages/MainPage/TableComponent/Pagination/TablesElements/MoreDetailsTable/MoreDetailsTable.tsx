@@ -3,11 +3,12 @@ import {
   TableRow,
   TableCell,
   Collapse,
-  Box,
   TableHead,
   TableBody,
   Avatar,
   Link,
+  Button,
+  Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonsGroup from "./ButtonsGroup/ButtonsGroup";
@@ -22,6 +23,7 @@ interface IProps {
   AvatarLink: string;
   NationalIdDoc: string;
   Comment: string;
+  setCommentAlert: (arg: boolean) => void;
 }
 
 const useRowStyles = makeStyles({
@@ -42,6 +44,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   AvatarLink,
   NationalIdDoc,
   Comment,
+  setCommentAlert,
 }) => {
   const classes = useRowStyles();
 
@@ -54,36 +57,48 @@ const MoreDetailsTable: React.FC<IProps> = ({
           unmountOnExit
           style={{ backgroundColor: "#fafafa", borderRadius: "18px" }}
         >
-          <Box margin={1}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>عکس پرسنلی بیمار</TableCell>
-                  <TableCell>کپی کارت ملی بیمار</TableCell>
-                  <TableCell>توضیحات</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <Avatar alt="Avatar" src={AvatarLink} />
-                  </TableCell>
-                  <TableCell>
-                    {NationalIdDoc === "" ? (
-                      "ندارد"
-                    ) : (
-                      <Link
-                        target="_blank"
-                        href={NationalIdDoc}
-                        rel="noreferrer"
-                      >
-                        مشاهده پی دی اف
-                      </Link>
-                    )}
-                  </TableCell>
-                  <TableCell>{Comment === "" ? "ندارد" : Comment}</TableCell>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>عکس پرسنلی بیمار</TableCell>
+                <TableCell>کپی کارت ملی بیمار</TableCell>
+                <TableCell>توضیحات</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Avatar alt="Avatar" src={AvatarLink} />
+                </TableCell>
+                <TableCell>
+                  {NationalIdDoc === "" ? (
+                    "ندارد"
+                  ) : (
+                    <Link target="_blank" href={NationalIdDoc} rel="noreferrer">
+                      مشاهده پی دی اف
+                    </Link>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {Comment === "" ? (
+                    "ندارد"
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={() => setCommentAlert(true)}
+                    >
+                      مشاهده
+                    </Button>
+                  )}
+                </TableCell>
 
-                  {/* Buttons */}
+                {/* Buttons */}
+                <Grid
+                  component="td"
+                  container
+                  justify="center"
+                  style={{ paddingInline: 15, paddingBottom: 15 }}
+                >
                   <ButtonsGroup
                     id={id}
                     Name={Name}
@@ -94,10 +109,10 @@ const MoreDetailsTable: React.FC<IProps> = ({
                     NationalIdDoc={NationalIdDoc}
                     Comment={Comment}
                   />
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Box>
+                </Grid>
+              </TableRow>
+            </TableBody>
+          </Table>
         </Collapse>
       </TableCell>
     </TableRow>

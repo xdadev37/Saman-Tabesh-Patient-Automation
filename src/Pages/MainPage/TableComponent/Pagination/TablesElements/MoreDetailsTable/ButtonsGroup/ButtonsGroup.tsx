@@ -1,8 +1,7 @@
-import { FC, useState } from "react";
+import { FC, useState, Fragment } from "react";
 import {
   ButtonGroup,
   Button,
-  Grid,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -85,7 +84,7 @@ const ButtonsGroup: FC<IProps> = ({
   };
 
   return (
-    <Grid component="td" container alignItems="center" justify="center">
+    <Fragment>
       <ButtonGroup variant="contained" size="small">
         {/* {noneFiles && ( */}
         <Button
@@ -130,7 +129,7 @@ const ButtonsGroup: FC<IProps> = ({
         </Button>
       </ButtonGroup>
       {deleteDialog}
-    </Grid>
+    </Fragment>
   );
 };
 

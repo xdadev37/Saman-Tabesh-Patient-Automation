@@ -11,12 +11,12 @@ const Header: React.FC = () => {
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
+            <HeaderTitle />
+          </Grid>
+          <Grid item>
             <Typography>
               سامانه مدیریت اطلاعات بیماران رادیوتراپی - بیمارستان سلامت فردا
             </Typography>
-          </Grid>
-          <Grid item>
-            <HeaderTitle />
           </Grid>
         </Grid>
       </Toolbar>

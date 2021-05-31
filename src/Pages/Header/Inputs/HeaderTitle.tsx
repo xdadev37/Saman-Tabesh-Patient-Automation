@@ -10,7 +10,7 @@ const space = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       "& > *": {
-        marginLeft: theme.spacing(5),
+        marginInline: theme.spacing(1),
       },
     },
   })
@@ -31,7 +31,7 @@ const HeaderTitle: React.FC = () => {
       <Button
         style={{ color: "#fff", cursor: "pointer" }}
         onClick={home}
-        endIcon={<Home />}
+        startIcon={<Home />}
         size="large"
       >
         خانه

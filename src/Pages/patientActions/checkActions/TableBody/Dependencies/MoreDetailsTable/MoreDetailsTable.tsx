@@ -8,6 +8,7 @@ import {
   TableBody,
   Link,
   Typography,
+  Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dataArrayOptional } from "../../../../../../dataArray";
@@ -31,6 +32,8 @@ interface IProps {
   SonoReportDoc: string;
   MamoReportDoc: string;
   LabReportDoc: string;
+  Comment: string;
+  setCommentAlert: (arg: boolean) => void;
 }
 
 const MoreDetailsTable: React.FC<IProps> = ({
@@ -44,6 +47,8 @@ const MoreDetailsTable: React.FC<IProps> = ({
   SonoReportDoc,
   MamoReportDoc,
   LabReportDoc,
+  Comment,
+  setCommentAlert,
 }) => {
   const classes = useRowStyles();
   const none = <Typography>ندارد</Typography>;
@@ -179,6 +184,18 @@ const MoreDetailsTable: React.FC<IProps> = ({
                       >
                         مشاهده پی دی اف
                       </Link>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {Comment === "" ? (
+                      "ندارد"
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        onClick={() => setCommentAlert(true)}
+                      >
+                        مشاهده
+                      </Button>
                     )}
                   </TableCell>
                 </TableRow>
