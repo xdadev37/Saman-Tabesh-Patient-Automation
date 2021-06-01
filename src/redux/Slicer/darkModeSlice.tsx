@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
+const UIMode =
+  window.localStorage.getItem("UIMode") === "lightMode" ? false : true;
+
 const initialState = {
-  darkMode: false,
+  darkMode: UIMode,
 };
 
 export const darkModeSlice = createSlice({
@@ -11,8 +14,10 @@ export const darkModeSlice = createSlice({
   reducers: {
     setDarkMode: (state) => {
       if (state.darkMode) {
+        window.localStorage.setItem("UIMode", "lightMode");
         state.darkMode = false;
       } else {
+        window.localStorage.setItem("UIMode", "darkMode");
         state.darkMode = true;
       }
     },

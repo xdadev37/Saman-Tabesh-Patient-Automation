@@ -33,9 +33,9 @@ const Header: React.FC = () => {
               }}
             >
               {darkMode ? (
-                <Brightness7 />
+                <Brightness7 fontSize="large" />
               ) : (
-                <Brightness4 style={{ color: "#fff" }} />
+                <Brightness4 fontSize="large" style={{ color: "#fff" }} />
               )}
             </IconButton>
           </Grid>

@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { Grid, CssBaseline } from "@material-ui/core";
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
@@ -11,9 +11,11 @@ import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
 import { useAppSelector } from "./Redux/hook";
 import { selectDarkMode } from "./Redux/Slicer/darkModeSlice";
+import Login from "./Pages/Admin/Login/Login";
 
 const App: FC = () => {
   const darkMode = useAppSelector(selectDarkMode);
+  const [login, setLogin] = useState(false);
 
   const theme = useMemo(
     () =>
@@ -33,25 +35,29 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <RTLProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <Grid container>
-            <Grid item xs={12} sm={12} lg={12}>
-              <Header />
+        {login ? (
+          <BrowserRouter>
+            <Grid container>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Header />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                lg={12}
+                style={{ marginTop: 90, marginBottom: 50, marginInline: 15 }}
+              >
+                <Switch>
+                  <Route component={MainPage} exact path="/" />
+                  <Route component={AddPatientPage} path="/addNewPatient" />
+                </Switch>
+              </Grid>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              lg={12}
-              style={{ marginTop: 90, marginBottom: 50, marginInline: 15 }}
-            >
-              <Switch>
-                <Route component={MainPage} exact path="/" />
-                <Route component={AddPatientPage} path="/addNewPatient" />
-              </Switch>
-            </Grid>
-          </Grid>
-        </BrowserRouter>
+          </BrowserRouter>
+        ) : (
+          <Login />
+        )}
       </RTLProvider>
     </ThemeProvider>
   );
