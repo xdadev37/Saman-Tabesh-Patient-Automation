@@ -8,6 +8,8 @@ import {
   Box,
 } from "@material-ui/core";
 import { CheckCircle, NoteAdd, Error } from "@material-ui/icons";
+import { useAppSelector } from "../../../../../Redux/hook";
+import { selectDarkMode } from "../../../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   setNationalIdDoc: (arg: Blob) => void;
@@ -16,6 +18,7 @@ interface IProps {
 const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
   const [pdfStatus, setPdfStatus] = useState<string>("null");
   const pdfReader = new FileReader();
+  const darkMode = useAppSelector(selectDarkMode);
 
   let pdfStatusElement;
   switch (pdfStatus) {
@@ -36,7 +39,7 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
   return (
     <InputLabel
       htmlFor="NationalIdDoc"
-      style={{ width: "54%", color: "#2962ff" }}
+      style={{ width: "54%", color: darkMode ? "#fff" : "#2962ff" }}
     >
       کارت ملی :
       <Box marginX={10} marginY={2} padding={0}>

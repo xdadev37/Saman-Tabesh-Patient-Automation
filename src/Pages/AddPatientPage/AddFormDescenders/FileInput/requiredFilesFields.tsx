@@ -11,6 +11,7 @@ import {
   setComment,
   selectRequiredField,
 } from "../../../../Redux/Slicer/patientInfoSlice";
+import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
 import ImageValidating from "./filesValidating/imageValidating";
 import PDFValidating from "./filesValidating/pdfValidating";
 
@@ -22,6 +23,7 @@ interface IFiles {
 const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   const dispatch = useAppDispatch();
   const commentValue = useAppSelector(selectRequiredField);
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
     <Fragment>
@@ -35,7 +37,11 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
       {/* ------------------------ Comment ------------------------ */}
       <hr />
       <InputLabel
-        style={{ width: "320px", color: "#2962ff", marginBottom: "10px" }}
+        style={{
+          width: "320px",
+          color: darkMode ? "#fff" : "#2962ff",
+          marginBottom: "10px",
+        }}
       >
         <BorderColor />
         &nbsp; توضیحات
@@ -57,7 +63,7 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
         <Typography
           variant="subtitle2"
           component="span"
-          style={{ width: "320px", color: "#000" }}
+          style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
         >
           راهنما :
           <br />

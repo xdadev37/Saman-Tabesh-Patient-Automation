@@ -1,5 +1,5 @@
-import { FC, useMemo, useState } from "react";
-import { Grid, useMediaQuery } from "@material-ui/core";
+import { FC, useMemo } from "react";
+import { Grid, CssBaseline } from "@material-ui/core";
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider,
@@ -9,11 +9,11 @@ import RTLProvider from "./RTLProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
+import { useAppSelector } from "./Redux/hook";
+import { selectDarkMode } from "./Redux/Slicer/darkModeSlice";
 
 const App: FC = () => {
-  const [darkMode, setDarkMode] = useState(
-    useMediaQuery("(prefers-color-scheme: light)")
-  );
+  const darkMode = useAppSelector(selectDarkMode);
 
   const theme = useMemo(
     () =>
@@ -32,12 +32,19 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <RTLProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <Grid container>
             <Grid item xs={12} sm={12} lg={12}>
-              <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+              <Header />
             </Grid>
-            <Grid item xs={12} sm={12} lg={12}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              lg={12}
+              style={{ marginTop: 90, marginBottom: 50, marginInline: 15 }}
+            >
               <Switch>
                 <Route component={MainPage} exact path="/" />
                 <Route component={AddPatientPage} path="/addNewPatient" />

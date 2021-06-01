@@ -9,7 +9,6 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
@@ -23,19 +22,10 @@ import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
 import { Add, ChevronRight } from "@material-ui/icons";
 import InfoBar from "../../../UI/InfoBar";
 
-const useStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    marginTop: {
-      marginTop: theme.spacing(10),
-    },
-  })
-);
-
 const CheckActions: FC = () => {
   const selectId = useAppSelector(selectPatientId);
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
-  const classes = useStyle();
 
   useEffect(() => {
     dispatch(emptyData());
@@ -68,17 +58,12 @@ const CheckActions: FC = () => {
   return (
     <Fragment>
       {loading ? (
-        <Grid
-          container
-          className={classes.marginTop}
-          alignItems="center"
-          direction="column"
-        >
+        <Grid container alignItems="center" direction="column">
           <Skeleton variant="rect" width="95%" height={650} animation="wave" />
           <Skeleton width="95%" />
         </Grid>
       ) : (
-        <Box marginTop={10} paddingX={3}>
+        <Fragment>
           <Box
             display="flex"
             marginY={3}
@@ -112,7 +97,7 @@ const CheckActions: FC = () => {
               </ButtonGroup>
             </Box>
           </TableContainer>
-        </Box>
+        </Fragment>
       )}
     </Fragment>
   );

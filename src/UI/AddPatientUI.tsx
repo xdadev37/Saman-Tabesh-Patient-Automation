@@ -11,11 +11,7 @@ const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     form: {
       paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
       width: "70%",
-      "& > *": {
-        marginInline: theme.spacing(10),
-      },
       "& > label": {
         marginTop: theme.spacing(3),
       },

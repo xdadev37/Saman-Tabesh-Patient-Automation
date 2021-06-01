@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonsGroup from "./ButtonsGroup/ButtonsGroup";
+import { useAppSelector } from "../../../../../../Redux/hook";
+import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   open: boolean;
@@ -47,6 +49,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   setCommentAlert,
 }) => {
   const classes = useRowStyles();
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
     <TableRow className={classes.root}>
@@ -55,7 +58,10 @@ const MoreDetailsTable: React.FC<IProps> = ({
           in={open}
           mountOnEnter
           unmountOnExit
-          style={{ backgroundColor: "#fafafa", borderRadius: "18px" }}
+          style={{
+            backgroundColor: darkMode ? "#616161" : "#fafafa",
+            borderRadius: "18px",
+          }}
         >
           <Table size="small">
             <TableHead>

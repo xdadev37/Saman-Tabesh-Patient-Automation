@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { Button, Backdrop, CircularProgress, Grid } from "@material-ui/core";
+import { Button, Backdrop, CircularProgress } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
@@ -86,25 +86,23 @@ const AddPatientPage: FC = () => {
   return (
     <FormProvider {...methods}>
       <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <Grid item style={{ marginTop: 90 }}>
-          <Button
-            variant="outlined"
-            startIcon={<ChevronRight />}
-            onClick={() => history.push("/")}
-            style={{ float: "left", marginInline: 30 }}
-          >
-            برگشت
-          </Button>
+        <Button
+          variant="outlined"
+          startIcon={<ChevronRight />}
+          onClick={() => history.push("/")}
+          style={{ float: "left", marginInline: 30 }}
+        >
+          برگشت
+        </Button>
 
-          <AddPatientUI
-            requiredField={requiredField}
-            watch={watch}
-            setAvatar={setAvatar}
-            setNationalIdDoc={setNationalIdDoc}
-            checkNIdAl={checkNIdAl}
-            setCheckNIdAl={setCheckNIdAl}
-          />
-        </Grid>
+        <AddPatientUI
+          requiredField={requiredField}
+          watch={watch}
+          setAvatar={setAvatar}
+          setNationalIdDoc={setNationalIdDoc}
+          checkNIdAl={checkNIdAl}
+          setCheckNIdAl={setCheckNIdAl}
+        />
       </form>
       <AlertSnackbar open={open} alertStatus={alertStatus}>
         {alertText}

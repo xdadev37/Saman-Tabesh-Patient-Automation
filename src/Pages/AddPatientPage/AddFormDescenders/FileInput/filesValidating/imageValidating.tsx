@@ -8,6 +8,8 @@ import {
   Box,
 } from "@material-ui/core";
 import { CheckCircle, Image, Error } from "@material-ui/icons";
+import { useAppSelector } from "../../../../../Redux/hook";
+import { selectDarkMode } from "../../../../../Redux/Slicer/darkModeSlice";
 
 interface Props {
   setAvatar: (arg: Blob) => void;
@@ -16,6 +18,7 @@ interface Props {
 const ImageValidating: FC<Props> = ({ setAvatar }) => {
   const [avatarStatus, setAvatarStatus] = useState<string>("null");
   const imageReader = new FileReader();
+  const darkMode = useAppSelector(selectDarkMode);
 
   let avatarStatusElement;
   switch (avatarStatus) {
@@ -33,7 +36,10 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
   }
 
   return (
-    <InputLabel htmlFor="Avatar" style={{ width: "55%", color: "#2962ff" }}>
+    <InputLabel
+      htmlFor="Avatar"
+      style={{ width: "55%", color: darkMode ? "#fff" : "#2962ff" }}
+    >
       عکس پرسنلی بیمار :
       <Box marginX={10} marginY={2}>
         <Button

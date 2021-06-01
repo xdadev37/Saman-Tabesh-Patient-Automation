@@ -1,6 +1,8 @@
 import { FC, Fragment, ChangeEvent, useState } from "react";
 import { InputLabel, Input, Typography, Button, Box } from "@material-ui/core";
 import { CheckCircle, Error, NoteAdd } from "@material-ui/icons";
+import { useAppSelector } from "../../../../../../Redux/hook";
+import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   id: string;
@@ -11,6 +13,7 @@ interface IProps {
 const FilesFields: FC<IProps> = ({ id, title, func }) => {
   const [pdfStatus, setPdfStatus] = useState<string>("null");
   const pdfReader = new FileReader();
+  const darkMode = useAppSelector(selectDarkMode);
 
   let pdfStatusElement;
   switch (pdfStatus) {
@@ -30,7 +33,10 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
 
   return (
     <Fragment>
-      <InputLabel htmlFor={id} style={{ color: "#000", marginBottom: 35 }}>
+      <InputLabel
+        htmlFor={id}
+        style={{ color: darkMode ? "#fff" : "#000", marginBottom: 35 }}
+      >
         {title}
         <Box marginX={10} marginY={2}>
           <Button

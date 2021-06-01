@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dataArrayOptional } from "../../../../../../dataArray";
+import { useAppSelector } from "../../../../../../Redux/hook";
+import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
 
 const useRowStyles = makeStyles({
   root: {
@@ -52,12 +54,16 @@ const MoreDetailsTable: React.FC<IProps> = ({
 }) => {
   const classes = useRowStyles();
   const none = <Typography>ندارد</Typography>;
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
     <TableRow className={classes.root}>
       <TableCell colSpan={6}>
         <Collapse
-          style={{ backgroundColor: "#fafafa", borderRadius: "18px" }}
+          style={{
+            backgroundColor: darkMode ? "#616161" : "#fafafa",
+            borderRadius: "18px",
+          }}
           in={open}
           mountOnEnter
           unmountOnExit

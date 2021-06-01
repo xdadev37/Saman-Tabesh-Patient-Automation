@@ -7,6 +7,7 @@ import checkActionReducer from "./Slicer/checkActionSlice";
 import PaginationReducer from "./Slicer/paginationSlice";
 import AlertMessageReducer from "./Slicer/alertMessageSlice";
 import EditActionReducer from "./Slicer/editActionSlice";
+import DarkModeReducer from "./Slicer/darkModeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     pagination: PaginationReducer,
     alertMessage: AlertMessageReducer,
     editAction: EditActionReducer,
+    darkMode: DarkModeReducer,
   },
 });
 

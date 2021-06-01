@@ -6,6 +6,8 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
+import { useAppSelector } from "../../../Redux/hook";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   id: string;
@@ -27,10 +29,11 @@ const NameFields: FC<IProps> = ({
     formState: { errors },
     setValue,
   } = useFormContext();
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
     <Fragment>
-      <InputLabel style={{ color: "#2962ff" }} htmlFor={id}>
+      <InputLabel style={{ color: darkMode ? "#fff" : "#2962ff" }} htmlFor={id}>
         {title}
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>

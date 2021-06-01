@@ -5,15 +5,16 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { Brightness4 } from "@material-ui/icons";
+import { Brightness4, Brightness7 } from "@material-ui/icons";
 import HeaderTitle from "./Inputs/HeaderTitle";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import { setDarkMode, selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
 
-interface IProps {
-  setDarkMode: (arg: boolean) => void;
-  darkMode: boolean;
-}
+const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const darkMode = useAppSelector(selectDarkMode);
+  console.log(darkMode);
 
-const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
   return (
     <AppBar
       style={{
@@ -29,14 +30,14 @@ const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
             <IconButton
               edge="start"
               onClick={() => {
-                if (darkMode) {
-                  setDarkMode(false);
-                } else {
-                  setDarkMode(true);
-                }
+                dispatch(setDarkMode());
               }}
             >
-              <Brightness4 />
+              {darkMode ? (
+                <Brightness7 />
+              ) : (
+                <Brightness4 style={{ color: "#fff" }} />
+              )}
             </IconButton>
           </Grid>
           <Grid item>

@@ -11,13 +11,11 @@ import { Check, BorderColor } from "@material-ui/icons";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import FileMapper from "../Pages/patientActions/newAction/AddFilesForm/FileMapper/FileMapper";
 import InfoBar from "./InfoBar";
+import { useAppSelector } from "../Redux/hook";
+import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      padding: theme.spacing(10),
-    },
-
     button: {
       margin: theme.spacing(5),
       float: "right",
@@ -30,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     span: { marginInline: "10px", fontWeight: "normal" },
-    label: { width: "320px", color: "#000" },
   })
 );
 
@@ -68,18 +65,21 @@ const FileForm: FC<IProps> = ({
   setCompletedStatus,
 }) => {
   const classes = useStyles();
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
-    <Grid container className={classes.root} direction="column">
+    <Grid container direction="column">
       <Grid container justify="space-around" alignItems="baseline">
         <Grid item>
           <Typography variant="body1">
-            <span style={{ color: "#2962ff" }}>موضوع : </span>
+            <span style={{ color: darkMode ? "#fff" : "#2962ff" }}>
+              موضوع :{" "}
+            </span>
             {newActionName}
           </Typography>
           <Button
             style={{ marginTop: 10 }}
-            variant="outlined"
+            variant={darkMode ? "contained" : "outlined"}
             color="secondary"
             onClick={() => setCompletedStatus(false)}
           >
@@ -108,7 +108,9 @@ const FileForm: FC<IProps> = ({
       {/* Comment */}
       <Grid item>
         <hr />
-        <InputLabel className={classes.label}>
+        <InputLabel
+          style={{ width: "320px", color: darkMode ? "#fff" : "#2962ff" }}
+        >
           <BorderColor />
           <span className={classes.span}>توضیحات</span>
         </InputLabel>
@@ -130,7 +132,7 @@ const FileForm: FC<IProps> = ({
           <Typography
             variant="subtitle2"
             component="span"
-            className={classes.label}
+            style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
           >
             راهنما :
             <br />

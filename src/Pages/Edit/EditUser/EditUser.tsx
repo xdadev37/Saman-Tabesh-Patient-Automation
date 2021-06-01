@@ -12,6 +12,7 @@ import {
 } from "../../../Redux/Slicer/alertMessageSlice";
 import axios from "axios";
 import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { MyAvatar } from "../../../UI/Avatar";
 import AddPatientUI from "../../../UI/AddPatientUI";
 
@@ -29,6 +30,7 @@ const EditUser: FC<IProps> = ({ setPending }) => {
   const [checkNIdAl, setCheckNIdAl] = useState(false);
   const dataGrid = new FormData();
   const patientId = useAppSelector(selectPatientId);
+  const darkMode = useAppSelector(selectDarkMode);
 
   useEffect(() => {
     dispatch(setOpen(false));
@@ -93,7 +95,7 @@ const EditUser: FC<IProps> = ({ setPending }) => {
   return (
     <FormProvider {...methods}>
       <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <Grid container justify="space-around" style={{ marginTop: 90 }}>
+        <Grid container justify="space-around">
           <MyAvatar
             variant="rounded"
             alt="Avatar"
@@ -108,7 +110,7 @@ const EditUser: FC<IProps> = ({ setPending }) => {
             startIcon={<Assignment />}
             size="large"
             color="primary"
-            variant="outlined"
+            variant={darkMode ? "contained" : "outlined"}
           >
             کپی کارت ملی ثبت شده
           </Button>

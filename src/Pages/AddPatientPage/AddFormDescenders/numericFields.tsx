@@ -7,6 +7,7 @@ import {
   setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   checkNIdAl: boolean;
@@ -21,6 +22,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
     }
   };
   const defaultState = useAppSelector(selectRequiredField);
+  const darkMode = useAppSelector(selectDarkMode);
 
   const {
     register,
@@ -73,7 +75,10 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
   return (
     <Fragment>
       {/* ------------------------ NationalId ------------------------ */}
-      <InputLabel htmlFor="NationalId" style={{ color: "#2962ff" }}>
+      <InputLabel
+        htmlFor="NationalId"
+        style={{ color: darkMode ? "#fff" : "#2962ff" }}
+      >
         کد ملی
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
@@ -106,7 +111,10 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       )}
 
       {/* ------------------------ FileNumber ------------------------ */}
-      <InputLabel htmlFor="FileNumber" style={{ color: "#2962ff" }}>
+      <InputLabel
+        htmlFor="FileNumber"
+        style={{ color: darkMode ? "#fff" : "#2962ff" }}
+      >
         شماره پرونده<span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Box display="flex" padding="10px">

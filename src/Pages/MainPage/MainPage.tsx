@@ -2,7 +2,6 @@ import { FC, Fragment, useState, useEffect } from "react";
 import Options from "./Options/Options";
 import PageCounter from "./Options/PageCounter";
 import { Grid, Backdrop, CircularProgress } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
 import InfoCard from "./Card/InfoCard";
@@ -21,23 +20,8 @@ import {
 import EditUser from "../Edit/EditUser/EditUser";
 import EditFiles from "../Edit/EditAction/EditActionName";
 
-const useStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    marginY: {
-      marginTop: theme.spacing(10),
-      "& > *": { paddingInline: theme.spacing(3) },
-      marginBottom: theme.spacing(3),
-    },
-    midMargin: {
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(3),
-    },
-  })
-);
-
 const MainPage: FC = () => {
   const dispatch = useAppDispatch();
-  const classes = useStyle();
   const [loading, setLoading] = useState(true);
   const actionForm = useAppSelector(selectActionForm);
   const alertText = useAppSelector(selectAlertText);
@@ -76,32 +60,30 @@ const MainPage: FC = () => {
   const MainPageRender = (
     <Fragment>
       {loading ? (
-        <Grid
-          container
-          className={classes.marginY}
-          alignItems="center"
-          direction="column"
-        >
+        <Grid container alignItems="center" direction="column">
           <Skeleton variant="rect" width="95%" height={650} animation="wave" />
           <Skeleton width="95%" />
         </Grid>
       ) : (
-        <Grid
-          container
-          className={classes.marginY}
-          justify="center"
-          alignItems="baseline"
-        >
+        <Grid container justify="center" alignItems="baseline">
           <Grid item sm={12} md={8} lg={8}>
             <Options />
           </Grid>
-          <Grid item sm={12} md={4} lg={4} className={classes.midMargin}>
+          <Grid
+            item
+            sm={12}
+            md={4}
+            lg={4}
+            style={{ marginTop: 30, marginBottom: 30 }}
+          >
             <InfoCard />
           </Grid>
-          <Grid item className={classes.midMargin} sm={12} md={12} lg={12}>
+          <Grid item sm={12} md={12} lg={12}>
             <TableComponent />
           </Grid>
-          <PageCounter />
+          <Grid item sm={12} md={12} lg={12} style={{ marginTop: 30 }}>
+            <PageCounter />
+          </Grid>
         </Grid>
       )}
     </Fragment>
