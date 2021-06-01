@@ -13,7 +13,6 @@ import { setDarkMode, selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
-  console.log(darkMode);
 
   return (
     <AppBar

@@ -12,17 +12,19 @@ import {
 import { Add } from "@material-ui/icons";
 import Pagination from "./Pagination/Pagination";
 import { useHistory } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setName,
   setFamilyName,
   setNationalId,
   setFileNumber,
 } from "../../../Redux/Slicer/patientInfoSlice";
-import { useAppDispatch } from "../../../Redux/hook";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
 const TableComponent: React.FC = () => {
   let history = useHistory();
   const tableHead = [
+    "",
     "ردیف",
     "نام",
     "نام خانوادگی",
@@ -32,15 +34,20 @@ const TableComponent: React.FC = () => {
     "تاریخ ویرایش",
   ];
   const dispatch = useAppDispatch();
+  const darkMode = useAppSelector(selectDarkMode);
 
   return (
     <TableContainer component={Paper}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell />
             {tableHead.map((column) => (
-              <TableCell key={column}>{column}</TableCell>
+              <TableCell
+                style={{ backgroundColor: darkMode ? "#616161" : "#fafafa" }}
+                key={column}
+              >
+                {column}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
