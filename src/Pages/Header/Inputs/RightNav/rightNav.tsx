@@ -1,8 +1,8 @@
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 // import mainLogo from "./mainLogo.png";
-import { useAppDispatch } from "../../../Redux/hook";
-import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { useAppDispatch } from "../../../../Redux/hook";
+import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
 import { useHistory } from "react-router-dom";
 import { Home } from "@material-ui/icons";
 
@@ -16,7 +16,7 @@ const space = makeStyles((theme: Theme) =>
   })
 );
 
-const HeaderTitle: React.FC = () => {
+const RightNav: React.FC = () => {
   const classes = space();
   const dispatch = useAppDispatch();
   let history = useHistory();
@@ -28,6 +28,14 @@ const HeaderTitle: React.FC = () => {
 
   return (
     <Grid container alignItems="center" className={classes.root}>
+      {/* <img
+        style={{ cursor: "pointer" }}
+        src={mainLogo}
+        alt="Logo"
+        width="100"
+        onClick={home}
+      /> */}
+
       <Button
         style={{ color: "#fff", cursor: "pointer" }}
         onClick={home}
@@ -36,15 +44,8 @@ const HeaderTitle: React.FC = () => {
       >
         خانه
       </Button>
-      {/* <img
-        style={{ cursor: "pointer" }}
-        src={mainLogo}
-        alt="Logo"
-        width="100"
-        onClick={home}
-      /> */}
     </Grid>
   );
 };
 
-export default HeaderTitle;
+export default RightNav;

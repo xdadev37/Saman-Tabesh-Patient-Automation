@@ -8,6 +8,8 @@ import PaginationReducer from "./Slicer/paginationSlice";
 import AlertMessageReducer from "./Slicer/alertMessageSlice";
 import EditActionReducer from "./Slicer/editActionSlice";
 import DarkModeReducer from "./Slicer/darkModeSlice";
+import BackdropReducer from "./Slicer/backdropSlice";
+import LoginReducer from "./Slicer/loginSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const store = configureStore({
     alertMessage: AlertMessageReducer,
     editAction: EditActionReducer,
     darkMode: DarkModeReducer,
+    backdrop: BackdropReducer,
+    login: LoginReducer,
   },
 });
 

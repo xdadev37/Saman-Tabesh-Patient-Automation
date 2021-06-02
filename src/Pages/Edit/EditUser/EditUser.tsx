@@ -10,17 +10,14 @@ import {
   setAlertText,
   setOpen,
 } from "../../../Redux/Slicer/alertMessageSlice";
-import axios from "axios";
 import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
+import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import { MyAvatar } from "../../../UI/Avatar";
 import AddPatientUI from "../../../UI/AddPatientUI";
+import { patch } from "../../../tokenAuth";
 
-interface IProps {
-  setPending: (arg: boolean) => void;
-}
-
-const EditUser: FC<IProps> = ({ setPending }) => {
+const EditUser: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
   const { handleSubmit, watch, setValue } = methods;
@@ -50,16 +47,13 @@ const EditUser: FC<IProps> = ({ setPending }) => {
     dataGrid.append("Comment", requiredField.Comment);
 
     if (checkNIdAl === false) {
-      setPending(true);
+      dispatch(setBackdrop());
       const axiosPromise = new Promise((sent, rejected) => {
-        axios
-          .patch(
-            `https://10.111.111.102:5001/api/patients/${patientId}`,
-            dataGrid
-          )
+        patch
+          .patch(`/api/patients/${patientId}`, dataGrid)
           .then((res) => {
             console.log(res);
-            if ((res.status = 204)) {
+            if (res.status === 204) {
               dispatch(setActionForm("mainPage"));
               dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ویرایش شد"));
               dispatch(setAlertStatus("success"));
@@ -83,7 +77,7 @@ const EditUser: FC<IProps> = ({ setPending }) => {
             dispatch(setAlertStatus("error"));
             rejected(dispatch(setOpen(true)));
           })
-          .finally(() => setPending(false));
+          .finally(() => dispatch(setBackdrop()));
       });
 
       await axiosPromise;

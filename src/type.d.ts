@@ -33,3 +33,9 @@ interface IActionItems {
   LabReportDoc: string;
   Comment: string;
 }
+
+interface IAuth {
+  username: string;
+  hashedPassword: string;
+  token: string;
+}

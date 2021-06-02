@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import AddFiles from "./AddFilesForm/optionalFields";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import {
   setAlertStatus,
   setAlertText,
@@ -35,11 +36,7 @@ const modal = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProps {
-  setPending: (arg: boolean) => void;
-}
-
-const GetActionName: FC<IProps> = ({ setPending }) => {
+const GetActionName: FC = () => {
   const dispatch = useAppDispatch();
   const [newActionName, setNewActionName] = useState("");
   const [actionId, setActionId] = useState(0);
@@ -54,7 +51,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
 
   const newActionSubmit = async () => {
     if (newActionName !== "") {
-      setPending(true);
+      dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
         axios
           .post("http://10.111.111.102:3003/actionName", {
@@ -79,7 +76,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
 
             failed(dispatch(setOpen(true)));
           })
-          .finally(() => setPending(false));
+          .finally(() => dispatch(setBackdrop()));
       });
       await submit;
     }
@@ -134,7 +131,6 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
         <AddFiles
           newActionName={newActionName}
           actionId={actionId}
-          setPending={setPending}
           setCompletedStatus={setCompletedStatus}
         />
       ) : (

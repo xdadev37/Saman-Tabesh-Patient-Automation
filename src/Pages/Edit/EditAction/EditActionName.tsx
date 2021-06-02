@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Close, Check } from "@material-ui/icons";
-import axios from "axios";
+import { patch } from "../../../tokenAuth";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
 import {
@@ -22,6 +22,7 @@ import {
 } from "../../../Redux/Slicer/editActionSlice";
 import EditFiles from "./EditActionFiles/EditActionFiles";
 import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import {
   setAlertStatus,
   setAlertText,
@@ -38,11 +39,7 @@ const modal = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProps {
-  setPending: (arg: boolean) => void;
-}
-
-const GetActionName: FC<IProps> = ({ setPending }) => {
+const GetActionName: FC = () => {
   const dispatch = useAppDispatch();
   const [completedStatus, setCompletedStatus] = useState(false);
   const selectId = useAppSelector(selectPatientId);
@@ -57,9 +54,9 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
 
   const newActionSubmit = async () => {
     if (newActionName !== "") {
-      setPending(true);
+      dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
-        axios
+        patch
           .patch(`http://10.111.111.102:3003/actionName/${actionId}`, {
             Name: newActionName,
             PatientId: selectId,
@@ -81,7 +78,7 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
 
             failed(dispatch(setOpen(true)));
           })
-          .finally(() => setPending(false));
+          .finally(() => dispatch(setBackdrop()));
       });
       await submit;
     }
@@ -137,7 +134,6 @@ const GetActionName: FC<IProps> = ({ setPending }) => {
         <EditFiles
           newActionName={newActionName}
           actionId={actionId}
-          setPending={setPending}
           setCompletedStatus={setCompletedStatus}
         />
       ) : (

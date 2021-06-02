@@ -1,145 +1,60 @@
+import { FC, useState } from "react";
+import axios from "axios";
+import { useAppDispatch } from "../../../Redux/hook";
 import {
-  InputLabel,
-  Input,
-  Button,
-  Typography,
-  Grid,
-  FormHelperText,
-  Box,
-} from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import backgroundLogin from "./SalamateFarda.jpg";
+  setAlertStatus,
+  setAlertText,
+  setOpen,
+} from "../../../Redux/Slicer/alertMessageSlice";
+import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
+import { setLogin } from "../../../Redux/Slicer/loginSlice";
+import LoginUI from "../../../UI/LoginUI";
 
-const Login: React.FC = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
-  //   const time = () => {
-  //     document.querySelectorAll(
-  //       "#time"
-  //     )![0].innerHTML = new Date().toLocaleTimeString("fa-IR");
-  //   };
-  //   setInterval(time, 1000);
+const Login: FC = () => {
+  const dispatch = useAppDispatch();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const submit = async () => {
-    await null;
+    dispatch(setBackdrop());
+    await new Promise((authorized, unAuthorized) => {
+      axios
+        .post("/api/login", {
+          email: username,
+          password: password,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            window.sessionStorage.setItem("token", res.data.token);
+            authorized(dispatch(setLogin()));
+          } else {
+            dispatch(setAlertStatus("error"));
+            dispatch(setAlertText("نام کاربری و یا گذرواژه اشتباه است"));
+
+            unAuthorized(dispatch(setOpen(true)));
+          }
+        })
+        .catch((error) => {
+          console.log(error.request);
+          if (error.request.responseText === "") {
+            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+          } else {
+            dispatch(setAlertText(error.request.responseText));
+          }
+
+          dispatch(setAlertStatus("error"));
+          unAuthorized(setOpen(true));
+        })
+        .finally(() => setBackdrop());
+    });
   };
 
   return (
-    <Grid
-      container
-      justify="center"
-      style={{
-        width: "80%",
-        border: "5px solid #303030",
-        borderRadius: "18px",
-        height: "80%",
-        marginTop: 200,
-        marginBottom: 100,
-        marginInline: 150,
-      }}
-    >
-      <Grid item sm={6} md={6} lg={6} style={{ paddingInline: 50 }}>
-        <Box marginY={5}>
-          <Typography variant="h5" color="primary">
-            ورود
-          </Typography>
-          <FormHelperText style={{ color: "#000" }}>
-            برای وررود نام کاربری و رمز عبور صحیح را وارد نمایید
-          </FormHelperText>
-          <hr />
-        </Box>
-        <Box marginY={5}>
-          <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-            <InputLabel htmlFor="username" style={{ color: "#000" }}>
-              نام کاربری
-            </InputLabel>
-            <Input
-              fullWidth
-              id="username"
-              type="search"
-              {...register("username", {
-                required: "پر کردن این فیلد الزامی است!",
-              })}
-            />
-            {errors.username && (
-              <Typography color="secondary">
-                {errors.username.message}
-              </Typography>
-            )}
-            <InputLabel
-              htmlFor="password"
-              style={{ marginTop: 30, color: "#000" }}
-            >
-              پسورد
-            </InputLabel>
-            <Input
-              fullWidth
-              id="password"
-              type="password"
-              {...register("password", {
-                required: "پر کردن این فیلد الزامی است!",
-                minLength: {
-                  value: 8,
-                  message: "مقدار رمز عبور حداقل باید 8 رقم باشد!",
-                },
-              })}
-            />
-            {errors.password && (
-              <Typography color="secondary">
-                {errors.password.message}
-              </Typography>
-            )}
-            <Box marginY={5}>
-              <Button
-                style={{ width: "100%" }}
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                ورود
-              </Button>
-            </Box>
-          </form>
-        </Box>
-      </Grid>
-      <Grid item sm={6} md={6} lg={6}>
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          style={{
-            backgroundImage: `url(${backgroundLogin})`,
-            backgroundSize: "cover",
-            height: "100%",
-            borderRadius: "10px",
-          }}
-        >
-          {/* <Box
-            border="3px solid #303030"
-            borderRadius="18px"
-            width={250}
-            paddingY={5}
-            paddingX={6}
-            style={{ backgroundColor: "#fafafa" }}
-          >
-            <Typography
-              id="time"
-              variant="h3"
-              style={{
-                color: "#000",
-                fontWeight: "bolder",
-              }}
-            >
-              00:00:00
-            </Typography>
-          </Box> */}
-        </Grid>
-      </Grid>
-    </Grid>
+    <LoginUI
+      setUsername={setUsername}
+      setPassword={setPassword}
+      submit={submit}
+    />
   );
 };
 

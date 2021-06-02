@@ -1,7 +1,7 @@
 import { FC, Fragment, useState, useEffect } from "react";
 import Options from "./Options/Options";
 import PageCounter from "./Options/PageCounter";
-import { Grid, Backdrop, CircularProgress } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
 import InfoCard from "./Card/InfoCard";
@@ -11,12 +11,6 @@ import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import axios from "axios";
 import GetActionName from "../patientActions/newAction/getActionName";
 import CheckAction from "../patientActions/checkActions/checkActions";
-import AlertSnackbar from "../../UI/AlertSnackbar";
-import {
-  selectAlertText,
-  selectAlertStatus,
-  selectOpen,
-} from "../../Redux/Slicer/alertMessageSlice";
 import EditUser from "../Edit/EditUser/EditUser";
 import EditFiles from "../Edit/EditAction/EditActionName";
 
@@ -24,10 +18,6 @@ const MainPage: FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const actionForm = useAppSelector(selectActionForm);
-  const alertText = useAppSelector(selectAlertText);
-  const alertStatus = useAppSelector(selectAlertStatus);
-  const open = useAppSelector(selectOpen);
-  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     const data = async () => {
@@ -36,7 +26,7 @@ const MainPage: FC = () => {
         axios
           .get("http://10.111.111.102:3002/requiredForm")
           .then((res) => {
-            if ((res.status = 200)) {
+            if (res.status === 200) {
               for (let i = 0; i < res.data.length; i++) {
                 dispatch(setDataGrid(res.data[i]));
               }
@@ -92,7 +82,7 @@ const MainPage: FC = () => {
   let Page = <Fragment></Fragment>;
   switch (actionForm) {
     case "getActionName":
-      Page = <GetActionName setPending={setPending} />;
+      Page = <GetActionName />;
       break;
 
     case "mainPage":
@@ -104,28 +94,18 @@ const MainPage: FC = () => {
       break;
 
     case "editUser":
-      Page = <EditUser setPending={setPending} />;
+      Page = <EditUser />;
       break;
 
     case "editAction":
-      Page = <EditFiles setPending={setPending} />;
+      Page = <EditFiles />;
       break;
 
     default:
       Page = MainPageRender;
   }
 
-  return (
-    <Fragment>
-      {Page}
-      <AlertSnackbar open={open} alertStatus={alertStatus}>
-        {alertText}
-      </AlertSnackbar>
-      <Backdrop open={pending} style={{ zIndex: 10000 }}>
-        <CircularProgress />
-      </Backdrop>
-    </Fragment>
-  );
+  return Page;
 };
 
 export default MainPage;

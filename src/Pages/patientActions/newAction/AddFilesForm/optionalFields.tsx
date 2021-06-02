@@ -8,19 +8,18 @@ import {
   setOpen,
 } from "../../../../Redux/Slicer/alertMessageSlice";
 import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
+import { setBackdrop } from "../../../../Redux/Slicer/backdropSlice";
 import FileFormEditor from "../../../../UI/FileFormEditor";
 
 interface IProps {
   newActionName: string;
   actionId: number;
-  setPending: (arg: boolean) => void;
   setCompletedStatus: (arg: boolean) => void;
 }
 
 const OptionalFields: FC<IProps> = ({
   newActionName,
   actionId,
-  setPending,
   setCompletedStatus,
 }) => {
   const dispatch = useAppDispatch();
@@ -37,7 +36,7 @@ const OptionalFields: FC<IProps> = ({
   const selectId = useAppSelector(selectPatientId);
 
   const dispatchData = async () => {
-    setPending(true);
+    dispatch(setBackdrop());
     const dispatcher = new Promise((sent, rejected) => {
       axios
         .post("http://10.111.111.102:3001/optionalForm", {
@@ -76,7 +75,7 @@ const OptionalFields: FC<IProps> = ({
 
           rejected(dispatch(setOpen(true)));
         })
-        .finally(() => setPending(false));
+        .finally(() => dispatch(setBackdrop()));
     });
 
     await dispatcher;

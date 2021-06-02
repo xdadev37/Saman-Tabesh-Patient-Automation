@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import { Grid, CssBaseline } from "@material-ui/core";
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
@@ -11,11 +11,13 @@ import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
 import { useAppSelector } from "./Redux/hook";
 import { selectDarkMode } from "./Redux/Slicer/darkModeSlice";
+import { selectLogin } from "./Redux/Slicer/loginSlice";
 import Login from "./Pages/Admin/Login/Login";
+import GlobalRedux from "./globalRedux";
 
 const App: FC = () => {
   const darkMode = useAppSelector(selectDarkMode);
-  const [login, setLogin] = useState(false);
+  const login = useAppSelector(selectLogin);
 
   const theme = useMemo(
     () =>
@@ -58,6 +60,7 @@ const App: FC = () => {
         ) : (
           <Login />
         )}
+        <GlobalRedux />
       </RTLProvider>
     </ThemeProvider>
   );

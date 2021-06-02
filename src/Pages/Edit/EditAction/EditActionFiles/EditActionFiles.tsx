@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
-import axios from "axios";
+import { patch } from "../../../../tokenAuth";
 import { selectPatientId } from "../../../../Redux/Slicer/idPasserSlice";
 import { selectActionComment } from "../../../../Redux/Slicer/editActionSlice";
 import {
@@ -9,19 +9,18 @@ import {
   setOpen,
 } from "../../../../Redux/Slicer/alertMessageSlice";
 import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
+import { setBackdrop } from "../../../../Redux/Slicer/backdropSlice";
 import FileFormEditor from "../../../../UI/FileFormEditor";
 
 interface IProps {
   newActionName: string;
   actionId: number;
-  setPending: (arg: boolean) => void;
-  setCompletedStatus:(arg:boolean)=>void
+  setCompletedStatus: (arg: boolean) => void;
 }
 
 const OptionalFields: FC<IProps> = ({
   newActionName,
   actionId,
-  setPending,
   setCompletedStatus,
 }) => {
   const dispatch = useAppDispatch();
@@ -39,9 +38,9 @@ const OptionalFields: FC<IProps> = ({
   const [LabReportDoc, setLabReportDoc] = useState<object | string>("");
 
   const dispatchData = async () => {
-    setPending(true);
+    dispatch(setBackdrop());
     const dispatcher = new Promise((sent, rejected) => {
-      axios
+      patch
         .patch(`http://10.111.111.102:3001/optionalForm/${actionId}`, {
           Name: newActionName,
           ActionId: actionId,
@@ -78,7 +77,7 @@ const OptionalFields: FC<IProps> = ({
 
           rejected(dispatch(setOpen(true)));
         })
-        .finally(() => setPending(false));
+        .finally(() => dispatch(setBackdrop()));
     });
 
     await dispatcher;
