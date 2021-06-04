@@ -1,6 +1,6 @@
-import { AppBar, Toolbar, Grid } from "@material-ui/core";
+import { AppBar, Toolbar, Grid, Typography } from "@material-ui/core";
 import RightNav from "./Inputs/RightNav/rightNav";
-import LeftNav from "./Inputs/leftNav";
+import LeftNav from "./Inputs/LeftNav/leftNav";
 
 const Header: React.FC = () => {
   return (
@@ -13,6 +13,11 @@ const Header: React.FC = () => {
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             <RightNav />
+          </Grid>
+          <Grid item>
+            <Typography variant="h6">
+              سامانه مدیریت اطلاعات بیماران رادیوتراپی - بیمارستان سلامت فردا
+            </Typography>
           </Grid>
           <Grid item>
             <LeftNav />

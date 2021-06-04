@@ -7,9 +7,7 @@ export const backdropSlice = createSlice({
   name: "backdropSlice",
   initialState,
   reducers: {
-    setBackdrop: (state) => {
-      state ? (state = false) : (state = true);
-    },
+    setBackdrop: (state) => (state = state ? false : true),
   },
 });
 

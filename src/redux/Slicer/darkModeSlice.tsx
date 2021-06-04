@@ -2,30 +2,30 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 const UIMode =
-  window.localStorage.getItem("UIMode") === "lightMode" ? false : true;
+  window.localStorage.getItem("UIMode") === "darkMode" ? true : false;
 
-const initialState = {
-  darkMode: UIMode,
-};
+const initialState = UIMode;
 
 export const darkModeSlice = createSlice({
   name: "darkModeSlice",
   initialState,
   reducers: {
     setDarkMode: (state) => {
-      if (state.darkMode) {
+      if (state) {
         window.localStorage.setItem("UIMode", "lightMode");
-        state.darkMode = false;
+        state = false;
       } else {
         window.localStorage.setItem("UIMode", "darkMode");
-        state.darkMode = true;
+        state = true;
       }
+
+      return state;
     },
   },
 });
 
 export const { setDarkMode } = darkModeSlice.actions;
 
-export const selectDarkMode = (state: RootState) => state.darkMode.darkMode;
+export const selectDarkMode = (state: RootState) => state.darkMode;
 
 export default darkModeSlice.reducer;

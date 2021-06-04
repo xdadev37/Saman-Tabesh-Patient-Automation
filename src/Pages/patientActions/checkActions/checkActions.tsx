@@ -33,7 +33,7 @@ const CheckActions: FC = () => {
     const data = async () => {
       const getActionFiles = new Promise((got, failed) => {
         axios
-          .get(`http://10.111.111.102:3001/optionalForm?PatientId=${selectId}`)
+          .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
           .then((res) => {
             if ((res.status = 200)) {
               for (let i = 0; i < res.data.length; i++) {

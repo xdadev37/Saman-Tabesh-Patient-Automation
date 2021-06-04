@@ -19,7 +19,7 @@ const Login: FC = () => {
     dispatch(setBackdrop());
     await new Promise((authorized, unAuthorized) => {
       axios
-        .post("/api/login", {
+        .post("https://reqres.in/api/login", {
           email: username,
           password: password,
         })
@@ -35,7 +35,7 @@ const Login: FC = () => {
           }
         })
         .catch((error) => {
-          console.log(error.request);
+          console.log(error);
           if (error.request.responseText === "") {
             dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
           } else {
@@ -45,7 +45,7 @@ const Login: FC = () => {
           dispatch(setAlertStatus("error"));
           unAuthorized(setOpen(true));
         })
-        .finally(() => setBackdrop());
+        .finally(() => dispatch(setBackdrop()));
     });
   };
 

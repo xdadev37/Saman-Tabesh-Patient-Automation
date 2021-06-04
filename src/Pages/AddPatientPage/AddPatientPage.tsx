@@ -42,7 +42,7 @@ const AddPatientPage: FC = () => {
       dispatch(setBackdrop());
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .post("http://10.111.111.102:5000/api/patients", dataGrid)
+          .post("http://localhost:3002/requiredForm", dataGrid)
           .then((res) => {
             console.log(res);
             if (res.status === 200) {

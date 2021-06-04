@@ -57,7 +57,7 @@ const GetActionName: FC = () => {
       dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
         patch
-          .patch(`http://10.111.111.102:3003/actionName/${actionId}`, {
+          .patch(`http://localhost:3003/actionName/${actionId}`, {
             Name: newActionName,
             PatientId: selectId,
           })

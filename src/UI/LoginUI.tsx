@@ -42,6 +42,7 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const hashingPassword = async (arg: string) => {
@@ -92,6 +93,7 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                   required: "پر کردن این فیلد الزامی است!",
                 })}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  setValue("username", event.target.value);
                   setUsername(event.target.value);
                 }}
               />
@@ -100,6 +102,7 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                   {errors.username.message}
                 </Typography>
               )}
+              <FormHelperText>hint: eve.holt@reqres.in</FormHelperText>
               <InputLabel
                 htmlFor="password"
                 style={{
@@ -123,7 +126,9 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                   },
                 })}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  hashingPassword(event.target.value);
+                  setValue("password", event.target.value);
+                  setPassword(event.target.value);
+                  // hashingPassword(event.target.value);
                 }}
               />
               {errors.password && (
@@ -131,6 +136,7 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                   {errors.password.message}
                 </Typography>
               )}
+              <FormHelperText>hint: cityslicka</FormHelperText>
               <Box marginY={5}>
                 <Button
                   style={{ width: "100%" }}

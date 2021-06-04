@@ -54,7 +54,7 @@ const GetActionName: FC = () => {
       dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
         axios
-          .post("http://10.111.111.102:3003/actionName", {
+          .post("http://localhost:3003/actionName", {
             Name: newActionName,
             PatientId: selectId,
           })
