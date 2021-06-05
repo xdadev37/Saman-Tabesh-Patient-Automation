@@ -42,10 +42,13 @@ const AddPatientPage: FC = () => {
       dispatch(setBackdrop());
       const axiosPromise = new Promise((sent, rejected) => {
         axios
-          .post("http://localhost:3002/requiredForm", dataGrid)
+          .post(
+            "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm",
+            dataGrid
+          )
           .then((res) => {
             console.log(res);
-            if (res.status === 200) {
+            if (res.status === 201) {
               dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
               dispatch(setAlertStatus("success"));
               history.push("/");

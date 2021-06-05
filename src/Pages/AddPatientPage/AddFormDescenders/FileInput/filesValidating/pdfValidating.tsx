@@ -75,19 +75,15 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
               } else {
                 const pdf = atob(String(pdfReader.result).slice(28));
 
-                if (pdf.match(/PDF/) === null) {
-                  setPdfStatus("fileFormat");
-                } else {
-                  if (!pdf.match(/PDF/)![0]) {
-                    setPdfStatus("fileFormat");
+                if (pdf.match(/PDF/)) {
+                  if (fileSize > 300000) {
+                    setPdfStatus("size");
                   } else {
-                    if (fileSize > 300000) {
-                      setPdfStatus("size");
-                    } else {
-                      setPdfStatus("ok");
-                      setNationalIdDoc(file);
-                    }
+                    setPdfStatus("ok");
+                    setNationalIdDoc(file);
                   }
+                } else {
+                  setPdfStatus("fileFormat");
                 }
               }
             };
@@ -104,7 +100,6 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
           alignItems="center"
           justifyContent="center"
           padding="10px"
-          width="140%"
         >
           <Error color="error" />
           &nbsp;

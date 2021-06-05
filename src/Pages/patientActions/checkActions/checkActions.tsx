@@ -33,9 +33,11 @@ const CheckActions: FC = () => {
     const data = async () => {
       const getActionFiles = new Promise((got, failed) => {
         axios
-          .get(`http://localhost:3001/optionalForm?PatientId=${selectId}`)
+          .get(
+            `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm?PatientId=${selectId}`
+          )
           .then((res) => {
-            if ((res.status = 200)) {
+            if ((res.status === 200)) {
               for (let i = 0; i < res.data.length; i++) {
                 dispatch(setFilesLinks(res.data[i]));
                 got(setLoading(false));

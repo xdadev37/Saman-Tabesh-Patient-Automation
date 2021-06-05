@@ -3,12 +3,10 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Button,
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { Add, Edit } from "@material-ui/icons";
-import { MyAvatar } from "../../../../UI/Avatar";
+import { Add, Edit, ExpandMore } from "@material-ui/icons";
 import { useAppDispatch } from "../../../../Redux/hook";
 import { setLogin } from "../../../../Redux/Slicer/loginSlice";
 
@@ -29,12 +27,10 @@ const Profile: FC = () => {
   return (
     <Fragment>
       <IconButton aria-controls="authMenu" onClick={handleMenu}>
-        {/* <ExpandMore /> */}
-        <MyAvatar alt="Avatar" src="" style={{ alignItems: "center" }}>
-          آ
-        </MyAvatar>
+        <ExpandMore />
       </IconButton>
       <Menu
+        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -60,10 +56,8 @@ const Profile: FC = () => {
           <ListItemText primary="تغییر گذرواژه" />
         </MenuItem>
         <hr />
-        <MenuItem>
-          <Button color="secondary" onClick={logout}>
-            خروج
-          </Button>
+        <MenuItem button onClick={logout} style={{ color: "#f50057" }}>
+          خروج
         </MenuItem>
       </Menu>
     </Fragment>

@@ -24,7 +24,9 @@ const MainPage: FC = () => {
       dispatch(emptyData());
       const getData = new Promise((got, failed) => {
         axios
-          .get("http://localhost:3002/requiredForm")
+          .get(
+            "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm"
+          )
           .then((res) => {
             if (res.status === 200) {
               for (let i = 0; i < res.data.length; i++) {

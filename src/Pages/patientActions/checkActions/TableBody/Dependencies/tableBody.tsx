@@ -66,13 +66,17 @@ const TableBody: FC<IProps> = ({
 
   const deleteAction = async (id: number) => {
     const deletePromise = new Promise((deleted, failed) => {
-      axios.delete(`http://localhost:3003/actionName/${id}`).then((res) => {
-        if ((res.status = 200)) {
-          deleted(dispatch(setActionForm("checkAction")));
-        } else {
-          failed(console.log("Action Not Happened", res.statusText));
-        }
-      });
+      axios
+        .delete(
+          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName/${id}`
+        )
+        .then((res) => {
+          if ((res.status = 200)) {
+            deleted(dispatch(setActionForm("checkAction")));
+          } else {
+            failed(console.log("Action Not Happened", res.statusText));
+          }
+        });
     });
 
     await deletePromise;

@@ -49,13 +49,17 @@ const ButtonsGroup: FC<IProps> = ({
 
   const deleteAction = async (id: number) => {
     const deletePromise = new Promise((deleted, failed) => {
-      axios.delete(`http://localhost:3002/requiredForm/${id}`).then((res) => {
-        if ((res.status = 200)) {
-          deleted(history.push("/"));
-        } else {
-          failed(console.log("Action Not Happened", res.statusText));
-        }
-      });
+      axios
+        .delete(
+          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${id}`
+        )
+        .then((res) => {
+          if ((res.status = 200)) {
+            deleted(history.push("/"));
+          } else {
+            failed(console.log("Action Not Happened", res.statusText));
+          }
+        });
     });
 
     await deletePromise;

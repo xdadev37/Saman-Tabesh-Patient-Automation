@@ -54,12 +54,15 @@ const GetActionName: FC = () => {
       dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
         axios
-          .post("http://localhost:3003/actionName", {
-            Name: newActionName,
-            PatientId: selectId,
-          })
+          .post(
+            "https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName",
+            {
+              Name: newActionName,
+              PatientId: selectId,
+            }
+          )
           .then((res) => {
-            if ((res.status = 201)) {
+            if (res.status === 201) {
               setActionId(res.data.id);
               submitted(setCompletedStatus(true));
             } else {

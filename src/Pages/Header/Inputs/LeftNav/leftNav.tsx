@@ -6,6 +6,7 @@ import {
 } from "../../../../Redux/Slicer/darkModeSlice";
 import IOSSwitch from "./darkModeToggle";
 import Profile from "./Profile";
+import { MyAvatar } from "../../../../UI/Avatar";
 
 const LeftNav: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,11 @@ const LeftNav: React.FC = () => {
       </Grid>
       <Grid item>
         <Profile />
+      </Grid>
+      <Grid item>
+        <MyAvatar alt="Avatar" src="" style={{ alignItems: "center" }}>
+          آ
+        </MyAvatar>
       </Grid>
     </Grid>
   );

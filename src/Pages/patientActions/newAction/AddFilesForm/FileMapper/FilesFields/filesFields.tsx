@@ -71,19 +71,15 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
                 } else {
                   const pdf = atob(String(pdfReader.result).slice(28));
 
-                  if (pdf.match(/PDF/) === null) {
-                    setPdfStatus("fileFormat");
-                  } else {
-                    if (!pdf.match(/PDF/)![0]) {
-                      setPdfStatus("fileFormat");
+                  if (pdf.match(/PDF/)) {
+                    if (fileSize > 300000) {
+                      setPdfStatus("size");
                     } else {
-                      if (fileSize > 300000) {
-                        setPdfStatus("size");
-                      } else {
-                        setPdfStatus("ok");
-                        func(file);
-                      }
+                      setPdfStatus("ok");
+                      func(file);
                     }
+                  } else {
+                    setPdfStatus("fileFormat");
                   }
                 }
               };

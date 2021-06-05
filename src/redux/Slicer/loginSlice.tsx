@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-const initialState = false;
+const tokenValidation =
+  window.sessionStorage.getItem("token") === null ? false : true;
+
+const initialState = tokenValidation;
 
 export const loginSlice = createSlice({
   name: "loginSlice",

@@ -76,19 +76,15 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
               } else {
                 const image = atob(String(imageReader.result).slice(23));
 
-                if (image.match(/JFIF/) === null) {
-                  setAvatarStatus("fileFormat");
-                } else {
-                  if (!image.match(/JFIF/)![0]) {
-                    setAvatarStatus("fileFormat");
+                if (image.match(/JFIF/)) {
+                  if (fileSize > 100000) {
+                    setAvatarStatus("size");
                   } else {
-                    if (fileSize > 100000) {
-                      setAvatarStatus("size");
-                    } else {
-                      setAvatarStatus("ok");
-                      setAvatar(file);
-                    }
+                    setAvatarStatus("ok");
+                    setAvatar(file);
                   }
+                } else {
+                  setAvatarStatus("fileFormat");
                 }
               }
             };
@@ -105,7 +101,6 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
           alignItems="center"
           justifyContent="center"
           padding="10px"
-          width="150%"
         >
           <Error color="error" />
           &nbsp;

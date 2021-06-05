@@ -1,4 +1,4 @@
-import { FC, Fragment, KeyboardEvent } from "react";
+import { FC, Fragment, ChangeEvent } from "react";
 import { InputLabel, Input, Typography, Box } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
@@ -16,11 +16,6 @@ interface IProps {
 
 const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
   const dispatch = useAppDispatch();
-  const numberType = (event: KeyboardEvent) => {
-    if (event.which < 47 || event.which > 58) {
-      event.preventDefault();
-    }
-  };
   const defaultState = useAppSelector(selectRequiredField);
   const darkMode = useAppSelector(selectDarkMode);
 
@@ -30,6 +25,29 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
     formState: { errors },
     setValue,
   } = useFormContext();
+
+  const numericValidation = (
+    event: ChangeEvent<HTMLInputElement>,
+    id: string,
+    text: string
+  ) => {
+    const inputValue = event.target.value;
+
+    if (inputValue === " ") {
+      event.target.value = "";
+    } else {
+      if (inputValue !== "") {
+        if (!inputValue.charAt(inputValue.length - 1).match(/[0-9]/)) {
+          event.target.value = inputValue.slice(0, inputValue.length - 1);
+          alert(`${text} فقط شامل اعداد است`);
+        } else {
+          setValue(id, inputValue);
+        }
+      } else {
+        setValue(id, "");
+      }
+    }
+  };
 
   const checkNationalIdAl = (value: string) => {
     if (value !== undefined) {
@@ -84,7 +102,6 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       </InputLabel>
       <Input
         defaultValue={defaultState.NationalId}
-        onKeyPress={numberType}
         inputProps={{ maxLength: 10 }}
         placeholder="کد ملی بیمار"
         id="NationalId"
@@ -94,9 +111,13 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
             value: 10,
             message: "مقدار کد ملی حداقل باید 10 عدد باشد!",
           },
+          pattern: {
+            value: /[0-9]{10}/,
+            message: "کد ملی فقط شامل اعداد است",
+          },
         })}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setValue("NationalId", event.target.value);
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          numericValidation(event, "NationalId", "کد ملی");
           dispatch(setNationalId(watch("NationalId")));
           checkNationalIdAl(watch("NationalId"));
         }}
@@ -120,20 +141,23 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       <Box display="flex" padding="10px">
         <Input
           defaultValue={defaultState.FileNumber}
-          onKeyPress={numberType}
           id="FileNumber"
-          inputProps={{ maxLength: 6 }}
           placeholder="ادامه شماره"
+          inputProps={{ maxLength: 6 }}
           {...register("FileNumber", {
             required: "پر کردن این فیلد الزامی است!",
             minLength: {
               value: 6,
               message: "مقدار شماره پرونده حداقل باید 6 عدد باشد!",
             },
+            pattern: {
+              value: /[0-9]{6}/,
+              message: "شماره پرونده فقط شامل اعداد است",
+            },
           })}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setValue("FileNumber", event.target.value);
-            dispatch(setFileNumber(watch("FileNumber")));
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            numericValidation(event, "ّFileNumber", "شماره پرونده");
+            dispatch(setFileNumber(watch("ّFileNumber")));
           }}
           style={{ width: "80px" }}
         />

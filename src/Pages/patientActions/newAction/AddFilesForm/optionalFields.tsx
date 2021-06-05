@@ -39,23 +39,26 @@ const OptionalFields: FC<IProps> = ({
     dispatch(setBackdrop());
     const dispatcher = new Promise((sent, rejected) => {
       axios
-        .post("http://localhost:3001/optionalForm", {
-          Name: newActionName,
-          ActionId: actionId,
-          PatientId: selectId,
-          PathologyDoc: PathologyDoc,
-          TreatmentDoc: TreatmentDoc,
-          CommitmentDoc: CommitmentDoc,
-          MRIReportDoc: MRIReportDoc,
-          CTReportDoc: CTReportDoc,
-          PETReportDoc: PETReportDoc,
-          SonoReportDoc: SonoReportDoc,
-          MamoReportDoc: MamoReportDoc,
-          LabReportDoc: LabReportDoc,
-          Comment: userComment,
-        })
+        .post(
+          "https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm",
+          {
+            Name: newActionName,
+            ActionId: actionId,
+            PatientId: selectId,
+            PathologyDoc: PathologyDoc,
+            TreatmentDoc: TreatmentDoc,
+            CommitmentDoc: CommitmentDoc,
+            MRIReportDoc: MRIReportDoc,
+            CTReportDoc: CTReportDoc,
+            PETReportDoc: PETReportDoc,
+            SonoReportDoc: SonoReportDoc,
+            MamoReportDoc: MamoReportDoc,
+            LabReportDoc: LabReportDoc,
+            Comment: userComment,
+          }
+        )
         .then((res) => {
-          if ((res.status = 201)) {
+          if (res.status === 201) {
             dispatch(setAlertText("رویداد با موفقیت ثبت شد"));
             dispatch(setAlertStatus("success"));
             dispatch(setActionForm("checkAction"));
@@ -69,11 +72,15 @@ const OptionalFields: FC<IProps> = ({
           }
         })
         .catch((error) => {
-          console.log(error.request);
-          dispatch(setAlertText(error.request.responseText));
-          dispatch(setAlertStatus("error"));
+            console.log(error.request);
+            if (error.request.responseText === "") {
+              dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+            } else {
+              dispatch(setAlertText(error.request.responseText));
+            }
 
-          rejected(dispatch(setOpen(true)));
+            dispatch(setAlertStatus("error"));
+            rejected(dispatch(setOpen(true)));
         })
         .finally(() => dispatch(setBackdrop()));
     });

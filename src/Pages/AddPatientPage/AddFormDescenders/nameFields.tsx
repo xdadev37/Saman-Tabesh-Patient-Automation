@@ -1,4 +1,4 @@
-import { FC, Fragment, KeyboardEvent, ChangeEvent } from "react";
+import { FC, Fragment, ChangeEvent } from "react";
 import {
   InputLabel,
   Input,
@@ -39,26 +39,35 @@ const NameFields: FC<IProps> = ({
       </InputLabel>
       <Input
         defaultValue={defaultState}
-        onKeyPress={(event: KeyboardEvent) => {
-          const ew = event.which;
-
-          if (ew === 32) {
-            return;
-          }
-          if (ew < 1574 || ew > 1741) {
-            event.preventDefault();
-            alert("تنها حروف فارسی مجازند.");
-          }
-        }}
         inputProps={{ maxLength: 80 }}
         placeholder={placeholder}
         type="search"
         id={id}
         {...register<string>(id, {
           required: "پر کردن این فیلد الزامی است!",
+          pattern: {
+            value: /[ا-ی آ]{80}/,
+            message: "فقط از حروف فارسی استفاده نمایید",
+          },
         })}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(id, event.target.value);
+          const inputValue = event.target.value;
+
+          if (inputValue === " ") {
+            event.target.value = "";
+          } else {
+            if (inputValue !== "") {
+              if (!inputValue.charAt(inputValue.length - 1).match(/[ا-ی آ]/)) {
+                event.target.value = inputValue.slice(0, inputValue.length - 1);
+                alert("تنها حروف فارسی مجازند");
+              } else {
+                setValue(id, inputValue);
+              }
+            } else {
+              setValue(id, "");
+            }
+          }
+
           setState(id);
         }}
       />

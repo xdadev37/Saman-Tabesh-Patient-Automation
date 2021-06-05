@@ -91,6 +91,10 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                 placeholder="نام کاربری خود را وارد کنید"
                 {...register("username", {
                   required: "پر کردن این فیلد الزامی است!",
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "فرمت ایمیل نادرست است",
+                  },
                 })}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                   setValue("username", event.target.value);
@@ -122,8 +126,12 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
                   required: "پر کردن این فیلد الزامی است!",
                   minLength: {
                     value: 8,
-                    message: "مقدار رمز عبور حداقل باید 8 رقم باشد!",
+                    message: "مقدار گذرواژه حداقل باید 8 رقم باشد!",
                   },
+                  // pattern: {
+                  //   value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
+                  //   message: "گذرواژه وارد شده اشتباه است",
+                  // },
                 })}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                   setValue("password", event.target.value);

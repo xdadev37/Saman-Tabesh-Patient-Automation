@@ -57,10 +57,13 @@ const GetActionName: FC = () => {
       dispatch(setBackdrop());
       const submit = new Promise((submitted, failed) => {
         patch
-          .patch(`http://localhost:3003/actionName/${actionId}`, {
-            Name: newActionName,
-            PatientId: selectId,
-          })
+          .patch(
+            `https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName/${actionId}`,
+            {
+              Name: newActionName,
+              PatientId: selectId,
+            }
+          )
           .then((res) => {
             if ((res.status = 200)) {
               submitted(setCompletedStatus(true));
@@ -72,10 +75,14 @@ const GetActionName: FC = () => {
             }
           })
           .catch((error) => {
-            console.log(error);
-            dispatch(setAlertText("خطای سرور!"));
-            dispatch(setAlertStatus("error"));
+            console.log(error.request);
+            if (error.request.responseText === "") {
+              dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+            } else {
+              dispatch(setAlertText(error.request.responseText));
+            }
 
+            dispatch(setAlertStatus("error"));
             failed(dispatch(setOpen(true)));
           })
           .finally(() => dispatch(setBackdrop()));

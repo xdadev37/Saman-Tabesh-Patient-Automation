@@ -41,21 +41,24 @@ const OptionalFields: FC<IProps> = ({
     dispatch(setBackdrop());
     const dispatcher = new Promise((sent, rejected) => {
       patch
-        .patch(`http://localhost:3001/optionalForm/${actionId}`, {
-          Name: newActionName,
-          ActionId: actionId,
-          PatientId: selectId,
-          PathologyDoc: PathologyDoc,
-          TreatmentDoc: TreatmentDoc,
-          CommitmentDoc: CommitmentDoc,
-          MRIReportDoc: MRIReportDoc,
-          CTReportDoc: CTReportDoc,
-          PETReportDoc: PETReportDoc,
-          SonoReportDoc: SonoReportDoc,
-          MamoReportDoc: MamoReportDoc,
-          LabReportDoc: LabReportDoc,
-          Comment: userComment,
-        })
+        .patch(
+          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm/${actionId}`,
+          {
+            Name: newActionName,
+            ActionId: actionId,
+            PatientId: selectId,
+            PathologyDoc: PathologyDoc,
+            TreatmentDoc: TreatmentDoc,
+            CommitmentDoc: CommitmentDoc,
+            MRIReportDoc: MRIReportDoc,
+            CTReportDoc: CTReportDoc,
+            PETReportDoc: PETReportDoc,
+            SonoReportDoc: SonoReportDoc,
+            MamoReportDoc: MamoReportDoc,
+            LabReportDoc: LabReportDoc,
+            Comment: userComment,
+          }
+        )
         .then((res) => {
           if ((res.status = 200)) {
             dispatch(setAlertText("تغییرات با موفقیت ثبت شد"));
