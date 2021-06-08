@@ -48,7 +48,7 @@ const App: FC = () => {
                 xs={12}
                 sm={12}
                 lg={12}
-                style={{ marginTop: 90, marginBottom: 50, marginInline: 15 }}
+                style={{ marginTop: 90, marginBottom: 50, marginInline: 150 }}
               >
                 <Switch>
                   <Route component={MainPage} exact path="/" />

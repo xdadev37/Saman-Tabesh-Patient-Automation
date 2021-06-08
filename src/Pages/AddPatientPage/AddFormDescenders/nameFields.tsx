@@ -33,11 +33,15 @@ const NameFields: FC<IProps> = ({
 
   return (
     <Fragment>
-      <InputLabel style={{ color: darkMode ? "#fff" : "#2962ff" }} htmlFor={id}>
+      <InputLabel
+        style={{ color: darkMode ? "#fff" : "#2962ff", fontSize: "14px" }}
+        htmlFor={id}
+      >
         {title}
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Input
+        style={{ fontSize: "small" }}
         defaultValue={defaultState}
         inputProps={{ maxLength: 80 }}
         placeholder={placeholder}
@@ -45,10 +49,6 @@ const NameFields: FC<IProps> = ({
         id={id}
         {...register<string>(id, {
           required: "پر کردن این فیلد الزامی است!",
-          pattern: {
-            value: /[ا-ی آ]{80}/,
-            message: "فقط از حروف فارسی استفاده نمایید",
-          },
         })}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           const inputValue = event.target.value;
@@ -75,7 +75,7 @@ const NameFields: FC<IProps> = ({
         <Typography color="secondary">{errors[id].message}</Typography>
       )}
       <FormHelperText>
-        <Typography variant="subtitle2" component="span">
+        <Typography variant="caption" component="span">
           تنها حروف فارسی مجازند.
         </Typography>
       </FormHelperText>

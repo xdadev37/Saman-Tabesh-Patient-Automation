@@ -1,9 +1,10 @@
-import { FC, Fragment, ChangeEvent } from "react";
+import { FC, ChangeEvent } from "react";
 import {
   InputLabel,
   Typography,
   FormHelperText,
   TextField,
+  Grid,
 } from "@material-ui/core";
 import { BorderColor } from "@material-ui/icons";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
@@ -26,53 +27,59 @@ const RequiredFilesFields: FC<IFiles> = ({ setAvatar, setNationalIdDoc }) => {
   const darkMode = useAppSelector(selectDarkMode);
 
   return (
-    <Fragment>
+    <Grid container justify="space-between">
       {/* ------------------------ Avatar ------------------------ */}
-      <ImageValidating setAvatar={setAvatar} />
+      <Grid item>
+        <ImageValidating setAvatar={setAvatar} />
+      </Grid>
 
       <hr />
       {/* ------------------------ NationalIdDoc ------------------------ */}
-      <PDFValidating setNationalIdDoc={setNationalIdDoc} />
+      <Grid item>
+        <PDFValidating setNationalIdDoc={setNationalIdDoc} />
+      </Grid>
 
       {/* ------------------------ Comment ------------------------ */}
-      <hr />
-      <InputLabel
-        style={{
-          width: "320px",
-          color: darkMode ? "#fff" : "#2962ff",
-          marginBottom: "10px",
-        }}
-      >
-        <BorderColor />
-        &nbsp; توضیحات
-      </InputLabel>
-      <TextField
-        defaultValue={commentValue.Comment}
-        autoComplete="off"
-        label="توضیحات تکمیلی"
-        variant="filled"
-        multiline
-        rows={4}
-        fullWidth
-        inputProps={{ maxLength: 800 }}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          dispatch(setComment(event.target.value));
-        }}
-      />
-      <FormHelperText>
-        <Typography
-          variant="subtitle2"
-          component="span"
+      <Grid item sm={12} md={12} lg={12}>
+        <hr style={{ marginTop: 10, marginBottom: 10 }} />
+        <InputLabel
+          style={{
+            color: darkMode ? "#fff" : "#2962ff",
+            fontSize: "14px",
+          }}
+        >
+          <BorderColor />
+          &nbsp; توضیحات
+        </InputLabel>
+        <br />
+        <TextField
+          defaultValue={commentValue.Comment}
+          autoComplete="off"
+          label="توضیحات تکمیلی"
+          variant="filled"
+          multiline
+          rows={3}
+          size="small"
+          fullWidth
+          inputProps={{ maxLength: 800 }}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            dispatch(setComment(event.target.value));
+          }}
+        />
+        <FormHelperText
           style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
         >
-          راهنما :
           <br />
-          حداکثر تعداد برای توضیحات کاراکتر مجاز : 800
-          <br />
-          در آخر برای ثبت نهایی دکمه ثبت را بفشارید
-        </Typography>
-      </FormHelperText>
-    </Fragment>
+          <Typography variant="caption" component="span">
+            راهنما :
+            <br />
+            حداکثر تعداد برای توضیحات کاراکتر مجاز : 800
+            <br />
+            در آخر برای ثبت نهایی دکمه ثبت را بفشارید
+          </Typography>
+        </FormHelperText>
+      </Grid>
+    </Grid>
   );
 };
 

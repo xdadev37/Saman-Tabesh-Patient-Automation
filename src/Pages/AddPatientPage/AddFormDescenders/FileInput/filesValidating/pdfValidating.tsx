@@ -39,7 +39,7 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
   return (
     <InputLabel
       htmlFor="NationalIdDoc"
-      style={{ width: "54%", color: darkMode ? "#fff" : "#2962ff" }}
+      style={{ color: darkMode ? "#fff" : "#2962ff", fontSize: "14px" }}
     >
       کارت ملی :
       <Box marginX={10} marginY={2} padding={0}>
@@ -48,6 +48,7 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
           color="primary"
           component="span"
           startIcon={<NoteAdd />}
+          size="small"
         >
           {pdfStatus === "ok" ? (
             <CheckCircle style={{ color: "#fff" }} />
@@ -108,8 +109,10 @@ const PDFValidating: FC<IProps> = ({ setNationalIdDoc }) => {
           </Typography>
         </Box>
       )}
-      <FormHelperText>
-        <Typography variant="subtitle2" component="span">
+      <FormHelperText
+        style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
+      >
+        <Typography variant="caption" component="span">
           حداکثر حجم فایل مجاز : 300 کیلوبایت
           <br />
           فرمت فایل قابل قبول : PDF

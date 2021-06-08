@@ -1,7 +1,4 @@
-import { FC, ChangeEvent } from "react";
 import {
-  InputLabel,
-  Input,
   Button,
   Typography,
   Grid,
@@ -11,9 +8,9 @@ import {
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useAppSelector } from "../Redux/hook";
 import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
-import bcrypt from "bcryptjs";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import backgroundLogin from "./SalamateFarda.jpg";
+import UserPassUI from "./UserPassUI";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,25 +26,15 @@ const useStyle = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  setUsername: (arg: string) => void;
-  setPassword: (arg: string) => void;
   submit: () => void;
 }
 
-const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
+const LoginUI: React.FC<IProps> = ({ submit }) => {
   const classes = useStyle();
   const darkMode = useAppSelector(selectDarkMode);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    setValue,
-  } = useForm();
-
-  const hashingPassword = async (arg: string) => {
-    await bcrypt.hash(arg, 10).then((res) => setPassword(res));
-  };
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
   return (
     <Grid
@@ -69,93 +56,29 @@ const LoginUI: FC<IProps> = ({ setUsername, setPassword, submit }) => {
           </Typography>
           <Box marginY={5}>
             <FormHelperText style={{ color: darkMode ? "#fff" : "#000" }}>
-              برای وررود نام کاربری و رمز عبور صحیح را وارد نمایید
+              برای وررود نام کاربری و گذرواژه صحیح را وارد نمایید
             </FormHelperText>
             <hr />
           </Box>
           <Box marginY={5}>
-            <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-              <InputLabel
-                htmlFor="username"
-                style={{
-                  color: darkMode ? "#fff" : "#000",
-                  marginBottom: 10,
-                }}
-              >
-                نام کاربری :
-              </InputLabel>
-              <Input
-                fullWidth
-                id="username"
-                type="search"
-                placeholder="نام کاربری خود را وارد کنید"
-                {...register("username", {
-                  required: "پر کردن این فیلد الزامی است!",
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: "فرمت ایمیل نادرست است",
-                  },
-                })}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setValue("username", event.target.value);
-                  setUsername(event.target.value);
-                }}
-              />
-              {errors.username && (
-                <Typography color="secondary">
-                  {errors.username.message}
-                </Typography>
-              )}
-              <FormHelperText>hint: eve.holt@reqres.in</FormHelperText>
-              <InputLabel
-                htmlFor="password"
-                style={{
-                  marginTop: 30,
-                  marginBottom: 10,
-                  color: darkMode ? "#fff" : "#000",
-                }}
-              >
-                گذرواژه :
-              </InputLabel>
-              <Input
-                fullWidth
-                id="password"
-                type="password"
-                placeholder="گذرواژه خود را وارد کنید"
-                {...register("password", {
-                  required: "پر کردن این فیلد الزامی است!",
-                  minLength: {
-                    value: 8,
-                    message: "مقدار گذرواژه حداقل باید 8 رقم باشد!",
-                  },
-                  // pattern: {
-                  //   value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
-                  //   message: "گذرواژه وارد شده اشتباه است",
-                  // },
-                })}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setValue("password", event.target.value);
-                  setPassword(event.target.value);
-                  // hashingPassword(event.target.value);
-                }}
-              />
-              {errors.password && (
-                <Typography color="secondary">
-                  {errors.password.message}
-                </Typography>
-              )}
-              <FormHelperText>hint: cityslicka</FormHelperText>
-              <Box marginY={5}>
-                <Button
-                  style={{ width: "100%" }}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  ورود
-                </Button>
-              </Box>
-            </form>
+            <FormProvider {...methods}>
+              <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+                <UserPassUI />
+                <br />
+                <FormHelperText>User: eve.holt@reqres.in</FormHelperText>
+                <FormHelperText>Pass: cityslicka</FormHelperText>
+                <Box marginY={5}>
+                  <Button
+                    style={{ width: "100%" }}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
+                    ورود
+                  </Button>
+                </Box>
+              </form>
+            </FormProvider>
           </Box>
         </Grid>
         <Grid

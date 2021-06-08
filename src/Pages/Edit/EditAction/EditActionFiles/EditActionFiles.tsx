@@ -2,7 +2,6 @@ import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import { patch } from "../../../../tokenAuth";
 import { selectPatientId } from "../../../../Redux/Slicer/idPasserSlice";
-import { selectActionComment } from "../../../../Redux/Slicer/editActionSlice";
 import {
   setAlertStatus,
   setAlertText,
@@ -25,8 +24,6 @@ const OptionalFields: FC<IProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const selectId = useAppSelector(selectPatientId);
-  const actionComment = useAppSelector(selectActionComment);
-  const [userComment, setUserComment] = useState(actionComment);
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
   const [TreatmentDoc, setTreatmentDoc] = useState<object | string>("");
   const [CommitmentDoc, setCommitmentDoc] = useState<object | string>("");
@@ -44,7 +41,6 @@ const OptionalFields: FC<IProps> = ({
         .patch(
           `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm/${actionId}`,
           {
-            Name: newActionName,
             ActionId: actionId,
             PatientId: selectId,
             PathologyDoc: PathologyDoc,
@@ -56,11 +52,10 @@ const OptionalFields: FC<IProps> = ({
             SonoReportDoc: SonoReportDoc,
             MamoReportDoc: MamoReportDoc,
             LabReportDoc: LabReportDoc,
-            Comment: userComment,
           }
         )
         .then((res) => {
-          if ((res.status = 200)) {
+          if ((res.status === 200)) {
             dispatch(setAlertText("تغییرات با موفقیت ثبت شد"));
             dispatch(setAlertStatus("success"));
             dispatch(setActionForm("checkAction"));
@@ -90,7 +85,6 @@ const OptionalFields: FC<IProps> = ({
     <FileFormEditor
       submit={dispatchData}
       newActionName={newActionName}
-      setUserComment={setUserComment}
       setPathologyDoc={setPathologyDoc}
       setTreatmentDoc={setTreatmentDoc}
       setCommitmentDoc={setCommitmentDoc}
@@ -100,7 +94,6 @@ const OptionalFields: FC<IProps> = ({
       setSonoReportDoc={setSonoReportDoc}
       setMamoReportDoc={setMamoReportDoc}
       setLabReportDoc={setLabReportDoc}
-      actionComment={userComment}
       setCompletedStatus={setCompletedStatus}
     />
   );

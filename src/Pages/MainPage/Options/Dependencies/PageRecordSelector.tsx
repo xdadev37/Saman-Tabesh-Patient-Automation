@@ -26,8 +26,11 @@ const PageRecordSelector: FC = () => {
 
   return (
     <FormControl>
-      <InputLabel id={recordId}>رکورد</InputLabel>
+      <InputLabel style={{ fontSize: "13px" }} id={recordId}>
+        رکورد
+      </InputLabel>
       <Select
+        style={{ width: "80%", fontSize: "small" }}
         onChange={handleChange}
         value={record}
         className={classes.select}
@@ -42,7 +45,7 @@ const PageRecordSelector: FC = () => {
         <MenuItem value={20}>20</MenuItem>
         <MenuItem value={25}>25</MenuItem>
       </Select>
-      <FormHelperText>انتخاب تعداد رکورد</FormHelperText>
+      <FormHelperText>تعداد رکورد</FormHelperText>
     </FormControl>
   );
 };

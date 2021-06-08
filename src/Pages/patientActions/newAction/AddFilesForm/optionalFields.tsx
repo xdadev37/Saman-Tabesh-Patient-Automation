@@ -23,7 +23,6 @@ const OptionalFields: FC<IProps> = ({
   setCompletedStatus,
 }) => {
   const dispatch = useAppDispatch();
-  const [userComment, setUserComment] = useState("");
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
   const [TreatmentDoc, setTreatmentDoc] = useState<object | string>("");
   const [CommitmentDoc, setCommitmentDoc] = useState<object | string>("");
@@ -54,7 +53,6 @@ const OptionalFields: FC<IProps> = ({
             SonoReportDoc: SonoReportDoc,
             MamoReportDoc: MamoReportDoc,
             LabReportDoc: LabReportDoc,
-            Comment: userComment,
           }
         )
         .then((res) => {
@@ -93,7 +91,6 @@ const OptionalFields: FC<IProps> = ({
       setCompletedStatus={setCompletedStatus}
       submit={dispatchData}
       newActionName={newActionName}
-      setUserComment={setUserComment}
       setPathologyDoc={setPathologyDoc}
       setTreatmentDoc={setTreatmentDoc}
       setCommitmentDoc={setCommitmentDoc}
@@ -103,7 +100,6 @@ const OptionalFields: FC<IProps> = ({
       setSonoReportDoc={setSonoReportDoc}
       setMamoReportDoc={setMamoReportDoc}
       setLabReportDoc={setLabReportDoc}
-      actionComment={userComment}
     />
   );
 };

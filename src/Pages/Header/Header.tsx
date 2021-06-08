@@ -15,7 +15,7 @@ const Header: React.FC = () => {
             <RightNav />
           </Grid>
           <Grid item>
-            <Typography variant="h6">
+            <Typography>
               سامانه مدیریت اطلاعات بیماران رادیوتراپی - بیمارستان سلامت فردا
             </Typography>
           </Grid>

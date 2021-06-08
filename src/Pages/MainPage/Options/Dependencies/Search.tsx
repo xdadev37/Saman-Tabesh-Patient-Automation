@@ -11,7 +11,9 @@ const Search: React.FC = () => {
 
   return (
     <FormControl>
-      <InputLabel htmlFor={searchId}>جستجو</InputLabel>
+      <InputLabel style={{ fontSize: "13px" }} htmlFor={searchId}>
+        جستجو
+      </InputLabel>
       <Input
         id={searchId}
         endAdornment={
@@ -19,7 +21,6 @@ const Search: React.FC = () => {
             <SearchIcon />
           </InputAdornment>
         }
-        style={{ width: "400px" }}
       />
     </FormControl>
   );

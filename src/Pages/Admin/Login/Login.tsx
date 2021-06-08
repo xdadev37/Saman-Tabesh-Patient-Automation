@@ -1,6 +1,5 @@
-import { FC, useState } from "react";
 import axios from "axios";
-import { useAppDispatch } from "../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setAlertStatus,
   setAlertText,
@@ -8,12 +7,16 @@ import {
 } from "../../../Redux/Slicer/alertMessageSlice";
 import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import { setLogin } from "../../../Redux/Slicer/loginSlice";
+import {
+  selectUsername,
+  selectPass,
+} from "../../../Redux/Slicer/userPassSlice";
 import LoginUI from "../../../UI/LoginUI";
 
-const Login: FC = () => {
+const Login: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const username = useAppSelector(selectUsername);
+  const password = useAppSelector(selectPass);
 
   const submit = async () => {
     dispatch(setBackdrop());
@@ -49,13 +52,7 @@ const Login: FC = () => {
     });
   };
 
-  return (
-    <LoginUI
-      setUsername={setUsername}
-      setPassword={setPassword}
-      submit={submit}
-    />
-  );
+  return <LoginUI submit={submit} />;
 };
 
 export default Login;

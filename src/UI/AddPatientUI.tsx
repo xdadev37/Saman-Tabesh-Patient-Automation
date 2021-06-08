@@ -40,35 +40,46 @@ const AddPatientUI: React.FC<IProps> = ({
   const dispatch = useAppDispatch();
 
   return (
-    <Grid item className={classes.form}>
+    <Grid container justify="space-between" className={classes.form}>
       {/* ------------------------ Names ------------------------ */}
-      <NameFields
-        id="Name"
-        title="نام"
-        placeholder="نام بیمار"
-        setState={(arg) => dispatch(setName(watch(arg)))}
-        defaultState={requiredField.Name}
-      />
-      <NameFields
-        id="FamilyName"
-        title="نام خانوادگی"
-        placeholder="نام خانوادگی بیمار"
-        setState={(arg) => dispatch(setFamilyName(watch(arg)))}
-        defaultState={requiredField.FamilyName}
-      />
+      <Grid item>
+        <NameFields
+          id="Name"
+          title="نام"
+          placeholder="نام بیمار"
+          setState={(arg) => dispatch(setName(watch(arg)))}
+          defaultState={requiredField.Name}
+        />
+        <br />
+        <NameFields
+          id="FamilyName"
+          title="نام خانوادگی"
+          placeholder="نام خانوادگی بیمار"
+          setState={(arg) => dispatch(setFamilyName(watch(arg)))}
+          defaultState={requiredField.FamilyName}
+        />
+      </Grid>
 
       {/* ------------------------ NumericFields ------------------------ */}
-      <NumericFields checkNIdAl={checkNIdAl} setCheckNIdAl={setCheckNIdAl} />
+      <hr />
+      <Grid item>
+        <NumericFields checkNIdAl={checkNIdAl} setCheckNIdAl={setCheckNIdAl} />
+      </Grid>
 
       {/* ------------------------ requiredFilesFields ------------------------ */}
-      <RequiredFilesFields
-        setAvatar={setAvatar}
-        setNationalIdDoc={setNationalIdDoc}
-      />
+      <Grid item>
+        <hr style={{ marginTop: 10, marginBottom: 10 }} />
+        <RequiredFilesFields
+          setAvatar={setAvatar}
+          setNationalIdDoc={setNationalIdDoc}
+        />
+      </Grid>
+
       <Grid container justify="flex-end">
         <Button
           type="submit"
-          startIcon={<Check />}
+          size="small"
+          startIcon={<Check fontSize="small" />}
           variant="contained"
           color="primary"
           style={{ width: "30%" }}

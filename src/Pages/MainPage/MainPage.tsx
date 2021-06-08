@@ -4,7 +4,6 @@ import PageCounter from "./Options/PageCounter";
 import { Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
-import InfoCard from "./Card/InfoCard";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
 import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
@@ -58,23 +57,14 @@ const MainPage: FC = () => {
         </Grid>
       ) : (
         <Grid container justify="center" alignItems="baseline">
-          <Grid item sm={12} md={8} lg={8}>
+          <Grid item sm={12} md={12} lg={12}>
             <Options />
           </Grid>
-          <Grid
-            item
-            sm={12}
-            md={4}
-            lg={4}
-            style={{ marginTop: 30, marginBottom: 30 }}
-          >
-            <InfoCard />
+          <Grid item sm={12} md={12} lg={12} style={{ marginBottom: 30 }}>
+            <PageCounter />
           </Grid>
           <Grid item sm={12} md={12} lg={12}>
             <TableComponent />
-          </Grid>
-          <Grid item sm={12} md={12} lg={12} style={{ marginTop: 30 }}>
-            <PageCounter />
           </Grid>
         </Grid>
       )}

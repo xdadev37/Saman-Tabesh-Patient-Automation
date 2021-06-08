@@ -95,12 +95,13 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       {/* ------------------------ NationalId ------------------------ */}
       <InputLabel
         htmlFor="NationalId"
-        style={{ color: darkMode ? "#fff" : "#2962ff" }}
+        style={{ color: darkMode ? "#fff" : "#2962ff", fontSize: "14px" }}
       >
         کد ملی
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Input
+        style={{ fontSize: "small" }}
         defaultValue={defaultState.NationalId}
         inputProps={{ maxLength: 10 }}
         placeholder="کد ملی بیمار"
@@ -134,7 +135,11 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       {/* ------------------------ FileNumber ------------------------ */}
       <InputLabel
         htmlFor="FileNumber"
-        style={{ color: darkMode ? "#fff" : "#2962ff" }}
+        style={{
+          color: darkMode ? "#fff" : "#2962ff",
+          marginTop: 30,
+          fontSize: "14px",
+        }}
       >
         شماره پرونده<span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
@@ -159,9 +164,9 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
             numericValidation(event, "ّFileNumber", "شماره پرونده");
             dispatch(setFileNumber(watch("ّFileNumber")));
           }}
-          style={{ width: "80px" }}
+          style={{ width: "80px", fontSize: "small" }}
         />
-        <Typography variant="h5">
+        <Typography variant="body1">
           <sub>_R_000</sub>
         </Typography>
       </Box>

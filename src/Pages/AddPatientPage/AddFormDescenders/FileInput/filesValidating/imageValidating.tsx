@@ -38,11 +38,12 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
   return (
     <InputLabel
       htmlFor="Avatar"
-      style={{ width: "55%", color: darkMode ? "#fff" : "#2962ff" }}
+      style={{ color: darkMode ? "#fff" : "#2962ff", fontSize: "14px" }}
     >
       عکس پرسنلی بیمار :
       <Box marginX={10} marginY={2}>
         <Button
+          size="small"
           variant="contained"
           color="primary"
           component="span"
@@ -109,8 +110,10 @@ const ImageValidating: FC<Props> = ({ setAvatar }) => {
           </Typography>
         </Box>
       )}
-      <FormHelperText>
-        <Typography variant="subtitle2" component="span">
+      <FormHelperText
+        style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
+      >
+        <Typography variant="caption" component="span">
           حداکثر حجم فایل مجاز : 100 کیلوبایت
           <br />
           فرمت عکس قابل قبول : JPG, JPEG
