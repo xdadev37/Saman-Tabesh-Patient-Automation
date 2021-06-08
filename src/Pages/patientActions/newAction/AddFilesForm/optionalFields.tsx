@@ -25,7 +25,6 @@ const OptionalFields: FC<IProps> = ({
   const dispatch = useAppDispatch();
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
   const [TreatmentDoc, setTreatmentDoc] = useState<object | string>("");
-  const [CommitmentDoc, setCommitmentDoc] = useState<object | string>("");
   const [MRIReportDoc, setMRIReportDoc] = useState<object | string>("");
   const [CTReportDoc, setCTReportDoc] = useState<object | string>("");
   const [PETReportDoc, setPETReportDoc] = useState<object | string>("");
@@ -46,7 +45,6 @@ const OptionalFields: FC<IProps> = ({
             PatientId: selectId,
             PathologyDoc: PathologyDoc,
             TreatmentDoc: TreatmentDoc,
-            CommitmentDoc: CommitmentDoc,
             MRIReportDoc: MRIReportDoc,
             CTReportDoc: CTReportDoc,
             PETReportDoc: PETReportDoc,
@@ -70,15 +68,15 @@ const OptionalFields: FC<IProps> = ({
           }
         })
         .catch((error) => {
-            console.log(error.request);
-            if (error.request.responseText === "") {
-              dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-            } else {
-              dispatch(setAlertText(error.request.responseText));
-            }
+          console.log(error.request);
+          if (error.request.responseText === "") {
+            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+          } else {
+            dispatch(setAlertText(error.request.responseText));
+          }
 
-            dispatch(setAlertStatus("error"));
-            rejected(dispatch(setOpen(true)));
+          dispatch(setAlertStatus("error"));
+          rejected(dispatch(setOpen(true)));
         })
         .finally(() => dispatch(setBackdrop()));
     });
@@ -93,7 +91,6 @@ const OptionalFields: FC<IProps> = ({
       newActionName={newActionName}
       setPathologyDoc={setPathologyDoc}
       setTreatmentDoc={setTreatmentDoc}
-      setCommitmentDoc={setCommitmentDoc}
       setMRIReportDoc={setMRIReportDoc}
       setCTReportDoc={setCTReportDoc}
       setPETReportDoc={setPETReportDoc}

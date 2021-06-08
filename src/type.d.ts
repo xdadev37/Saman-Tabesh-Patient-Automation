@@ -2,10 +2,14 @@ interface IRequiredFields {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  FileNumber: string;
   Comment: string;
   AvatarLink: string;
   NationalIdDoc: string;
+  Diagnosis: string;
+  Insurance: string;
+  mobileNo: string;
+  emergencyMobileNo: string;
+  Birthday: string;
 }
 
 interface IDataGrid {

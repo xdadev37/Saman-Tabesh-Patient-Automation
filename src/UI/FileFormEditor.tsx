@@ -26,7 +26,6 @@ interface IProps {
   newActionName: string;
   setPathologyDoc: (arg: Blob) => void;
   setTreatmentDoc: (arg: Blob) => void;
-  setCommitmentDoc: (arg: Blob) => void;
   setMRIReportDoc: (arg: Blob) => void;
   setCTReportDoc: (arg: Blob) => void;
   setPETReportDoc: (arg: Blob) => void;
@@ -41,7 +40,6 @@ const FileForm: React.FC<IProps> = ({
   newActionName,
   setPathologyDoc,
   setTreatmentDoc,
-  setCommitmentDoc,
   setMRIReportDoc,
   setCTReportDoc,
   setPETReportDoc,
@@ -81,7 +79,6 @@ const FileForm: React.FC<IProps> = ({
         <FileMapper
           setPathologyDoc={setPathologyDoc}
           setTreatmentDoc={setTreatmentDoc}
-          setCommitmentDoc={setCommitmentDoc}
           setMRIReportDoc={setMRIReportDoc}
           setCTReportDoc={setCTReportDoc}
           setPETReportDoc={setPETReportDoc}

@@ -1,5 +1,5 @@
 import NameFields from "../Pages/AddPatientPage/AddFormDescenders/nameFields";
-import ImageValidating from "../Pages/AddPatientPage/AddFormDescenders/FileInput/filesValidating/imageValidating";
+import ImageValidating from "../Pages/AddPatientPage/AddFormDescenders/imageValidating";
 import { useForm, FormProvider } from "react-hook-form";
 import { Button, InputLabel, Input, Typography } from "@material-ui/core";
 import { ChevronRight } from "@material-ui/icons";

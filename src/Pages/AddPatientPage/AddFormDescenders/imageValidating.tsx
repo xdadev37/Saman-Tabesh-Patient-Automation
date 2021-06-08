@@ -8,8 +8,8 @@ import {
   Box,
 } from "@material-ui/core";
 import { CheckCircle, Image, Error } from "@material-ui/icons";
-import { useAppSelector } from "../../../../../Redux/hook";
-import { selectDarkMode } from "../../../../../Redux/Slicer/darkModeSlice";
+import { useAppSelector } from "../../../Redux/hook";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
 interface Props {
   setAvatar: (arg: Blob) => void;

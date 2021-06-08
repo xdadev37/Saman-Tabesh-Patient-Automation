@@ -4,7 +4,6 @@ import FilesFields from "./FilesFields/filesFields";
 interface IProps {
   setPathologyDoc: (arg: Blob) => void;
   setTreatmentDoc: (arg: Blob) => void;
-  setCommitmentDoc: (arg: Blob) => void;
   setMRIReportDoc: (arg: Blob) => void;
   setCTReportDoc: (arg: Blob) => void;
   setPETReportDoc: (arg: Blob) => void;
@@ -16,7 +15,6 @@ interface IProps {
 const FileMapper: React.FC<IProps> = ({
   setPathologyDoc,
   setTreatmentDoc,
-  setCommitmentDoc,
   setMRIReportDoc,
   setCTReportDoc,
   setPETReportDoc,
@@ -36,11 +34,6 @@ const FileMapper: React.FC<IProps> = ({
           id="TreatmentDoc"
           title="کارت درمان :"
           func={setTreatmentDoc}
-        />
-        <FilesFields
-          id="CommitmentDoc"
-          title="فرم رضایت بیمار :"
-          func={setCommitmentDoc}
         />
         <FilesFields
           id="MRIReportDoc"

@@ -3,10 +3,12 @@ import { InputLabel, Input, Typography, Box } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
+  selectRequiredField,
   setNationalId,
-  setFileNumber,
+  setMobileNo,
+  setEmergencyMobileNo,
+  setBirthday,
 } from "../../../Redux/Slicer/patientInfoSlice";
-import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
@@ -37,7 +39,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       event.target.value = "";
     } else {
       if (inputValue !== "") {
-        if (!inputValue.charAt(inputValue.length - 1).match(/[0-9]/)) {
+        if (!inputValue.charAt(inputValue.length - 1).match(/\d/)) {
           event.target.value = inputValue.slice(0, inputValue.length - 1);
           alert(`${text} فقط شامل اعداد است`);
         } else {
@@ -90,6 +92,22 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
     }
   };
 
+  const telNumbers = [
+    {
+      value: "",
+      id: "mobileNo",
+      defaultState: defaultState.mobileNo,
+      dispatcher: () => dispatch(setMobileNo(watch("mobileNo"))),
+    },
+    {
+      value: " اضطراری",
+      id: "emergencyMobileNo",
+      defaultState: defaultState.emergencyMobileNo,
+      dispatcher: () =>
+        dispatch(setEmergencyMobileNo(watch("emergencyMobileNo"))),
+    },
+  ];
+
   return (
     <Fragment>
       {/* ------------------------ NationalId ------------------------ */}
@@ -113,7 +131,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
             message: "مقدار کد ملی حداقل باید 10 عدد باشد!",
           },
           pattern: {
-            value: /[0-9]{10}/,
+            value: /\d{10}/,
             message: "کد ملی فقط شامل اعداد است",
           },
         })}
@@ -132,47 +150,91 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
         <Typography color="secondary">{errors.NationalId.message}</Typography>
       )}
 
-      {/* ------------------------ FileNumber ------------------------ */}
+      {/* ------------------------ birthday ------------------------ */}
       <InputLabel
-        htmlFor="FileNumber"
+        htmlFor="birthday"
         style={{
           color: darkMode ? "#fff" : "#2962ff",
           marginTop: 30,
           fontSize: "14px",
         }}
       >
-        شماره پرونده<span style={{ color: "#ff0000" }}>*</span> :
+        تاریخ تولد<span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Box display="flex" padding="10px">
         <Input
-          defaultValue={defaultState.FileNumber}
-          id="FileNumber"
-          placeholder="ادامه شماره"
-          inputProps={{ maxLength: 6 }}
-          {...register("FileNumber", {
-            required: "پر کردن این فیلد الزامی است!",
-            minLength: {
-              value: 6,
-              message: "مقدار شماره پرونده حداقل باید 6 عدد باشد!",
-            },
+          defaultValue={defaultState.Birthday}
+          id="birthday"
+          placeholder="روز / سال / ماه"
+          {...register("birthday", {
+            required: "ورود تاریخ تولد بیمار الزامی است!",
             pattern: {
-              value: /[0-9]{6}/,
-              message: "شماره پرونده فقط شامل اعداد است",
+              value: /\d{4}-\d{2}-\d{2}/,
+              message: "فرمت تاریخ تولد وارد شده نادرست است",
             },
           })}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            numericValidation(event, "ّFileNumber", "شماره پرونده");
-            dispatch(setFileNumber(watch("ّFileNumber")));
+            numericValidation(event, "birthday", "تاریخ تولد");
+            dispatch(setBirthday(watch("birthday")));
           }}
-          style={{ width: "80px", fontSize: "small" }}
+          style={{ fontSize: "small" }}
         />
-        <Typography variant="body1">
-          <sub>_R_000</sub>
-        </Typography>
       </Box>
-      {errors.FileNumber && (
-        <Typography color="secondary">{errors.FileNumber.message}</Typography>
+      {errors.birthday && (
+        <Typography color="secondary">{errors.birthday.message}</Typography>
       )}
+
+      {/* ------------------------ telNumbers ------------------------ */}
+      {telNumbers.map((input) => (
+        <Fragment>
+          <InputLabel
+            htmlFor={input.id}
+            style={{
+              color: darkMode ? "#fff" : "#2962ff",
+              marginTop: 30,
+              fontSize: "14px",
+            }}
+          >
+            {`شماره موبایل${input.value}`} :
+          </InputLabel>
+          <Box display="flex" padding="10px">
+            <Input
+              defaultValue={input.defaultState}
+              id={input.id}
+              placeholder="ادامه شماره"
+              inputProps={{ maxLength: 11 }}
+              {...register(input.id, {
+                required: "پر کردن این فیلد الزامی است!",
+                minLength: {
+                  value: 11,
+                  message: `مقدار شماره موبایل${input.value} حداقل باید 11 عدد باشد!`,
+                },
+                pattern: {
+                  value: /\d{11}/,
+                  message: `شماره موبایل${input.value} فقط شامل اعداد است`,
+                },
+              })}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                numericValidation(
+                  event,
+                  input.id,
+                  `شماره موبایل${input.value}`
+                );
+                input.dispatcher();
+              }}
+              style={{ width: "80px", fontSize: "small" }}
+            />
+            <Typography variant="body1">
+              <sub>09</sub>
+            </Typography>
+          </Box>
+          {errors[input.id] && (
+            <Typography color="secondary">
+              {errors[input.id].message}
+            </Typography>
+          )}
+        </Fragment>
+      ))}
     </Fragment>
   );
 };

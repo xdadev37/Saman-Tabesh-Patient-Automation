@@ -17,7 +17,9 @@ import {
   setName,
   setFamilyName,
   setNationalId,
-  setFileNumber,
+  setComment,
+  setDiagnosis,
+  setInsurance,
 } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
@@ -35,6 +37,15 @@ const TableComponent: React.FC = () => {
   ];
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
+
+  const deleteTemp = () => {
+    dispatch(setName(""));
+    dispatch(setFamilyName(""));
+    dispatch(setNationalId(""));
+    dispatch(setComment(""));
+    dispatch(setDiagnosis(""));
+    dispatch(setInsurance(""));
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -60,10 +71,7 @@ const TableComponent: React.FC = () => {
           color="primary"
           variant="contained"
           onClick={() => {
-            dispatch(setName(""));
-            dispatch(setFamilyName(""));
-            dispatch(setNationalId(""));
-            dispatch(setFileNumber(""));
+            deleteTemp();
             history.push("/addNewPatient");
           }}
           startIcon={<Add />}

@@ -16,7 +16,6 @@ import {
   setName,
   setFamilyName,
   setNationalId,
-  setFileNumber,
   setComment,
   setAvatarLink,
   setNationalIdDoc,
@@ -54,7 +53,7 @@ const ButtonsGroup: FC<IProps> = ({
           `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${id}`
         )
         .then((res) => {
-          if ((res.status = 200)) {
+          if (res.status === 200) {
             deleted(history.push("/"));
           } else {
             failed(console.log("Action Not Happened", res.statusText));
@@ -83,8 +82,8 @@ const ButtonsGroup: FC<IProps> = ({
     dispatch(setName(Name));
     dispatch(setFamilyName(FamilyName));
     dispatch(setNationalId(NationalId));
-    dispatch(setFileNumber(FileNumber));
     dispatch(setAvatarLink(AvatarLink));
+    dispatch(setComment(Comment));
   };
 
   return (
@@ -115,7 +114,6 @@ const ButtonsGroup: FC<IProps> = ({
         <Button
           onClick={() => {
             tempData();
-            dispatch(setComment(Comment));
             dispatch(setNationalIdDoc(NationalIdDoc));
             dispatch(setActionForm("editUser"));
           }}

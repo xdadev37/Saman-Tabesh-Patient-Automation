@@ -26,7 +26,6 @@ const OptionalFields: FC<IProps> = ({
   const selectId = useAppSelector(selectPatientId);
   const [PathologyDoc, setPathologyDoc] = useState<object | string>("");
   const [TreatmentDoc, setTreatmentDoc] = useState<object | string>("");
-  const [CommitmentDoc, setCommitmentDoc] = useState<object | string>("");
   const [MRIReportDoc, setMRIReportDoc] = useState<object | string>("");
   const [CTReportDoc, setCTReportDoc] = useState<object | string>("");
   const [PETReportDoc, setPETReportDoc] = useState<object | string>("");
@@ -45,7 +44,6 @@ const OptionalFields: FC<IProps> = ({
             PatientId: selectId,
             PathologyDoc: PathologyDoc,
             TreatmentDoc: TreatmentDoc,
-            CommitmentDoc: CommitmentDoc,
             MRIReportDoc: MRIReportDoc,
             CTReportDoc: CTReportDoc,
             PETReportDoc: PETReportDoc,
@@ -87,7 +85,6 @@ const OptionalFields: FC<IProps> = ({
       newActionName={newActionName}
       setPathologyDoc={setPathologyDoc}
       setTreatmentDoc={setTreatmentDoc}
-      setCommitmentDoc={setCommitmentDoc}
       setMRIReportDoc={setMRIReportDoc}
       setCTReportDoc={setCTReportDoc}
       setPETReportDoc={setPETReportDoc}

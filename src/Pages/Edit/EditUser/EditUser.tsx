@@ -14,7 +14,7 @@ import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import { MyAvatar } from "../../../UI/Avatar";
-import AddPatientUI from "../../../UI/AddPatientUI";
+import AddPatientUI from "../../../UI/AddPatientUI/MainInfoUI";
 import { patch } from "../../../tokenAuth";
 
 const EditUser: FC = () => {
@@ -34,14 +34,12 @@ const EditUser: FC = () => {
     setValue("Name", requiredField.Name);
     setValue("FamilyName", requiredField.FamilyName);
     setValue("NationalId", requiredField.NationalId);
-    setValue("FileNumber", requiredField.FileNumber);
   }, [setValue, requiredField, dispatch]);
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
     dataGrid.append("FamilyName", requiredField.FamilyName);
     dataGrid.append("NationalId", requiredField.NationalId);
-    dataGrid.append("FileNumber", requiredField.FileNumber);
     dataGrid.append("Avatar", avatar);
     dataGrid.append("NationalIdDoc", nationalIdDoc);
     dataGrid.append("Comment", requiredField.Comment);
