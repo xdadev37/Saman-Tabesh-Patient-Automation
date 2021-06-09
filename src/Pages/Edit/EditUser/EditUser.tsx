@@ -14,7 +14,7 @@ import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import { MyAvatar } from "../../../UI/Avatar";
-import AddPatientUI from "../../../UI/AddPatientUI/MainInfoUI";
+import MainInfoUI from "../../../UI/AddPatientUI/MainInfoUI";
 import { patch } from "../../../tokenAuth";
 
 const EditUser: FC = () => {
@@ -97,7 +97,7 @@ const EditUser: FC = () => {
           </MyAvatar>
           <Button
             target="_blank"
-            href={requiredField.NationalIdDoc}
+            href={requiredField.NationalIdDocLink}
             rel="noreferrer"
             startIcon={<Assignment />}
             size="large"
@@ -115,14 +115,14 @@ const EditUser: FC = () => {
           </Button>
         </Grid>
 
-        <AddPatientUI
+        {/* <MainInfoUI
           requiredField={requiredField}
           watch={watch}
           setAvatar={setAvatar}
           setNationalIdDoc={setNationalIdDoc}
           checkNIdAl={checkNIdAl}
           setCheckNIdAl={setCheckNIdAl}
-        />
+        /> */}
       </form>
     </FormProvider>
   );

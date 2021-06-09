@@ -34,7 +34,7 @@ const MedicalInfoUI: FC = () => {
           <Select
             id="select"
             required
-            style={{ width: 200 }}
+            style={{ width: 200, height: 40 }}
             variant="outlined"
             value={tempData.Diagnosis}
             onChange={(event: ChangeEvent<{ value: unknown }>) => {
@@ -60,7 +60,7 @@ const MedicalInfoUI: FC = () => {
           <Select
             id="select"
             required
-            style={{ width: 200 }}
+            style={{ width: 200, height: 40 }}
             variant="outlined"
             value={tempData.Insurance}
             onChange={(event: ChangeEvent<{ value: unknown }>) => {
@@ -85,7 +85,6 @@ const MedicalInfoUI: FC = () => {
         <InputLabel
           style={{
             color: darkMode ? "#fff" : "#2962ff",
-            fontSize: "14px",
           }}
         >
           <BorderColor />
@@ -99,7 +98,6 @@ const MedicalInfoUI: FC = () => {
           variant="filled"
           multiline
           rows={3}
-          size="small"
           fullWidth
           inputProps={{ maxLength: 800 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +108,7 @@ const MedicalInfoUI: FC = () => {
           style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
         >
           <br />
-          <Typography variant="caption" component="span">
+          <Typography variant="subtitle2" component="span">
             راهنما :
             <br />
             حداکثر تعداد برای توضیحات کاراکتر مجاز : 800

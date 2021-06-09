@@ -18,9 +18,8 @@ interface IProps {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  FileNumber: string;
   Avatar: string;
-  NationalIdDoc: string;
+  NationalIdDocLink: string;
   Comment: string;
 }
 
@@ -29,9 +28,8 @@ const MainTable: FC<IProps> = ({
   Name,
   FamilyName,
   NationalId,
-  FileNumber,
   Avatar,
-  NationalIdDoc,
+  NationalIdDocLink,
   Comment,
 }) => {
   const [open, setOpen] = useState(false);
@@ -71,7 +69,6 @@ const MainTable: FC<IProps> = ({
         <TableCell>{Name}</TableCell>
         <TableCell>{FamilyName}</TableCell>
         <TableCell>{NationalId}</TableCell>
-        <TableCell>{FileNumber}</TableCell>
         <TableCell>{`تاریخ`}</TableCell>
         <TableCell>{`تاریخ`}</TableCell>
       </TableRow>
@@ -81,9 +78,8 @@ const MainTable: FC<IProps> = ({
         Name={Name}
         FamilyName={FamilyName}
         NationalId={NationalId}
-        FileNumber={FileNumber}
         AvatarLink={Avatar}
-        NationalIdDoc={NationalIdDoc}
+        NationalIdDocLink={NationalIdDocLink}
         Comment={Comment}
         setCommentAlert={setCommentAlert}
       />

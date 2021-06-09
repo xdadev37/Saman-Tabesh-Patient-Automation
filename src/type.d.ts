@@ -4,7 +4,7 @@ interface IRequiredFields {
   NationalId: string;
   Comment: string;
   AvatarLink: string;
-  NationalIdDoc: string;
+  NationalIdDocLink: string;
   Diagnosis: string;
   Insurance: string;
   mobileNo: string;
@@ -17,9 +17,8 @@ interface IDataGrid {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  FileNumber: string;
   Avatar: string;
-  NationalIdDoc: string;
+  NationalIdDocLink: string;
   Comment: string;
 }
 

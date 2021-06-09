@@ -33,17 +33,13 @@ const NameFields: FC<IProps> = ({
 
   return (
     <Fragment>
-      <InputLabel
-        style={{ color: darkMode ? "#fff" : "#2962ff", fontSize: "14px" }}
-        htmlFor={id}
-      >
+      <InputLabel style={{ color: darkMode ? "#fff" : "#2962ff" }} htmlFor={id}>
         {title}
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
       <Input
-        style={{ fontSize: "small" }}
         defaultValue={defaultState}
-        inputProps={{ maxLength: 80 }}
+        inputProps={{ maxLength: 20 }}
         placeholder={placeholder}
         type="search"
         id={id}
@@ -75,7 +71,7 @@ const NameFields: FC<IProps> = ({
         <Typography color="secondary">{errors[id].message}</Typography>
       )}
       <FormHelperText>
-        <Typography variant="caption" component="span">
+        <Typography variant="subtitle2" component="span">
           تنها حروف فارسی مجازند.
         </Typography>
       </FormHelperText>

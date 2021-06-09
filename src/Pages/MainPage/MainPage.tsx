@@ -12,6 +12,7 @@ import GetActionName from "../patientActions/newAction/getActionName";
 import CheckAction from "../patientActions/checkActions/checkActions";
 import EditUser from "../Edit/EditUser/EditUser";
 import EditFiles from "../Edit/EditAction/EditActionName";
+import { Route } from "react-router-dom";
 
 const MainPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +75,7 @@ const MainPage: FC = () => {
   let Page = <Fragment></Fragment>;
   switch (actionForm) {
     case "getActionName":
-      Page = <GetActionName />;
+      Page = <Route component={GetActionName} path="/options" />;
       break;
 
     case "mainPage":
@@ -82,15 +83,15 @@ const MainPage: FC = () => {
       break;
 
     case "checkAction":
-      Page = <CheckAction />;
+      Page = <Route component={CheckAction} path="/options" />;
       break;
 
     case "editUser":
-      Page = <EditUser />;
+      Page = <Route component={EditUser} path="/options" />;
       break;
 
     case "editAction":
-      Page = <EditFiles />;
+      Page = <Route component={EditFiles} path="/options" />;
       break;
 
     default:

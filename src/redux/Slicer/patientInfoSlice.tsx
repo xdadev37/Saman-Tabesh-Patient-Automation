@@ -12,13 +12,13 @@ const initialState: IInitialState = {
       FamilyName: "",
       NationalId: "",
       AvatarLink: "",
-      NationalIdDoc: "",
+      NationalIdDocLink: "",
       Comment: "",
       Diagnosis: "",
       Insurance: "",
       mobileNo: "",
       emergencyMobileNo: "",
-      Birthday: "____/__/__",
+      Birthday: "",
     },
   ],
 };
@@ -43,16 +43,16 @@ export const patientInfoSlice = createSlice({
       state.requiredFields[0].AvatarLink = action.payload;
     },
 
-    setNationalIdDoc: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].NationalIdDoc = action.payload;
+    setNationalIdDocLink: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].NationalIdDocLink = action.payload;
     },
 
     setMobileNo: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].mobileNo = action.payload;
+      state.requiredFields[0].mobileNo = `09${action.payload}`;
     },
 
     setEmergencyMobileNo: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].emergencyMobileNo = action.payload;
+      state.requiredFields[0].emergencyMobileNo = `09${action.payload}`;
     },
 
     setBirthday: (state, action: PayloadAction<string>) => {
@@ -79,7 +79,7 @@ export const {
   setNationalId,
   setComment,
   setAvatarLink,
-  setNationalIdDoc,
+  setNationalIdDocLink,
   setDiagnosis,
   setInsurance,
   setMobileNo,

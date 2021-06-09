@@ -21,7 +21,6 @@ const InfoBar: FC = () => {
       </Grid>
       <Grid item>
         <Typography>{`ش.م : ${tempData.NationalId}`}</Typography>
-        {/* <Typography>{`ش.پ : ${tempData.FileNumber}`}</Typography> */}
       </Grid>
     </Fragment>
   );

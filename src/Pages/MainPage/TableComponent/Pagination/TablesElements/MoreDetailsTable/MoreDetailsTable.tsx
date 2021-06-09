@@ -21,9 +21,8 @@ interface IProps {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  FileNumber: string;
   AvatarLink: string;
-  NationalIdDoc: string;
+  NationalIdDocLink: string;
   Comment: string;
   setCommentAlert: (arg: boolean) => void;
 }
@@ -42,9 +41,8 @@ const MoreDetailsTable: React.FC<IProps> = ({
   Name,
   FamilyName,
   NationalId,
-  FileNumber,
   AvatarLink,
-  NationalIdDoc,
+  NationalIdDocLink,
   Comment,
   setCommentAlert,
 }) => {
@@ -77,10 +75,10 @@ const MoreDetailsTable: React.FC<IProps> = ({
                   <Avatar alt="Avatar" src={AvatarLink} />
                 </TableCell>
                 <TableCell>
-                  {NationalIdDoc === "" ? (
+                  {NationalIdDocLink === "" ? (
                     "ندارد"
                   ) : (
-                    <Link target="_blank" href={NationalIdDoc} rel="noreferrer">
+                    <Link target="_blank" href={NationalIdDocLink} rel="noreferrer">
                       مشاهده پی دی اف
                     </Link>
                   )}
@@ -110,9 +108,8 @@ const MoreDetailsTable: React.FC<IProps> = ({
                     Name={Name}
                     FamilyName={FamilyName}
                     NationalId={NationalId}
-                    FileNumber={FileNumber}
                     AvatarLink={AvatarLink}
-                    NationalIdDoc={NationalIdDoc}
+                    NationalIdDocLink={NationalIdDocLink}
                     Comment={Comment}
                   />
                 </Grid>

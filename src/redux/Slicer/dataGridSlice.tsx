@@ -7,9 +7,8 @@ const initialState: IDataGrid[] = [
     Name: "",
     FamilyName: "",
     NationalId: "",
-    FileNumber: "",
     Avatar: "",
-    NationalIdDoc: "",
+    NationalIdDocLink: "",
     Comment: "",
   },
 ];

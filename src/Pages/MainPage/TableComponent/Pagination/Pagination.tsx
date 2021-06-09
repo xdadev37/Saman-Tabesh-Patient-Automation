@@ -15,9 +15,8 @@ const Pagination: FC = () => {
           Name={data.Name}
           FamilyName={data.FamilyName}
           NationalId={data.NationalId}
-          FileNumber={data.FileNumber}
           Avatar={data.Avatar}
-          NationalIdDoc={data.NationalIdDoc}
+          NationalIdDocLink={data.NationalIdDocLink}
           Comment={data.Comment}
         />
       ))}

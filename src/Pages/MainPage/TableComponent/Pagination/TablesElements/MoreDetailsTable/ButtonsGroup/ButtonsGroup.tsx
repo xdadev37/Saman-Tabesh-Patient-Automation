@@ -18,7 +18,7 @@ import {
   setNationalId,
   setComment,
   setAvatarLink,
-  setNationalIdDoc,
+  setNationalIdDocLink,
 } from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
@@ -26,9 +26,8 @@ interface IProps {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  FileNumber: string;
   AvatarLink: string;
-  NationalIdDoc: string;
+  NationalIdDocLink: string;
   Comment: string;
 }
 
@@ -37,9 +36,8 @@ const ButtonsGroup: FC<IProps> = ({
   Name,
   FamilyName,
   NationalId,
-  FileNumber,
   AvatarLink,
-  NationalIdDoc,
+  NationalIdDocLink,
   Comment,
 }) => {
   const dispatch = useAppDispatch();
@@ -114,7 +112,7 @@ const ButtonsGroup: FC<IProps> = ({
         <Button
           onClick={() => {
             tempData();
-            dispatch(setNationalIdDoc(NationalIdDoc));
+            dispatch(setNationalIdDocLink(NationalIdDocLink));
             dispatch(setActionForm("editUser"));
           }}
           color="default"
