@@ -1,7 +1,7 @@
 import { FC, Fragment, ChangeEvent } from "react";
 import {
   InputLabel,
-  Input,
+  TextField,
   Typography,
   FormHelperText,
 } from "@material-ui/core";
@@ -37,10 +37,12 @@ const NameFields: FC<IProps> = ({
         {title}
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
-      <Input
+      <TextField
         defaultValue={defaultState}
         inputProps={{ maxLength: 20 }}
         placeholder={placeholder}
+        variant="outlined"
+        size="small"
         type="search"
         id={id}
         {...register<string>(id, {

@@ -169,23 +169,29 @@ const CheckEntries: React.FC<IProps> = ({
           {filesInfo.map((input) => (
             <Typography key={input.text}>
               {input.text} :
-              <Typography color={input.state === "" ? "secondary" : "primary"}>
+              <Typography
+                component="span"
+                color={input.state === "" ? "secondary" : "primary"}
+              >
                 {input.state === "" ? "ندارد" : "دارد"}
               </Typography>
             </Typography>
           ))}
         </Grid>
       </Grid>
-      <Button
-        type="submit"
-        size="small"
-        startIcon={<Check fontSize="small" />}
-        variant="contained"
-        color="primary"
-        style={{ width: "30%" }}
-      >
-        ثبت نهایی اطلاعات
-      </Button>
+
+      <Grid container justify="flex-end">
+        <Button
+          type="submit"
+          size="small"
+          startIcon={<Check fontSize="small" />}
+          variant="contained"
+          color="primary"
+          style={{ width: "30%" }}
+        >
+          ثبت نهایی اطلاعات
+        </Button>
+      </Grid>
     </form>
   );
 };

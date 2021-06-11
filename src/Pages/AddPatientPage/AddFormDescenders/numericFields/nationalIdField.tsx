@@ -1,5 +1,5 @@
 import { FC, Fragment, ChangeEvent } from "react";
-import { InputLabel, Input, Typography } from "@material-ui/core";
+import { InputLabel, TextField, Typography } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import {
@@ -77,10 +77,12 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
         کد ملی
         <span style={{ color: "#ff0000" }}>*</span> :
       </InputLabel>
-      <Input
+      <TextField
         defaultValue={defaultState.NationalId}
         inputProps={{ maxLength: 10 }}
         placeholder="کد ملی بیمار"
+        variant="outlined"
+        size="small"
         id="NationalId"
         {...register("NationalId", {
           required: "پر کردن این فیلد الزامی است!",

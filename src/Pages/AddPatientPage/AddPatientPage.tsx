@@ -2,7 +2,6 @@ import { FC, useState, useEffect, ChangeEvent } from "react";
 import { Button, Tabs, Tab, AppBar, Box } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppSelector } from "../../Redux/hook";
-import { useHistory } from "react-router-dom";
 import { ChevronRight } from "@material-ui/icons";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import { setOpen } from "../../Redux/Slicer/alertMessageSlice";
@@ -19,8 +18,7 @@ const AddPatientPage: FC = () => {
   const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const [commitmentDoc, setCommitmentDoc] = useState<Blob | string>("");
   const [policyDoc, setPolicyDoc] = useState<Blob | string>("");
-  const [value, setValue] = useState(0);
-  let history = useHistory();
+  const [value, setValue] = useState(2);
   const [checkNIdAl, setCheckNIdAl] = useState(false);
   const [mainInfoStatus, setMainInfoStatus] = useState(true);
 
@@ -56,9 +54,11 @@ const AddPatientPage: FC = () => {
         />
       );
       break;
+
     case 1:
-      shownTab = <MedicalInfo />;
+      shownTab = <MedicalInfo setValue={setValue} />;
       break;
+
     case 2:
       shownTab = (
         <MainFilesUI
@@ -66,9 +66,11 @@ const AddPatientPage: FC = () => {
           setNationalIdDoc={setNationalIdDoc}
           setCommitmentDoc={setCommitmentDoc}
           setPolicyDoc={setPolicyDoc}
+          setValue={setValue}
         />
       );
       break;
+
     case 3:
       shownTab = (
         <CheckEntries
@@ -90,17 +92,13 @@ const AddPatientPage: FC = () => {
       <Button
         variant="outlined"
         startIcon={<ChevronRight />}
-        onClick={() => history.push("/")}
+        onClick={() => setValue(value - 1)}
         style={{ float: "left", marginInline: 30 }}
       >
         برگشت
       </Button>
-      <AppBar>
-        <Tabs
-          onChange={handleSwitchTabs}
-          value={value}
-          indicatorColor="primary"
-        >
+      <AppBar color="default">
+        <Tabs onChange={handleSwitchTabs} value={value}>
           <Tab label="اطلاعات هویتی" aria-controls="0" />
           <Tab
             label="اطلاعات درمانی"

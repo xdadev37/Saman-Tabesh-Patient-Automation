@@ -44,7 +44,6 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
             color="primary"
             component="span"
             startIcon={<NoteAdd />}
-            size="small"
           >
             {pdfStatus === "ok" ? (
               <CheckCircle style={{ color: "#fff" }} />

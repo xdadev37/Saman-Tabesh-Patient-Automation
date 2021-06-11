@@ -18,6 +18,7 @@ export const birthday = [
     pattern: /\d{2}/,
     maxLength: 2,
     index: { start: 6, end: 8 },
+    limiter: { start: 0, end: 31 },
   },
   {
     value: "ماه",
@@ -25,6 +26,7 @@ export const birthday = [
     pattern: /\d{2}/,
     maxLength: 2,
     index: { start: 4, end: 6 },
+    limiter: { start: 0, end: 12 },
   },
   {
     value: "سال",
@@ -32,5 +34,6 @@ export const birthday = [
     pattern: /\d{4}/,
     maxLength: 4,
     index: { start: 0, end: 4 },
+    limiter: { start: 1300, end: new Date().getFullYear() - 621 },
   },
 ];

@@ -7,8 +7,9 @@ import {
   TextField,
   FormHelperText,
   Typography,
+  Button,
 } from "@material-ui/core";
-import { BorderColor } from "@material-ui/icons";
+import { BorderColor, ChevronLeft } from "@material-ui/icons";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import {
   selectRequiredField,
@@ -18,19 +19,23 @@ import {
 } from "../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
 
-const MedicalInfoUI: FC = () => {
+interface IProps {
+  setValue: (arg: number) => void;
+}
+
+const MedicalInfoUI: FC<IProps> = ({ setValue }) => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
 
   return (
-    <Grid item>
+    <form autoComplete="off" onSubmit={() => setValue(2)}>
       <Grid container justify="space-around">
         <InputLabel
           htmlFor="select"
           style={{ marginTop: 10, marginBottom: 10 }}
         >
-          نام بیماری : &nbsp;
+          تشخیص : &nbsp;
           <Select
             id="select"
             required
@@ -56,11 +61,11 @@ const MedicalInfoUI: FC = () => {
           htmlFor="select"
           style={{ marginTop: 10, marginBottom: 10 }}
         >
-          نوع بیمه : &nbsp;
+          بیمه : &nbsp;
           <Select
             id="select"
             required
-            style={{ width: 200, height: 40 }}
+            // style={{ width: 200, height: 40 }}
             variant="outlined"
             value={tempData.Insurance}
             onChange={(event: ChangeEvent<{ value: unknown }>) => {
@@ -117,7 +122,19 @@ const MedicalInfoUI: FC = () => {
           </Typography>
         </FormHelperText>
       </Grid>
-    </Grid>
+
+      <Grid container justify="flex-end">
+        <Button
+          type="submit"
+          endIcon={<ChevronLeft />}
+          variant="contained"
+          color="primary"
+          style={{ width: "10%" }}
+        >
+          بعدی
+        </Button>
+      </Grid>
+    </form>
   );
 };
 

@@ -83,7 +83,7 @@ const TelNumbersFields: FC = () => {
                 );
                 input.dispatcher();
               }}
-              style={{ width: "80px" }}
+              style={{ width: "50%" }}
             />
             <Typography variant="h5" color="textPrimary">
               <sub>09</sub>

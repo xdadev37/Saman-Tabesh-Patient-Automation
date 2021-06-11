@@ -43,7 +43,15 @@ const BirthdayFields: FC = () => {
                 required: `ورود ${input.value} تولد بیمار الزامی است`,
                 pattern: {
                   value: input.pattern,
-                  message: `فرمت ${input.value} تولد وارد شده نادرست است`,
+                  message: `${input.value} تولد فقط شامل اعداد است`,
+                },
+                min: {
+                  value: input.limiter.start,
+                  message: `مقدار ${input.value} تولد وارد شده امکان پذیر نیست`,
+                },
+                max: {
+                  value: input.limiter.end,
+                  message: `مقدار ${input.value} تولد وارد شده امکان پذیر نیست`,
                 },
               })}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +62,7 @@ const BirthdayFields: FC = () => {
                   setValue
                 );
               }}
-              style={{ fontSize: "small", width: 60 }}
+              style={{ fontSize: "small", width: 70 }}
             />
           </Grid>
         </Grid>
