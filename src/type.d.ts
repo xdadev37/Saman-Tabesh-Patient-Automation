@@ -42,3 +42,19 @@ interface IAuth {
   hashedPassword: string;
   token: string;
 }
+
+interface IDropMenu {
+  diagnosisMenu: [
+    {
+      id: string;
+      value: string;
+    }
+  ];
+
+  insuranceMenu: [
+    {
+      id: string;
+      value: string;
+    }
+  ];
+}

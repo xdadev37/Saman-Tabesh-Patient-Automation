@@ -1,5 +1,4 @@
 import NameFields from "../Pages/AddPatientPage/AddFormDescenders/nameFields";
-import ImageValidating from "../Pages/AddPatientPage/AddFormDescenders/imageValidating";
 import { useForm, FormProvider } from "react-hook-form";
 import { Button, InputLabel, Input, Typography } from "@material-ui/core";
 import { ChevronRight } from "@material-ui/icons";
@@ -9,13 +8,15 @@ import { useAppDispatch, useAppSelector } from "../Redux/hook";
 import { setDocName, setDocFamilyName } from "../Redux/Slicer/permissionSlice";
 import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
 import { selectPass } from "../Redux/Slicer/userPassSlice";
+import WebcamImage from "../Pages/AddPatientPage/AddFormDescenders/webcamImage";
 
 interface IProps {
   submit: () => void;
-  setAvatar: (arg: Blob) => void;
+  avatar: string;
+  setAvatar: (arg: string) => void;
 }
 
-const PermissionsUI: React.FC<IProps> = ({ submit, setAvatar }) => {
+const PermissionsUI: React.FC<IProps> = ({ submit, avatar, setAvatar }) => {
   const methods = useForm();
   const {
     handleSubmit,
@@ -27,6 +28,7 @@ const PermissionsUI: React.FC<IProps> = ({ submit, setAvatar }) => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
   const pass = useAppSelector(selectPass);
+  const setVideoSrc = () => HTMLVideoElement;
 
   return (
     <FormProvider {...methods}>
@@ -55,7 +57,11 @@ const PermissionsUI: React.FC<IProps> = ({ submit, setAvatar }) => {
           defaultState=""
         />
 
-        <ImageValidating setAvatar={setAvatar} />
+        <WebcamImage
+          avatar={avatar}
+          setAvatar={setAvatar}
+          setVideoSrc={setVideoSrc}
+        />
 
         <UserPassUI />
 

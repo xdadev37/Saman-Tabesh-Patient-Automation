@@ -12,6 +12,7 @@ import BackdropReducer from "./Slicer/backdropSlice";
 import LoginReducer from "./Slicer/loginSlice";
 import UserPassReducer from "./Slicer/userPassSlice";
 import PermissionReducer from "./Slicer/permissionSlice";
+import DropDownMenu from "./Slicer/dropMenuDataSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     login: LoginReducer,
     userPass: UserPassReducer,
     permission: PermissionReducer,
+    dropDownMenu: DropDownMenu,
   },
 });
 

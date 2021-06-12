@@ -72,7 +72,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
       {/* ------------------------ NationalId ------------------------ */}
       <InputLabel
         htmlFor="NationalId"
-        style={{ color: darkMode ? "#fff" : "#2962ff" }}
+        style={{ color: darkMode ? "#fff" : "#2962ff", marginTop: 20 }}
       >
         کد ملی
         <span style={{ color: "#ff0000" }}>*</span> :

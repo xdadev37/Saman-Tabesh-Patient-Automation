@@ -1,35 +1,47 @@
-import ImageValidating from "../../Pages/AddPatientPage/AddFormDescenders/imageValidating";
 import FilesFields from "../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
-import { FormHelperText, Typography, Button, Grid } from "@material-ui/core";
+import {
+  FormHelperText,
+  Typography,
+  Button,
+  Grid,
+  Paper,
+} from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
 import { useAppSelector } from "../../Redux/hook";
 import { selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
 import WebcamImage from "../../Pages/AddPatientPage/AddFormDescenders/webcamImage";
 
 interface IProps {
-  setAvatar: (arg: Blob) => void;
+  avatar: string;
+  setAvatar: (arg: string) => void;
   setNationalIdDoc: (arg: Blob) => void;
   setCommitmentDoc: (arg: Blob) => void;
   setPolicyDoc: (arg: Blob) => void;
   setValue: (arg: number) => void;
+  setVideoSrc: (arg: HTMLVideoElement) => void;
 }
 
 const MainFilesUI: React.FC<IProps> = ({
+  avatar,
   setAvatar,
   setNationalIdDoc,
   setCommitmentDoc,
   setPolicyDoc,
   setValue,
+  setVideoSrc,
 }) => {
   const darkMode = useAppSelector(selectDarkMode);
 
   return (
-    <Grid container>
-      <Grid item>
-        {/* <ImageValidating setAvatar={setAvatar} /> */}
-        <WebcamImage />
-        <hr />
+    <Grid container component={Paper}>
+      <Grid container>
+        <WebcamImage
+          avatar={avatar}
+          setAvatar={setAvatar}
+          setVideoSrc={setVideoSrc}
+        />
       </Grid>
+      <hr style={{ width: "80%", marginBottom: 40, marginTop: 40 }} />
       <Grid container>
         <FilesFields
           id="NationalIdCard"

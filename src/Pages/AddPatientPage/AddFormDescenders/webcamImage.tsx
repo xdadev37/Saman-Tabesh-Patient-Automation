@@ -1,42 +1,57 @@
-import { FC, Fragment, useEffect } from "react";
+import { FC, useEffect } from "react";
+import { Avatar, Grid } from "@material-ui/core";
 
-const WebcamImage: FC = () => {
-  // const fileReader = new FileReader();
+interface IProps {
+  avatar: string;
+  setAvatar: (arg: string) => void;
+  setVideoSrc: (arg: HTMLVideoElement) => void;
+}
 
+const WebcamImage: FC<IProps> = ({ setAvatar, setVideoSrc, avatar }) => {
   useEffect(() => {
     const enableWebcam = navigator.mediaDevices.getUserMedia({ video: true });
     const webcamStream = document.querySelector("video")!;
+    setVideoSrc(webcamStream);
 
     enableWebcam
       .then((res) => {
         webcamStream.srcObject = res;
       })
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => {
+        const errorMessage = String(error);
+
+        if (errorMessage.match(/Requested device not found/)) {
+          alert("نبود وبک");
+        } else {
+          if (errorMessage.match(/Permission denied/)) {
+            alert("دسترسی وبک داده نشده");
+          } else {
+            alert("مشکلی پیش آمده");
+          }
+        }
+      });
+  }, [setVideoSrc]);
 
   const snap = () => {
     const webcamStream = document.querySelector("video")!;
-    const avatar = document.querySelector("img")!;
-
-    webcamStream.autofocus = true;
     const canvas = document.querySelector("canvas")!;
-    canvas.getContext("2d")!.drawImage(webcamStream, 0, 0, 150, 100);
+    canvas.getContext("2d")!.drawImage(webcamStream, 75, 0, 150, 150);
     const img64 = canvas.toDataURL("image/jpeg");
-    avatar.src = img64;
-    canvas.toBlob((img) => {
-      img?.arrayBuffer().then((res) => {
-        const blob = new Uint8Array(res);
-        const img = new Blob([blob]);
-      });
-    }, "image/jpeg");
+    setAvatar(img64);
   };
 
   return (
-    <Fragment>
-      <video onClick={snap} width={200} muted autoPlay />
-      <canvas />
-      <img alt="Avatar" width={200} height={150} />
-    </Fragment>
+    <Grid container justify="space-around">
+      <video
+        onClick={snap}
+        width={200}
+        muted
+        autoPlay
+        style={{ border: "3px groove #ccc", borderRadius: "50%" }}
+      />
+      <canvas hidden />
+      <Avatar alt="Avatar" src={avatar} style={{ width: 100, height: 100 }} />
+    </Grid>
   );
 };
 

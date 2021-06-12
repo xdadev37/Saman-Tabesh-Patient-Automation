@@ -48,6 +48,7 @@ const TelNumbersFields: FC = () => {
             style={{
               color: darkMode ? "#fff" : "#2962ff",
               marginTop: 30,
+              marginBottom: 10,
             }}
           >
             {`شماره موبایل${input.value}`} :

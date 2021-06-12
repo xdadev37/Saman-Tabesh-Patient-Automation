@@ -2,13 +2,13 @@ import { FC, useState } from "react";
 import PermissionUI from "../../../UI/PermissionsUI";
 
 const Permissions: FC = () => {
-  const [avatar, setAvatar] = useState<Blob | string>("");
+  const [avatar, setAvatar] = useState<string>("");
 
   const submit = async () => {
     await null;
   };
 
-  return <PermissionUI setAvatar={setAvatar} submit={submit} />;
+  return <PermissionUI avatar={avatar} setAvatar={setAvatar} submit={submit} />;
 };
 
 export default Permissions;

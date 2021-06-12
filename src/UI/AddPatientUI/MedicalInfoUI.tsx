@@ -2,7 +2,7 @@ import { FC, ChangeEvent } from "react";
 import {
   Grid,
   InputLabel,
-  // MenuItem,
+  MenuItem,
   Select,
   TextField,
   FormHelperText,
@@ -18,70 +18,68 @@ import {
   setInsurance,
 } from "../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
+import { selectDropDownMenu } from "../../Redux/Slicer/dropMenuDataSlice";
 
 interface IProps {
   setValue: (arg: number) => void;
+  setAnotherTabStatus: (arg: boolean) => void;
 }
 
-const MedicalInfoUI: FC<IProps> = ({ setValue }) => {
+const MedicalInfoUI: FC<IProps> = ({ setValue, setAnotherTabStatus }) => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
+  const dropDownMenu = useAppSelector(selectDropDownMenu);
+
+  const selectors = [
+    {
+      id: "diagnosis",
+      text: "تشخیص : ",
+      value: tempData.Diagnosis,
+      func: (arg: string) => setDiagnosis(arg),
+      menuData: dropDownMenu.diagnosisMenu,
+    },
+    {
+      id: "insurance",
+      text: "بیمه : ",
+      value: tempData.Insurance,
+      func: (arg: string) => setInsurance(arg),
+      menuData: dropDownMenu.insuranceMenu,
+    },
+  ];
+
+  const submit = () => {
+    setAnotherTabStatus(false);
+    setValue(2);
+  };
 
   return (
-    <form autoComplete="off" onSubmit={() => setValue(2)}>
+    <form autoComplete="off" onSubmit={submit}>
       <Grid container justify="space-around">
-        <InputLabel
-          htmlFor="select"
-          style={{ marginTop: 10, marginBottom: 10 }}
-        >
-          تشخیص : &nbsp;
-          <Select
-            id="select"
-            required
-            style={{ width: 200, height: 40 }}
-            variant="outlined"
-            value={tempData.Diagnosis}
-            onChange={(event: ChangeEvent<{ value: unknown }>) => {
-              dispatch(setDiagnosis(String(event.target.value)));
-            }}
+        {selectors.map((input) => (
+          <InputLabel
+            htmlFor={input.id}
+            style={{ marginTop: 10, marginBottom: 10 }}
           >
-            {/* {window.sessionStorage
-              .getItem("Diagnosis")![0]
-              .split(",")
-              .map((args) => (
-                <MenuItem value={args}>
-                  <em>{args}</em>
+            {input.text}
+            <Select
+              id={input.id}
+              required
+              style={{ width: 200, height: 40 }}
+              variant="outlined"
+              value={input.value}
+              onChange={(event: ChangeEvent<{ value: unknown }>) => {
+                dispatch(input.func(String(event.target.value)));
+              }}
+            >
+              {input.menuData.map((menu) => (
+                <MenuItem value={menu.id}>
+                  <em>{menu.value}</em>
                 </MenuItem>
-              ))} */}
-          </Select>
-        </InputLabel>
-
-        <InputLabel
-          htmlFor="select"
-          style={{ marginTop: 10, marginBottom: 10 }}
-        >
-          بیمه : &nbsp;
-          <Select
-            id="select"
-            required
-            // style={{ width: 200, height: 40 }}
-            variant="outlined"
-            value={tempData.Insurance}
-            onChange={(event: ChangeEvent<{ value: unknown }>) => {
-              dispatch(setInsurance(String(event.target.value)));
-            }}
-          >
-            {/* {window.sessionStorage
-              .getItem("Insurance")![0]
-              .split(",")
-              .map((args) => (
-                <MenuItem value={args}>
-                  <em>{args}</em>
-                </MenuItem>
-              ))} */}
-          </Select>
-        </InputLabel>
+              ))}
+            </Select>
+          </InputLabel>
+        ))}
       </Grid>
 
       {/* ------------------------ Comment ------------------------ */}

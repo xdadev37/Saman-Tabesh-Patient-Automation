@@ -38,20 +38,19 @@ const FilesFields: FC<IProps> = ({ id, title, func }) => {
         style={{ color: darkMode ? "#fff" : "#000", marginBottom: 35 }}
       >
         {title}
-        <Box marginX={10} marginY={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            component="span"
-            startIcon={<NoteAdd />}
-          >
-            {pdfStatus === "ok" ? (
-              <CheckCircle style={{ color: "#fff" }} />
-            ) : (
-              "انتخاب فایل"
-            )}
-          </Button>
-        </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          startIcon={<NoteAdd />}
+          style={{ marginInline: 30 }}
+        >
+          {pdfStatus === "ok" ? (
+            <CheckCircle style={{ color: "#fff" }} />
+          ) : (
+            "انتخاب فایل"
+          )}
+        </Button>
         <Input
           hidden
           style={{ display: "none" }}

@@ -9,36 +9,52 @@ import MainInfoUI from "../../UI/AddPatientUI/MainInfoUI";
 import MedicalInfo from "../../UI/AddPatientUI/MedicalInfoUI";
 import MainFilesUI from "../../UI/AddPatientUI/MainFilesUI";
 import CheckEntries from "../../UI/AddPatientUI/checkEntries";
+import {
+  setDropDownMenu,
+  selectDropDownMenu,
+} from "../../Redux/Slicer/dropMenuDataSlice";
+import axios from "axios";
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
   const methods = useForm();
   const { watch } = methods;
-  const [avatar, setAvatar] = useState<Blob | string>("");
+  const [avatar, setAvatar] = useState<string>("");
   const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const [commitmentDoc, setCommitmentDoc] = useState<Blob | string>("");
   const [policyDoc, setPolicyDoc] = useState<Blob | string>("");
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(0);
   const [checkNIdAl, setCheckNIdAl] = useState(false);
-  const [mainInfoStatus, setMainInfoStatus] = useState(true);
+  const [anotherTabStatus, setAnotherTabStatus] = useState(true);
+  const [videoSrc, setVideoSrc] = useState<HTMLVideoElement | undefined>();
+  const [medicalInfoStatus, setMedicalInfoStatus] = useState(true);
+  const dropDownMenu = useAppSelector(selectDropDownMenu);
 
   useEffect(() => {
     if (
-      window.sessionStorage.getItem("Diagnosis") === null ||
-      window.sessionStorage.getItem("Insurance") === null
+      dropDownMenu.diagnosisMenu.length === 1 ||
+      dropDownMenu.insuranceMenu.length === 1
     ) {
-      window.sessionStorage.setItem("Diagnosis", "");
-      window.sessionStorage.setItem("Insurance", "");
+      axios
+        .get("url")
+        .then((res) => {
+          console.log(res);
+          setDropDownMenu(res.data);
+        })
+        .catch((error) => {
+          alert("خطای سرور");
+          console.log(error);
+        });
     }
 
     setOpen(false);
-  }, []);
+  }, [dropDownMenu]);
 
   const handleSwitchTabs = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  let shownTab = <></>;
+  let shownTab;
   switch (value) {
     case 0:
       shownTab = (
@@ -49,24 +65,32 @@ const AddPatientPage: FC = () => {
           setNationalIdDoc={setNationalIdDoc}
           checkNIdAl={checkNIdAl}
           setCheckNIdAl={setCheckNIdAl}
-          setMainInfoStatus={setMainInfoStatus}
           setValue={setValue}
+          videoSrc={videoSrc}
+          setMedicalInfoStatus={setMedicalInfoStatus}
         />
       );
       break;
 
     case 1:
-      shownTab = <MedicalInfo setValue={setValue} />;
+      shownTab = (
+        <MedicalInfo
+          setValue={setValue}
+          setAnotherTabStatus={setAnotherTabStatus}
+        />
+      );
       break;
 
     case 2:
       shownTab = (
         <MainFilesUI
+          avatar={avatar}
           setAvatar={setAvatar}
           setNationalIdDoc={setNationalIdDoc}
           setCommitmentDoc={setCommitmentDoc}
           setPolicyDoc={setPolicyDoc}
           setValue={setValue}
+          setVideoSrc={setVideoSrc}
         />
       );
       break;
@@ -89,27 +113,29 @@ const AddPatientPage: FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <Button
-        variant="outlined"
-        startIcon={<ChevronRight />}
-        onClick={() => setValue(value - 1)}
-        style={{ float: "left", marginInline: 30 }}
-      >
-        برگشت
-      </Button>
+      {value !== 0 && (
+        <Button
+          variant="outlined"
+          startIcon={<ChevronRight />}
+          onClick={() => setValue(value - 1)}
+          style={{ float: "left", marginInline: 30 }}
+        >
+          برگشت
+        </Button>
+      )}
       <AppBar color="default">
         <Tabs onChange={handleSwitchTabs} value={value}>
           <Tab label="اطلاعات هویتی" aria-controls="0" />
           <Tab
             label="اطلاعات درمانی"
             aria-controls="1"
-            disabled={mainInfoStatus}
+            disabled={medicalInfoStatus}
           />
-          <Tab label="مدارک" aria-controls="2" disabled={mainInfoStatus} />
+          <Tab label="مدارک" aria-controls="2" disabled={anotherTabStatus} />
           <Tab
             label="اطلاعات کلی"
             aria-controls="3"
-            disabled={mainInfoStatus}
+            disabled={anotherTabStatus}
           />
         </Tabs>
       </AppBar>

@@ -18,8 +18,8 @@ const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     form: {
       paddingTop: theme.spacing(5),
-      "& > label": {
-        marginTop: theme.spacing(3),
+      "& > * > label": {
+        marginBottom: theme.spacing(2),
       },
     },
   })
@@ -28,12 +28,13 @@ const useStyle = makeStyles((theme: Theme) =>
 interface IProps {
   requiredField: IRequiredFields;
   watch: (arg: string) => string;
-  setAvatar: (arg: Blob | string) => void;
+  setAvatar: (arg: string) => void;
   setNationalIdDoc: (arg: Blob | string) => void;
   checkNIdAl: boolean;
   setCheckNIdAl: (arg: boolean) => void;
-  setMainInfoStatus: (arg: boolean) => void;
+  setMedicalInfoStatus: (arg: boolean) => void;
   setValue: (arg: number) => void;
+  videoSrc: HTMLVideoElement | undefined;
 }
 
 const MainInfoUI: FC<IProps> = ({
@@ -41,20 +42,28 @@ const MainInfoUI: FC<IProps> = ({
   watch,
   checkNIdAl,
   setCheckNIdAl,
-  setMainInfoStatus,
   setValue,
+  videoSrc,
+  setMedicalInfoStatus,
 }) => {
   const classes = useStyle();
   const dispatch = useAppDispatch();
   const { handleSubmit } = useFormContext();
 
   useEffect(() => {
-    setMainInfoStatus(true);
-  }, [setMainInfoStatus]);
+    setMedicalInfoStatus(true);
+    if (videoSrc !== undefined) {
+      videoSrc!.srcObject = null;
+
+      navigator.mediaDevices.getUserMedia({ video: true }).then((res) => {
+        res.getVideoTracks().forEach((tracks) => tracks.stop());
+      });
+    }
+  }, [setMedicalInfoStatus, videoSrc]);
 
   const submit = () => {
     dispatch(setBirthday(watch("year") + watch("month") + watch("day")));
-    setMainInfoStatus(false);
+    setMedicalInfoStatus(false);
     setValue(1);
   };
 
