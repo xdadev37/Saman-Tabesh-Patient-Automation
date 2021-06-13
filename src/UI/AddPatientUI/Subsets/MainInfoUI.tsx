@@ -1,29 +1,17 @@
 import { FC, useEffect } from "react";
 import { Grid, Button } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { ChevronLeft } from "@material-ui/icons";
-import NameFields from "../../Pages/AddPatientPage/AddFormDescenders/nameFields";
-import { useAppDispatch } from "../../Redux/hook";
+import NameFields from "../../../Pages/AddPatientPage/AddFormDescenders/nameFields";
+import { useAppDispatch } from "../../../Redux/hook";
 import {
   setName,
   setFamilyName,
   setBirthday,
-} from "../../Redux/Slicer/patientInfoSlice";
+} from "../../../Redux/Slicer/patientInfoSlice";
 import { useFormContext } from "react-hook-form";
-import Birthday from "../../Pages/AddPatientPage/AddFormDescenders/numericFields/birthdayFields";
-import NationalId from "./../../Pages/AddPatientPage/AddFormDescenders/numericFields/nationalIdField";
-import TelNumbers from "./../../Pages/AddPatientPage/AddFormDescenders/numericFields/telNumbersFields";
-
-const useStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    form: {
-      paddingTop: theme.spacing(5),
-      "& > * > label": {
-        marginBottom: theme.spacing(2),
-      },
-    },
-  })
-);
+import Birthday from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/birthdayFields";
+import NationalId from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/nationalIdField";
+import TelNumbers from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/telNumbersFields";
 
 interface IProps {
   requiredField: IRequiredFields;
@@ -34,7 +22,6 @@ interface IProps {
   setCheckNIdAl: (arg: boolean) => void;
   setMedicalInfoStatus: (arg: boolean) => void;
   setValue: (arg: number) => void;
-  videoSrc: HTMLVideoElement | undefined;
 }
 
 const MainInfoUI: FC<IProps> = ({
@@ -43,33 +30,24 @@ const MainInfoUI: FC<IProps> = ({
   checkNIdAl,
   setCheckNIdAl,
   setValue,
-  videoSrc,
   setMedicalInfoStatus,
 }) => {
-  const classes = useStyle();
   const dispatch = useAppDispatch();
   const { handleSubmit } = useFormContext();
 
   useEffect(() => {
     setMedicalInfoStatus(true);
-    if (videoSrc !== undefined) {
-      videoSrc!.srcObject = null;
-
-      navigator.mediaDevices.getUserMedia({ video: true }).then((res) => {
-        res.getVideoTracks().forEach((tracks) => tracks.stop());
-      });
-    }
-  }, [setMedicalInfoStatus, videoSrc]);
+  }, [setMedicalInfoStatus]);
 
   const submit = () => {
-    dispatch(setBirthday(watch("year") + watch("month") + watch("day")));
+    dispatch(setBirthday(`${watch("year")}/${watch("month")}/${watch("day")}`));
     setMedicalInfoStatus(false);
     setValue(1);
   };
 
   return (
     <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-      <Grid container justify="space-between" className={classes.form}>
+      <Grid container justify="space-evenly" id="mainInfoUI">
         {/* ------------------------ Names ------------------------ */}
         <Grid item>
           <NameFields
@@ -91,7 +69,13 @@ const MainInfoUI: FC<IProps> = ({
         </Grid>
 
         {/* ------------------------ NumericFields ------------------------ */}
-        <hr />
+        <hr
+          style={{
+            marginBottom: 40,
+            marginTop: 40,
+            border: "0.0001px groove #000",
+          }}
+        />
         <Grid item>
           <Birthday />
           <TelNumbers />

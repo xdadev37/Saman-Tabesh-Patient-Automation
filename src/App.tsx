@@ -14,7 +14,6 @@ import { selectDarkMode } from "./Redux/Slicer/darkModeSlice";
 import { selectLogin } from "./Redux/Slicer/loginSlice";
 import Login from "./Pages/Admin/Login/Login";
 import GlobalRedux from "./globalRedux";
-import AddPatient from "./Pages/AddPatientPage/AddPatientPage";
 
 const App: FC = () => {
   const darkMode = useAppSelector(selectDarkMode);
@@ -38,7 +37,7 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <RTLProvider theme={theme}>
         <CssBaseline />
-        {/* {login ? (
+        {login ? (
           <BrowserRouter>
             <Grid container>
               <Grid item xs={12} sm={12} lg={12}>
@@ -60,8 +59,7 @@ const App: FC = () => {
           </BrowserRouter>
         ) : (
           <Login />
-        )} */}
-        <AddPatient />
+        )}
         <GlobalRedux />
       </RTLProvider>
     </ThemeProvider>

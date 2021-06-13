@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../Redux/hook";
 import { setDocName, setDocFamilyName } from "../Redux/Slicer/permissionSlice";
 import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
 import { selectPass } from "../Redux/Slicer/userPassSlice";
-import WebcamImage from "../Pages/AddPatientPage/AddFormDescenders/webcamImage";
+import WebcamImage from "../Pages/AddPatientPage/AddFormDescenders/Webcam/webcamImage";
 
 interface IProps {
   submit: () => void;

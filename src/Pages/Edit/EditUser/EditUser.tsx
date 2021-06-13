@@ -14,7 +14,7 @@ import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import { MyAvatar } from "../../../UI/Avatar";
-import MainInfoUI from "../../../UI/AddPatientUI/MainInfoUI";
+import MainInfoUI from "../../../UI/AddPatientUI/Subsets/MainInfoUI";
 import { patch } from "../../../tokenAuth";
 
 const EditUser: FC = () => {

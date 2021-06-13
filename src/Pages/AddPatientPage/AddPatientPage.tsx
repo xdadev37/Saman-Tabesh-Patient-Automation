@@ -1,19 +1,20 @@
 import { FC, useState, useEffect, ChangeEvent } from "react";
-import { Button, Tabs, Tab, AppBar, Box } from "@material-ui/core";
+import { Button, Tabs, Tab, AppBar, Box, Paper } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAppSelector } from "../../Redux/hook";
 import { ChevronRight } from "@material-ui/icons";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import { setOpen } from "../../Redux/Slicer/alertMessageSlice";
-import MainInfoUI from "../../UI/AddPatientUI/MainInfoUI";
-import MedicalInfo from "../../UI/AddPatientUI/MedicalInfoUI";
-import MainFilesUI from "../../UI/AddPatientUI/MainFilesUI";
-import CheckEntries from "../../UI/AddPatientUI/checkEntries";
-import {
-  setDropDownMenu,
-  selectDropDownMenu,
-} from "../../Redux/Slicer/dropMenuDataSlice";
-import axios from "axios";
+import MainInfoUI from "../../UI/AddPatientUI/Subsets/MainInfoUI";
+import MedicalInfo from "../../UI/AddPatientUI/Subsets/MedicalInfoUI";
+import MainFilesUI from "../../UI/AddPatientUI/Subsets/MainFilesUI";
+import CheckEntries from "./AddFormDescenders/checkEntries";
+import { useStyle } from "../../UI/AddPatientUI/AddPatientStyle";
+// import {
+//   setDropDownMenu,
+//   selectDropDownMenu,
+// } from "../../Redux/Slicer/dropMenuDataSlice";
+// import axios from "axios";
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
@@ -28,27 +29,42 @@ const AddPatientPage: FC = () => {
   const [anotherTabStatus, setAnotherTabStatus] = useState(true);
   const [videoSrc, setVideoSrc] = useState<HTMLVideoElement | undefined>();
   const [medicalInfoStatus, setMedicalInfoStatus] = useState(true);
-  const dropDownMenu = useAppSelector(selectDropDownMenu);
+  const classes = useStyle();
+  // const dropDownMenu = useAppSelector(selectDropDownMenu);
 
   useEffect(() => {
-    if (
-      dropDownMenu.diagnosisMenu.length === 1 ||
-      dropDownMenu.insuranceMenu.length === 1
-    ) {
-      axios
-        .get("url")
-        .then((res) => {
-          console.log(res);
-          setDropDownMenu(res.data);
-        })
-        .catch((error) => {
-          alert("خطای سرور");
-          console.log(error);
-        });
-    }
+    // if (
+    //   dropDownMenu.diagnosisMenu.length === 1 ||
+    //   dropDownMenu.insuranceMenu.length === 1
+    // ) {
+    //   axios
+    //     .get("url")
+    //     .then((res) => {
+    //       console.log(res);
+    //       setDropDownMenu(res.data);
+    //     })
+    //     .catch((error) => {
+    //       alert("خطای سرور");
+    //       console.log(error);
+    //     });
+    // }
+    const webcamLife = async () => {
+      if (value !== 2) {
+        if (videoSrc !== undefined) {
+          videoSrc!.srcObject = null;
 
+          await navigator.mediaDevices
+            .getUserMedia({ video: true })
+            .then((res) => {
+              res.getVideoTracks().forEach((tracks) => tracks.stop());
+            });
+        }
+      }
+    };
+
+    webcamLife();
     setOpen(false);
-  }, [dropDownMenu]);
+  }, [videoSrc, value]);
 
   const handleSwitchTabs = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -66,7 +82,6 @@ const AddPatientPage: FC = () => {
           checkNIdAl={checkNIdAl}
           setCheckNIdAl={setCheckNIdAl}
           setValue={setValue}
-          videoSrc={videoSrc}
           setMedicalInfoStatus={setMedicalInfoStatus}
         />
       );
@@ -113,17 +128,7 @@ const AddPatientPage: FC = () => {
 
   return (
     <FormProvider {...methods}>
-      {value !== 0 && (
-        <Button
-          variant="outlined"
-          startIcon={<ChevronRight />}
-          onClick={() => setValue(value - 1)}
-          style={{ float: "left", marginInline: 30 }}
-        >
-          برگشت
-        </Button>
-      )}
-      <AppBar color="default">
+      <AppBar color="default" position="relative">
         <Tabs onChange={handleSwitchTabs} value={value}>
           <Tab label="اطلاعات هویتی" aria-controls="0" />
           <Tab
@@ -138,8 +143,22 @@ const AddPatientPage: FC = () => {
             disabled={anotherTabStatus}
           />
         </Tabs>
+        <Box className={classes.root} component={Paper}>
+          {value !== 0 && (
+            <Box justifyContent="flex-end" paddingBottom={0.01} paddingTop={3}>
+              <Button
+                variant="contained"
+                startIcon={<ChevronRight />}
+                onClick={() => setValue(value - 1)}
+                style={{ float: "left", marginInline: 30 }}
+              >
+                برگشت
+              </Button>
+            </Box>
+          )}
+          {shownTab}
+        </Box>
       </AppBar>
-      <Box marginTop={10}>{shownTab}</Box>
     </FormProvider>
   );
 };

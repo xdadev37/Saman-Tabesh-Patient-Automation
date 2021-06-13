@@ -4,14 +4,14 @@ import type { RootState } from "../store";
 const initialState: IDropMenu = {
   diagnosisMenu: [
     {
-      id: "",
-      value: "",
+      id: "Test",
+      value: "Test",
     },
   ],
   insuranceMenu: [
     {
-      id: "",
-      value: "",
+      id: "Test",
+      value: "Test",
     },
   ],
 };

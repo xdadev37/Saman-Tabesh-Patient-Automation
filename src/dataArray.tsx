@@ -17,7 +17,7 @@ export const birthday = [
     id: "day",
     pattern: /\d{2}/,
     maxLength: 2,
-    index: { start: 6, end: 8 },
+    index: 2,
     limiter: { start: 0, end: 31 },
   },
   {
@@ -25,7 +25,7 @@ export const birthday = [
     id: "month",
     pattern: /\d{2}/,
     maxLength: 2,
-    index: { start: 4, end: 6 },
+    index: 1,
     limiter: { start: 0, end: 12 },
   },
   {
@@ -33,7 +33,13 @@ export const birthday = [
     id: "year",
     pattern: /\d{4}/,
     maxLength: 4,
-    index: { start: 0, end: 4 },
-    limiter: { start: 1300, end: new Date().getFullYear() - 621 },
+    index: 0,
+    limiter: {
+      start: 1300,
+      end: new Date().toLocaleDateString("fa-IR", {
+        year: "numeric",
+        numberingSystem: "latn",
+      }),
+    },
   },
 ];

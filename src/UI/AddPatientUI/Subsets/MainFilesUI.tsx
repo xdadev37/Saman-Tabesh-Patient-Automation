@@ -1,15 +1,14 @@
-import FilesFields from "../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
+import FilesFields from "../../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
 import {
   FormHelperText,
   Typography,
   Button,
   Grid,
-  Paper,
 } from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
-import { useAppSelector } from "../../Redux/hook";
-import { selectDarkMode } from "../../Redux/Slicer/darkModeSlice";
-import WebcamImage from "../../Pages/AddPatientPage/AddFormDescenders/webcamImage";
+import { useAppSelector } from "../../../Redux/hook";
+import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
+import WebcamImage from "../../../Pages/AddPatientPage/AddFormDescenders/Webcam/webcamImage";
 
 interface IProps {
   avatar: string;
@@ -33,7 +32,7 @@ const MainFilesUI: React.FC<IProps> = ({
   const darkMode = useAppSelector(selectDarkMode);
 
   return (
-    <Grid container component={Paper}>
+    <Grid container id="mainFilesUI">
       <Grid container>
         <WebcamImage
           avatar={avatar}
@@ -41,7 +40,7 @@ const MainFilesUI: React.FC<IProps> = ({
           setVideoSrc={setVideoSrc}
         />
       </Grid>
-      <hr style={{ width: "80%", marginBottom: 40, marginTop: 40 }} />
+      <hr style={{ width: "100%", marginBottom: 40, marginTop: 40, border:"0.0001px groove #000" }} />
       <Grid container>
         <FilesFields
           id="NationalIdCard"

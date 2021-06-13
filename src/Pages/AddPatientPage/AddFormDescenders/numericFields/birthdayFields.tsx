@@ -30,10 +30,7 @@ const BirthdayFields: FC = () => {
               {input.value} تولد<span style={{ color: "#ff0000" }}>*</span> :
             </InputLabel>
             <TextField
-              defaultValue={defaultState.Birthday.slice(
-                input.index.start,
-                input.index.end
-              )}
+              defaultValue={defaultState.Birthday.split("/")[input.index]}
               id={input.id}
               variant="outlined"
               size="small"
