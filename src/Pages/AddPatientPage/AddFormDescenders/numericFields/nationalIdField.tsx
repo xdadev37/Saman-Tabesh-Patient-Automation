@@ -1,4 +1,4 @@
-import { FC, Fragment, ChangeEvent } from "react";
+import { FC, Fragment, ChangeEvent, useState } from "react";
 import { InputLabel, TextField, Typography } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
@@ -9,15 +9,11 @@ import {
 import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
 import { numericValidation } from "./numericValidation";
 
-interface IProps {
-  checkNIdAl: boolean;
-  setCheckNIdAl: (arg: boolean) => void;
-}
-
-const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
+const NumericFields: FC = () => {
   const dispatch = useAppDispatch();
   const defaultState = useAppSelector(selectRequiredField);
   const darkMode = useAppSelector(selectDarkMode);
+  const [checkNIdAl, setCheckNIdAl] = useState(false);
 
   const {
     register,
@@ -42,6 +38,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
           value === "9999999999"
         ) {
           setCheckNIdAl(true);
+          return false;
         } else {
           const a = parseInt(value.charAt(9));
           const b =
@@ -57,12 +54,15 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
           const c = b % 11;
           if ((c < 2 && a === c) || (c >= 2 && 11 - c === a)) {
             setCheckNIdAl(false);
+            return true;
           } else {
             setCheckNIdAl(true);
+            return false;
           }
         }
       } else {
         setCheckNIdAl(false);
+        return true;
       }
     }
   };
@@ -94,6 +94,7 @@ const NumericFields: FC<IProps> = ({ checkNIdAl, setCheckNIdAl }) => {
             value: /\d{10}/,
             message: "کد ملی فقط شامل اعداد است",
           },
+          validate: checkNationalIdAl,
         })}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           numericValidation(event, "NationalId", "کد ملی", setValue);

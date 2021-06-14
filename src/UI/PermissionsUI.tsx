@@ -12,11 +12,9 @@ import WebcamImage from "../Pages/AddPatientPage/AddFormDescenders/Webcam/webcam
 
 interface IProps {
   submit: () => void;
-  avatar: string;
-  setAvatar: (arg: string) => void;
 }
 
-const PermissionsUI: React.FC<IProps> = ({ submit, avatar, setAvatar }) => {
+const PermissionsUI: React.FC<IProps> = ({ submit }) => {
   const methods = useForm();
   const {
     handleSubmit,
@@ -57,11 +55,7 @@ const PermissionsUI: React.FC<IProps> = ({ submit, avatar, setAvatar }) => {
           defaultState=""
         />
 
-        <WebcamImage
-          avatar={avatar}
-          setAvatar={setAvatar}
-          setVideoSrc={setVideoSrc}
-        />
+        <WebcamImage setVideoSrc={setVideoSrc} />
 
         <UserPassUI />
 

@@ -26,7 +26,7 @@ const Profile: FC = () => {
 
   return (
     <Fragment>
-      <IconButton aria-controls="authMenu" onClick={handleMenu}>
+      <IconButton aria-controls="authMenu" onClick={handleMenu} size="small">
         <ExpandMore />
       </IconButton>
       <Menu

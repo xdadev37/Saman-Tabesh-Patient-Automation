@@ -13,8 +13,8 @@ interface Props extends SwitchProps {
 const IOSSwitch = withStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: 42,
-      height: 26,
+      width: 32,
+      height: 16,
       padding: 0,
       margin: theme.spacing(1),
       fontSize: "1px",
@@ -37,8 +37,8 @@ const IOSSwitch = withStyles((theme: Theme) =>
       },
     },
     thumb: {
-      width: 24,
-      height: 24,
+      width: 14,
+      height: 14,
     },
     track: {
       borderRadius: 26 / 2,

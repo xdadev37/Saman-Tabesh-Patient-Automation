@@ -14,6 +14,7 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
 import MoreDetailsTable from "./MoreDetailsTable/MoreDetailsTable";
 
 interface IProps {
+  row: number;
   id: number;
   Name: string;
   FamilyName: string;
@@ -24,6 +25,7 @@ interface IProps {
 }
 
 const MainTable: FC<IProps> = ({
+  row,
   id,
   Name,
   FamilyName,
@@ -65,7 +67,7 @@ const MainTable: FC<IProps> = ({
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell>{id}</TableCell>
+        <TableCell>{row}</TableCell>
         <TableCell>{Name}</TableCell>
         <TableCell>{FamilyName}</TableCell>
         <TableCell>{NationalId}</TableCell>
@@ -78,7 +80,7 @@ const MainTable: FC<IProps> = ({
         Name={Name}
         FamilyName={FamilyName}
         NationalId={NationalId}
-        AvatarLink={Avatar}
+        Avatar={Avatar}
         NationalIdDocLink={NationalIdDocLink}
         Comment={Comment}
         setCommentAlert={setCommentAlert}

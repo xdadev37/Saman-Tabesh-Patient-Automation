@@ -39,15 +39,10 @@ const App: FC = () => {
         <CssBaseline />
         {login ? (
           <BrowserRouter>
-            <Grid container>
-              <Grid item xs={12} sm={12} lg={12}>
-                <Header />
-              </Grid>
+            <Grid container justify="center">
+              <Header />
               <Grid
                 item
-                xs={12}
-                sm={12}
-                lg={12}
                 style={{ marginTop: 90, marginBottom: 50, marginInline: 150 }}
               >
                 <Switch>

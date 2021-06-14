@@ -11,6 +11,7 @@ const Pagination: FC = () => {
       {selectData.map((data) => (
         <MainTable
           key={data.id}
+          row={selectData.indexOf(data)}
           id={data.id}
           Name={data.Name}
           FamilyName={data.FamilyName}

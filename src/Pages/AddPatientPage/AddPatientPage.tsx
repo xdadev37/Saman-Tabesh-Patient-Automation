@@ -1,165 +1,93 @@
-import { FC, useState, useEffect, ChangeEvent } from "react";
-import { Button, Tabs, Tab, AppBar, Box, Paper } from "@material-ui/core";
-import { useForm, FormProvider } from "react-hook-form";
-import { useAppSelector } from "../../Redux/hook";
-import { ChevronRight } from "@material-ui/icons";
+import { FC, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
-import { setOpen } from "../../Redux/Slicer/alertMessageSlice";
-import MainInfoUI from "../../UI/AddPatientUI/Subsets/MainInfoUI";
-import MedicalInfo from "../../UI/AddPatientUI/Subsets/MedicalInfoUI";
-import MainFilesUI from "../../UI/AddPatientUI/Subsets/MainFilesUI";
-import CheckEntries from "./AddFormDescenders/checkEntries";
-import { useStyle } from "../../UI/AddPatientUI/AddPatientStyle";
+import { setBackdrop } from "../../Redux/Slicer/backdropSlice";
+import {
+  setAlertStatus,
+  setAlertText,
+  setOpen,
+} from "../../Redux/Slicer/alertMessageSlice";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import PatientPageUI from "../../UI/AddPatientUI/PatientPageUI";
 // import {
 //   setDropDownMenu,
 //   selectDropDownMenu,
 // } from "../../Redux/Slicer/dropMenuDataSlice";
-// import axios from "axios";
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
-  const methods = useForm();
-  const { watch } = methods;
-  const [avatar, setAvatar] = useState<string>("");
+  const dataGrid = new FormData();
   const [nationalIdDoc, setNationalIdDoc] = useState<Blob | string>("");
   const [commitmentDoc, setCommitmentDoc] = useState<Blob | string>("");
   const [policyDoc, setPolicyDoc] = useState<Blob | string>("");
-  const [value, setValue] = useState(0);
-  const [checkNIdAl, setCheckNIdAl] = useState(false);
-  const [anotherTabStatus, setAnotherTabStatus] = useState(true);
-  const [videoSrc, setVideoSrc] = useState<HTMLVideoElement | undefined>();
-  const [medicalInfoStatus, setMedicalInfoStatus] = useState(true);
-  const classes = useStyle();
-  // const dropDownMenu = useAppSelector(selectDropDownMenu);
+  const dispatch = useAppDispatch();
+  let history = useHistory();
 
-  useEffect(() => {
-    // if (
-    //   dropDownMenu.diagnosisMenu.length === 1 ||
-    //   dropDownMenu.insuranceMenu.length === 1
-    // ) {
-    //   axios
-    //     .get("url")
-    //     .then((res) => {
-    //       console.log(res);
-    //       setDropDownMenu(res.data);
-    //     })
-    //     .catch((error) => {
-    //       alert("خطای سرور");
-    //       console.log(error);
-    //     });
-    // }
-    const webcamLife = async () => {
-      if (value !== 2) {
-        if (videoSrc !== undefined) {
-          videoSrc!.srcObject = null;
+  const submit = async () => {
+    dataGrid.append("Name", requiredField.Name);
+    dataGrid.append("FamilyName", requiredField.FamilyName);
+    dataGrid.append("NationalId", requiredField.NationalId);
+    dataGrid.append("Avatar", requiredField.Avatar);
+    dataGrid.append("NationalIdDoc", nationalIdDoc);
+    dataGrid.append("Comment", requiredField.Comment);
+    dataGrid.append("Diagnosis", requiredField.Diagnosis);
+    dataGrid.append("Insurance", requiredField.Insurance);
+    dataGrid.append("CommitmentDoc", commitmentDoc);
+    dataGrid.append("PolicyDoc", policyDoc);
+    dataGrid.append("MobileNo", requiredField.mobileNo);
+    dataGrid.append("EmergencyMobileNo", requiredField.emergencyMobileNo);
+    dataGrid.append("Birthday", requiredField.Birthday);
 
-          await navigator.mediaDevices
-            .getUserMedia({ video: true })
-            .then((res) => {
-              res.getVideoTracks().forEach((tracks) => tracks.stop());
-            });
-        }
-      }
-    };
+    dispatch(setBackdrop());
+    const axiosPromise = new Promise((sent, rejected) => {
+      axios
+        .post(
+          "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm",
+          dataGrid
+        )
+        .then((res) => {
+          console.log(res);
+          if (res.status === 201) {
+            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+            dispatch(setAlertStatus("success"));
+            history.push("/");
 
-    webcamLife();
-    setOpen(false);
-  }, [videoSrc, value]);
+            sent(dispatch(setOpen(true)));
+          } else {
+            dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
+            dispatch(setAlertStatus("error"));
 
-  const handleSwitchTabs = (event: ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+            rejected(dispatch(setOpen(true)));
+          }
+        })
+        .catch((error) => {
+          console.log(error.request);
+          if (error.request.responseText === "") {
+            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+          } else {
+            dispatch(setAlertText(error.request.responseText));
+          }
+
+          dispatch(setAlertStatus("error"));
+          rejected(dispatch(setOpen(true)));
+        })
+        .finally(() => dispatch(setBackdrop()));
+    });
+
+    await axiosPromise;
   };
 
-  let shownTab;
-  switch (value) {
-    case 0:
-      shownTab = (
-        <MainInfoUI
-          requiredField={requiredField}
-          watch={watch}
-          setAvatar={setAvatar}
-          setNationalIdDoc={setNationalIdDoc}
-          checkNIdAl={checkNIdAl}
-          setCheckNIdAl={setCheckNIdAl}
-          setValue={setValue}
-          setMedicalInfoStatus={setMedicalInfoStatus}
-        />
-      );
-      break;
-
-    case 1:
-      shownTab = (
-        <MedicalInfo
-          setValue={setValue}
-          setAnotherTabStatus={setAnotherTabStatus}
-        />
-      );
-      break;
-
-    case 2:
-      shownTab = (
-        <MainFilesUI
-          avatar={avatar}
-          setAvatar={setAvatar}
-          setNationalIdDoc={setNationalIdDoc}
-          setCommitmentDoc={setCommitmentDoc}
-          setPolicyDoc={setPolicyDoc}
-          setValue={setValue}
-          setVideoSrc={setVideoSrc}
-        />
-      );
-      break;
-
-    case 3:
-      shownTab = (
-        <CheckEntries
-          avatar={avatar}
-          nationalIdDoc={nationalIdDoc}
-          commitmentDoc={commitmentDoc}
-          policyDoc={policyDoc}
-          checkNIdAl={checkNIdAl}
-        />
-      );
-      break;
-
-    default:
-      <></>;
-  }
-
   return (
-    <FormProvider {...methods}>
-      <AppBar color="default" position="relative">
-        <Tabs onChange={handleSwitchTabs} value={value}>
-          <Tab label="اطلاعات هویتی" aria-controls="0" />
-          <Tab
-            label="اطلاعات درمانی"
-            aria-controls="1"
-            disabled={medicalInfoStatus}
-          />
-          <Tab label="مدارک" aria-controls="2" disabled={anotherTabStatus} />
-          <Tab
-            label="اطلاعات کلی"
-            aria-controls="3"
-            disabled={anotherTabStatus}
-          />
-        </Tabs>
-        <Box className={classes.root} component={Paper}>
-          {value !== 0 && (
-            <Box justifyContent="flex-end" paddingBottom={0.01} paddingTop={3}>
-              <Button
-                variant="contained"
-                startIcon={<ChevronRight />}
-                onClick={() => setValue(value - 1)}
-                style={{ float: "left", marginInline: 30 }}
-              >
-                برگشت
-              </Button>
-            </Box>
-          )}
-          {shownTab}
-        </Box>
-      </AppBar>
-    </FormProvider>
+    <PatientPageUI
+      submit={submit}
+      setNationalIdDoc={setNationalIdDoc}
+      setCommitmentDoc={setCommitmentDoc}
+      setPolicyDoc={setPolicyDoc}
+      nationalIdDoc={nationalIdDoc}
+      commitmentDoc={commitmentDoc}
+      policyDoc={policyDoc}
+    />
   );
 };
 

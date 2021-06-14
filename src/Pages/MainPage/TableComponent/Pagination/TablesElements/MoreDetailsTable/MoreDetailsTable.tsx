@@ -5,7 +5,7 @@ import {
   Collapse,
   TableHead,
   TableBody,
-  Avatar,
+  Avatar as AvatarMU,
   Link,
   Button,
   Grid,
@@ -21,7 +21,7 @@ interface IProps {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  AvatarLink: string;
+  Avatar: string;
   NationalIdDocLink: string;
   Comment: string;
   setCommentAlert: (arg: boolean) => void;
@@ -41,7 +41,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   Name,
   FamilyName,
   NationalId,
-  AvatarLink,
+  Avatar,
   NationalIdDocLink,
   Comment,
   setCommentAlert,
@@ -72,7 +72,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Avatar alt="Avatar" src={AvatarLink} />
+                  <AvatarMU alt="Avatar" src={Avatar} />
                 </TableCell>
                 <TableCell>
                   {NationalIdDocLink === "" ? (
@@ -108,7 +108,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                     Name={Name}
                     FamilyName={FamilyName}
                     NationalId={NationalId}
-                    AvatarLink={AvatarLink}
+                    Avatar={Avatar}
                     NationalIdDocLink={NationalIdDocLink}
                     Comment={Comment}
                   />

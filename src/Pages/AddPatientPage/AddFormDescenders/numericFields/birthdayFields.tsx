@@ -66,7 +66,7 @@ const BirthdayFields: FC = () => {
       ))}
       <Grid container direction="column">
         {birthday.map((input) => (
-          <Grid item key={input.id}>
+          <Grid item key={input.id} style={{ marginTop: 10 }}>
             {errors[input.id] && (
               <Typography color="secondary" variant="subtitle2">
                 {errors[input.id].message}

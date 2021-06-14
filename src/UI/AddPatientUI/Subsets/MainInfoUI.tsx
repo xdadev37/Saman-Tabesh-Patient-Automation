@@ -16,20 +16,15 @@ import TelNumbers from "../../../Pages/AddPatientPage/AddFormDescenders/numericF
 interface IProps {
   requiredField: IRequiredFields;
   watch: (arg: string) => string;
-  setAvatar: (arg: string) => void;
   setNationalIdDoc: (arg: Blob | string) => void;
-  checkNIdAl: boolean;
-  setCheckNIdAl: (arg: boolean) => void;
   setMedicalInfoStatus: (arg: boolean) => void;
-  setValue: (arg: number) => void;
+  setTab: (arg: number) => void;
 }
 
 const MainInfoUI: FC<IProps> = ({
   requiredField,
   watch,
-  checkNIdAl,
-  setCheckNIdAl,
-  setValue,
+  setTab,
   setMedicalInfoStatus,
 }) => {
   const dispatch = useAppDispatch();
@@ -42,7 +37,7 @@ const MainInfoUI: FC<IProps> = ({
   const submit = () => {
     dispatch(setBirthday(`${watch("year")}/${watch("month")}/${watch("day")}`));
     setMedicalInfoStatus(false);
-    setValue(1);
+    setTab(1);
   };
 
   return (
@@ -65,7 +60,7 @@ const MainInfoUI: FC<IProps> = ({
             setState={(arg) => dispatch(setFamilyName(watch(arg)))}
             defaultState={requiredField.FamilyName}
           />
-          <NationalId checkNIdAl={checkNIdAl} setCheckNIdAl={setCheckNIdAl} />
+          <NationalId />
         </Grid>
 
         {/* ------------------------ NumericFields ------------------------ */}

@@ -17,8 +17,13 @@ import {
   setFamilyName,
   setNationalId,
   setComment,
-  setAvatarLink,
   setNationalIdDocLink,
+  // setAvatar,
+  // setBirthday,
+  // setDiagnosis,
+  // setInsurance,
+  // setEmergencyMobileNo,
+  // setMobileNo,
 } from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
@@ -26,7 +31,7 @@ interface IProps {
   Name: string;
   FamilyName: string;
   NationalId: string;
-  AvatarLink: string;
+  Avatar: string;
   NationalIdDocLink: string;
   Comment: string;
 }
@@ -36,7 +41,7 @@ const ButtonsGroup: FC<IProps> = ({
   Name,
   FamilyName,
   NationalId,
-  AvatarLink,
+  Avatar,
   NationalIdDocLink,
   Comment,
 }) => {
@@ -80,7 +85,6 @@ const ButtonsGroup: FC<IProps> = ({
     dispatch(setName(Name));
     dispatch(setFamilyName(FamilyName));
     dispatch(setNationalId(NationalId));
-    dispatch(setAvatarLink(AvatarLink));
     dispatch(setComment(Comment));
   };
 

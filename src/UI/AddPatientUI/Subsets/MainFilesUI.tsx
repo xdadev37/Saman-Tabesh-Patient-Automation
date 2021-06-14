@@ -1,32 +1,23 @@
-import FilesFields from "../../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
-import {
-  FormHelperText,
-  Typography,
-  Button,
-  Grid,
-} from "@material-ui/core";
+import { FormHelperText, Typography, Button, Grid } from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
 import { useAppSelector } from "../../../Redux/hook";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
+import FilesFields from "../../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
 import WebcamImage from "../../../Pages/AddPatientPage/AddFormDescenders/Webcam/webcamImage";
 
 interface IProps {
-  avatar: string;
-  setAvatar: (arg: string) => void;
   setNationalIdDoc: (arg: Blob) => void;
   setCommitmentDoc: (arg: Blob) => void;
   setPolicyDoc: (arg: Blob) => void;
-  setValue: (arg: number) => void;
+  setTab: (arg: number) => void;
   setVideoSrc: (arg: HTMLVideoElement) => void;
 }
 
 const MainFilesUI: React.FC<IProps> = ({
-  avatar,
-  setAvatar,
   setNationalIdDoc,
   setCommitmentDoc,
   setPolicyDoc,
-  setValue,
+  setTab,
   setVideoSrc,
 }) => {
   const darkMode = useAppSelector(selectDarkMode);
@@ -34,13 +25,16 @@ const MainFilesUI: React.FC<IProps> = ({
   return (
     <Grid container id="mainFilesUI">
       <Grid container>
-        <WebcamImage
-          avatar={avatar}
-          setAvatar={setAvatar}
-          setVideoSrc={setVideoSrc}
-        />
+        <WebcamImage setVideoSrc={setVideoSrc} />
       </Grid>
-      <hr style={{ width: "100%", marginBottom: 40, marginTop: 40, border:"0.0001px groove #000" }} />
+      <hr
+        style={{
+          width: "100%",
+          marginBottom: 40,
+          marginTop: 40,
+          border: "0.0001px groove #000",
+        }}
+      />
       <Grid container>
         <FilesFields
           id="NationalIdCard"
@@ -72,7 +66,7 @@ const MainFilesUI: React.FC<IProps> = ({
 
       <Grid container justify="flex-end">
         <Button
-          onClick={() => setValue(3)}
+          onClick={() => setTab(3)}
           endIcon={<ChevronLeft />}
           variant="contained"
           color="primary"

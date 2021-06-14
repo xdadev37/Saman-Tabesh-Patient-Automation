@@ -11,7 +11,7 @@ const InfoBar: FC = () => {
   return (
     <Fragment>
       <Grid item style={{ display: "flex", alignItems: "baseline" }}>
-        <MyAvatar variant="rounded" alt="avatar" src={tempData.AvatarLink}>
+        <MyAvatar variant="rounded" alt="avatar" src={tempData.Avatar}>
           {avatarFirstLetter}
         </MyAvatar>
         &nbsp;

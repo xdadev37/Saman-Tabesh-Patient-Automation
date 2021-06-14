@@ -16,7 +16,11 @@ const LeftNav: React.FC = () => {
     <Grid container alignItems="baseline">
       <Grid item>
         <FormControlLabel
-          label={darkMode ? "حالت شب" : "حالت روز"}
+          label={
+            <span style={{ fontSize: "14px" }}>
+              {darkMode ? "حالت شب" : "حالت روز"}
+            </span>
+          }
           control={
             <IOSSwitch
               checked={darkMode}

@@ -11,7 +11,7 @@ const initialState: IInitialState = {
       Name: "",
       FamilyName: "",
       NationalId: "",
-      AvatarLink: "",
+      Avatar: "",
       NationalIdDocLink: "",
       Comment: "",
       Diagnosis: "",
@@ -39,8 +39,8 @@ export const patientInfoSlice = createSlice({
       state.requiredFields[0].NationalId = action.payload;
     },
 
-    setAvatarLink: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].AvatarLink = action.payload;
+    setAvatar: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].Avatar = action.payload;
     },
 
     setNationalIdDocLink: (state, action: PayloadAction<string>) => {
@@ -78,7 +78,7 @@ export const {
   setFamilyName,
   setNationalId,
   setComment,
-  setAvatarLink,
+  setAvatar,
   setNationalIdDocLink,
   setDiagnosis,
   setInsurance,

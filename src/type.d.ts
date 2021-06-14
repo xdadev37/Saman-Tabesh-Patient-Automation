@@ -3,7 +3,7 @@ interface IRequiredFields {
   FamilyName: string;
   NationalId: string;
   Comment: string;
-  AvatarLink: string;
+  Avatar: string;
   NationalIdDocLink: string;
   Diagnosis: string;
   Insurance: string;

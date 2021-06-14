@@ -21,11 +21,11 @@ import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { selectDropDownMenu } from "../../../Redux/Slicer/dropMenuDataSlice";
 
 interface IProps {
-  setValue: (arg: number) => void;
+  setTab: (arg: number) => void;
   setAnotherTabStatus: (arg: boolean) => void;
 }
 
-const MedicalInfoUI: FC<IProps> = ({ setValue, setAnotherTabStatus }) => {
+const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
@@ -54,7 +54,7 @@ const MedicalInfoUI: FC<IProps> = ({ setValue, setAnotherTabStatus }) => {
 
   const submit = () => {
     setAnotherTabStatus(false);
-    setValue(2);
+    setTab(2);
   };
 
   return (
