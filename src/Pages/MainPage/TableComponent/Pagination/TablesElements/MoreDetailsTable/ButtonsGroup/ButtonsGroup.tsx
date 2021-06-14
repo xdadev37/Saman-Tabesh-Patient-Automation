@@ -22,8 +22,8 @@ import {
   // setBirthday,
   // setDiagnosis,
   // setInsurance,
-  // setEmergencyMobileNo,
-  // setMobileNo,
+  // setUrgencyNumber,
+  // setphoneNumber,
 } from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {

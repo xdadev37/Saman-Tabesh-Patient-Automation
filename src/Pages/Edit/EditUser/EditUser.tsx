@@ -37,8 +37,8 @@ const EditUser: FC = () => {
     setValue("Comment", requiredField.Comment);
     setValue("Diagnosis", requiredField.Diagnosis);
     setValue("Insurance", requiredField.Insurance);
-    setValue("MobileNo", requiredField.mobileNo);
-    setValue("EmergencyMobileNo", requiredField.emergencyMobileNo);
+    setValue("PhoneNumber", requiredField.phoneNumber);
+    setValue("UrgencyNumber", requiredField.urgencyNumber);
     setValue("Birthday", requiredField.Birthday);
   }, [requiredField, dispatch, setValue]);
 
@@ -53,8 +53,8 @@ const EditUser: FC = () => {
     dataGrid.append("Insurance", requiredField.Insurance);
     dataGrid.append("CommitmentDoc", commitmentDoc);
     dataGrid.append("PolicyDoc", policyDoc);
-    dataGrid.append("MobileNo", requiredField.mobileNo);
-    dataGrid.append("EmergencyMobileNo", requiredField.emergencyMobileNo);
+    dataGrid.append("PhoneNumber", requiredField.phoneNumber);
+    dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
     dataGrid.append("Birthday", requiredField.Birthday);
 
     dispatch(setBackdrop());

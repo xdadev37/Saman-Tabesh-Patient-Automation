@@ -78,7 +78,12 @@ const MoreDetailsTable: React.FC<IProps> = ({
                   {NationalIdDocLink === "" ? (
                     "ندارد"
                   ) : (
-                    <Link target="_blank" href={NationalIdDocLink} rel="noreferrer">
+                    <Link
+                      color={darkMode ? "textPrimary" : "primary"}
+                      target="_blank"
+                      href={NationalIdDocLink}
+                      rel="noreferrer"
+                    >
                       مشاهده پی دی اف
                     </Link>
                   )}

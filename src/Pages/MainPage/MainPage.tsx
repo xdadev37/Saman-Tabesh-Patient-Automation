@@ -12,6 +12,7 @@ import GetActionName from "../patientActions/newAction/getActionName";
 import CheckAction from "../patientActions/checkActions/checkActions";
 import EditUser from "../Edit/EditUser/EditUser";
 import EditFiles from "../Edit/EditAction/EditActionName";
+import AddFile from "../AddFile/AddFile";
 
 const MainPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -91,6 +92,10 @@ const MainPage: FC = () => {
 
     case "editAction":
       Page = <EditFiles />;
+      break;
+
+    case "addFile":
+      Page = <AddFile />;
       break;
 
     default:

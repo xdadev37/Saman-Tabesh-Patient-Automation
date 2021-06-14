@@ -19,6 +19,7 @@ import {
 } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { selectDropDownMenu } from "../../../Redux/Slicer/dropMenuDataSlice";
+import { useFormContext } from "react-hook-form";
 
 interface IProps {
   setTab: (arg: number) => void;
@@ -30,6 +31,7 @@ const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
   const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
   const dropDownMenu = useAppSelector(selectDropDownMenu);
+  const { register } = useFormContext();
 
   useEffect(() => {
     setAnotherTabStatus(true);
@@ -70,10 +72,12 @@ const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
               {input.text}
               <Select
                 id={input.id}
-                required
                 style={{ width: 200, height: 40 }}
                 variant="outlined"
                 value={input.value}
+                {...register(input.id, {
+                  required: `انتخاب نوع ${input.text.split(":")[0]} الزامی است`,
+                })}
                 onChange={(event: ChangeEvent<{ value: unknown }>) => {
                   dispatch(input.func(String(event.target.value)));
                 }}

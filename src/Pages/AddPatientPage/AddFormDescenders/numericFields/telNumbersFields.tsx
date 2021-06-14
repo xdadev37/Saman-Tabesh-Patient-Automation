@@ -4,8 +4,8 @@ import { useFormContext } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import {
   selectRequiredField,
-  setMobileNo,
-  setEmergencyMobileNo,
+  setPhoneNumber,
+  setUrgencyNumber,
 } from "../../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
 import { numericValidation } from "./numericValidation";
@@ -24,17 +24,16 @@ const TelNumbersFields: FC = () => {
   const telNumbers = [
     {
       value: "",
-      id: "mobileNo",
-      defaultState: defaultState.mobileNo,
-      dispatcher: () => dispatch(setMobileNo(watch("mobileNo"))),
+      id: "phoneNumber",
+      defaultState: defaultState.phoneNumber,
+      dispatcher: () => dispatch(setPhoneNumber(watch("phoneNumber"))),
       isRequired: true,
     },
     {
       value: " اضطراری",
-      id: "emergencyMobileNo",
-      defaultState: defaultState.emergencyMobileNo,
-      dispatcher: () =>
-        dispatch(setEmergencyMobileNo(watch("emergencyMobileNo"))),
+      id: "urgencyNumber",
+      defaultState: defaultState.urgencyNumber,
+      dispatcher: () => dispatch(setUrgencyNumber(watch("urgencyNumber"))),
       isRequired: false,
     },
   ];
@@ -71,8 +70,9 @@ const TelNumbersFields: FC = () => {
                   message: `مقدار شماره موبایل${input.value} حداقل باید 11 عدد باشد!`,
                 },
                 pattern: {
-                  value: /\d{9}/,
-                  message: `شماره موبایل${input.value} فقط شامل اعداد است`,
+                  // value: /^[\u06F0][\u06F0-\u06F9]{3}[\u06F0-\u06F9]{3}[\u06F0-\u06F9]{4}/,
+                  value: /(0|\+98)?([ ]|,|-|[()]){0,2}9[1|2|3|4]([ ]|,|-|[()]){0,2}(?:[0-9]([ ]|,|-|[()]){0,2}){8}/,
+                  message: `شماره موبایل${input.value} اشتباه وارد شده`,
                 },
               })}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {

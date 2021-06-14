@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import { setBackdrop } from "../../Redux/Slicer/backdropSlice";
+import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
 import {
   setAlertStatus,
   setAlertText,
@@ -35,8 +36,8 @@ const AddPatientPage: FC = () => {
     dataGrid.append("Insurance", requiredField.Insurance);
     dataGrid.append("CommitmentDoc", commitmentDoc);
     dataGrid.append("PolicyDoc", policyDoc);
-    dataGrid.append("MobileNo", requiredField.mobileNo);
-    dataGrid.append("EmergencyMobileNo", requiredField.emergencyMobileNo);
+    dataGrid.append("PhoneNumber", requiredField.phoneNumber);
+    dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
     dataGrid.append("Birthday", requiredField.Birthday);
 
     dispatch(setBackdrop());
@@ -51,6 +52,7 @@ const AddPatientPage: FC = () => {
           if (res.status === 201) {
             dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
             dispatch(setAlertStatus("success"));
+            dispatch(setPatientId(res.data.id));
             history.push("/");
 
             sent(dispatch(setOpen(true)));

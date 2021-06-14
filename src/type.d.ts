@@ -7,8 +7,8 @@ interface IRequiredFields {
   NationalIdDocLink: string;
   Diagnosis: string;
   Insurance: string;
-  mobileNo: string;
-  emergencyMobileNo: string;
+  phoneNumber: string;
+  urgencyNumber: string;
   Birthday: string;
 }
 
@@ -57,4 +57,11 @@ interface IDropMenu {
       value: string;
     }
   ];
+}
+
+interface IAddFile {
+  id: string;
+  value: string;
+  description: string;
+  isAvailable: boolean;
 }

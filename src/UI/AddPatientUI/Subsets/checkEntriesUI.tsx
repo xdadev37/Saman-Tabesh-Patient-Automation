@@ -31,11 +31,11 @@ const CheckEntriesUI: React.FC<IProps> = ({
       key: 2,
     },
     {
-      input1: `شماره موبایل بیمار : ${requiredField.mobileNo}`,
+      input1: `شماره موبایل بیمار : ${requiredField.phoneNumber}`,
       input2: `شماره موبایل اضطراری : ${
-        requiredField.emergencyMobileNo === ""
+        requiredField.urgencyNumber === ""
           ? "ندارد"
-          : requiredField.emergencyMobileNo
+          : requiredField.urgencyNumber
       }`,
       key: 3,
     },
