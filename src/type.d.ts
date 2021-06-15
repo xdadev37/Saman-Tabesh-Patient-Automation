@@ -5,15 +5,15 @@ interface IRequiredFields {
   Comment: string;
   Avatar: string;
   NationalIdDocLink: string;
-  Diagnosis: string;
-  Insurance: string;
+  DiagnosisId: string;
+  InsuranceType: string;
   phoneNumber: string;
   urgencyNumber: string;
-  Birthday: string;
+  DateOfBirth: string;
 }
 
 interface IDataGrid {
-  id: number;
+  id: string;
   Name: string;
   FamilyName: string;
   NationalId: string;
@@ -44,14 +44,14 @@ interface IAuth {
 }
 
 interface IDropMenu {
-  diagnosisMenu: [
+  DiagnosisIdMenu: [
     {
       id: string;
       value: string;
     }
   ];
 
-  insuranceMenu: [
+  InsuranceTypeMenu: [
     {
       id: string;
       value: string;
@@ -64,4 +64,9 @@ interface IAddFile {
   value: string;
   description: string;
   isAvailable: boolean;
+}
+
+interface IPhysician {
+  id: string;
+  value: string;
 }

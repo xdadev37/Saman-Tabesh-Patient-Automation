@@ -17,7 +17,7 @@ import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
 
 interface IProps {
   open: boolean;
-  id: number;
+  id: string;
   Name: string;
   FamilyName: string;
   NationalId: string;

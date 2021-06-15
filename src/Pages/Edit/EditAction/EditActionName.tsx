@@ -1,97 +1,131 @@
-import { FC, useState, Fragment, useEffect } from "react";
-import { Dialog } from "@material-ui/core";
-import { patch } from "../../../tokenAuth";
+import { FC, ChangeEvent, useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  IconButton,
+  Typography,
+  Button,
+  List,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Close, Check } from "@material-ui/icons";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
-import {
-  selectActionId,
-  selectActionName,
-} from "../../../Redux/Slicer/editActionSlice";
-import EditFiles from "./EditActionFiles/EditActionFiles";
-import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
-import { selectActionComment } from "../../../Redux/Slicer/editActionSlice";
-import {
-  setAlertStatus,
-  setAlertText,
-  setOpen,
-} from "../../../Redux/Slicer/alertMessageSlice";
-import ModalEntry from "../../patientActions/newAction/AddFilesForm/ModalEntry";
+import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import CommentField from "../../../UI/CommentFieldUI";
+import EditActionFiles from "./EditActionFiles/EditActionFiles";
 
-const GetActionName: FC = () => {
+const useStyle = makeStyles((theme: Theme) =>
+  createStyles({
+    modal: {
+      marginTop: theme.spacing(10),
+      marginInline: theme.spacing(10),
+    },
+
+    button: {
+      margin: theme.spacing(5),
+      float: "right",
+      width: "30%",
+    },
+
+    marginY: {
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(4),
+    },
+
+    span: { marginInline: "10px", fontWeight: "normal" },
+  })
+);
+
+const ModalEntry: FC = () => {
   const dispatch = useAppDispatch();
+  const tempData = useAppSelector(selectRequiredField);
+  const classes = useStyle();
+  const [newActionName, setNewActionName] = useState("");
+  const [userComment, setUserComment] = useState("");
   const [completedStatus, setCompletedStatus] = useState(false);
-  const actionComment = useAppSelector(selectActionComment);
-  const [userComment, setUserComment] = useState(actionComment);
-  const selectId = useAppSelector(selectPatientId);
-  const actionId = useAppSelector(selectActionId);
-  const actionName = useAppSelector(selectActionName);
-  const [newActionName, setNewActionName] = useState(actionName);
 
-  useEffect(() => {
-    dispatch(setOpen(false));
-  }, [dispatch]);
-
-  const newActionSubmit = async () => {
-    if (newActionName !== "") {
-      dispatch(setBackdrop());
-      const submit = new Promise((submitted, failed) => {
-        patch
-          .patch(
-            `https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName/${actionId}`,
-            {
-              Name: newActionName,
-              PatientId: selectId,
-              Comment: userComment,
-            }
-          )
-          .then((res) => {
-            if (res.status === 200) {
-              submitted(setCompletedStatus(true));
-            } else {
-              dispatch(setAlertText("ثبت اطلاعات انجام نشد!"));
-              dispatch(setAlertStatus("error"));
-
-              failed(dispatch(setOpen(true)));
-            }
-          })
-          .catch((error) => {
-            console.log(error.request);
-            if (error.request.responseText === "") {
-              dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-            } else {
-              dispatch(setAlertText(error.request.responseText));
-            }
-
-            dispatch(setAlertStatus("error"));
-            failed(dispatch(setOpen(true)));
-          })
-          .finally(() => dispatch(setBackdrop()));
-      });
-      await submit;
-    }
+  const submit = () => {
+    setCompletedStatus(true);
   };
 
+  const modalEntry = (
+    <Grid container>
+      <AppBar>
+        <Toolbar>
+          <Grid container justify="space-between">
+            <IconButton onClick={() => dispatch(setActionForm("mainPage"))}>
+              <Close />
+            </IconButton>
+            <Typography variant="h6">{`ایجاد اقدام جدید برای ${tempData.Name} ${tempData.FamilyName}`}</Typography>
+            <Button
+              variant="contained"
+              onClick={() => dispatch(setActionForm("mainPage"))}
+              color="secondary"
+            >
+              خروج
+            </Button>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <List className={classes.modal}>
+        <InputLabel htmlFor="select" className={classes.marginY}>
+          نام رویداد : &nbsp;
+          <Select
+            id="select"
+            required
+            style={{ width: 200 }}
+            variant="outlined"
+            value={newActionName}
+            onChange={(event: ChangeEvent<{ value: unknown }>) => {
+              setNewActionName(String(event.target.value));
+            }}
+          >
+            <MenuItem value="ثبت اولیه پرونده">
+              <em>ثبت اولیه پرونده</em>
+            </MenuItem>
+            <MenuItem value="فاز دوم درمان">
+              <em>فاز دوم درمان</em>
+            </MenuItem>
+            <MenuItem value="پیگیری نتیجه درمان">
+              <em>پیگیری نتیجه درمان</em>
+            </MenuItem>
+          </Select>
+        </InputLabel>
+
+        {/* ------------------------ Comment ------------------------ */}
+        <CommentField defaultValue={userComment} func={setUserComment} />
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={submit}
+          startIcon={<Check />}
+          className={classes.button}
+        >
+          ثبت رویداد
+        </Button>
+      </List>
+    </Grid>
+  );
+
   return (
-    <Fragment>
+    <Grid container>
       {completedStatus ? (
-        <EditFiles
+        <EditActionFiles
           newActionName={newActionName}
-          actionId={actionId}
+          userComment={userComment}
           setCompletedStatus={setCompletedStatus}
         />
       ) : (
-        <Dialog fullScreen open={true}>
-          <ModalEntry
-            newActionName={newActionName}
-            setNewActionName={setNewActionName}
-            userComment={userComment}
-            setUserComment={setUserComment}
-            submit={newActionSubmit}
-          />
-        </Dialog>
+        modalEntry
       )}
-    </Fragment>
+    </Grid>
   );
 };
 
-export default GetActionName;
+export default ModalEntry;

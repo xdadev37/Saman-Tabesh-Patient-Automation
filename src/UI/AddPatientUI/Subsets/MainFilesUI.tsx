@@ -47,7 +47,7 @@ const MainFilesUI: React.FC<IProps> = ({
           func={setCommitmentDoc}
         />
         <FilesFields
-          id="diagnosisDoc"
+          id="DiagnosisIdDoc"
           title="فرم پذیرش شرایط بخش :"
           func={setPolicyDoc}
         />

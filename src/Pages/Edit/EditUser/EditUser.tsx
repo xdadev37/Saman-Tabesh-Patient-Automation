@@ -35,11 +35,11 @@ const EditUser: FC = () => {
     setValue("NationalId", requiredField.NationalId);
     setValue("Avatar", requiredField.Avatar);
     setValue("Comment", requiredField.Comment);
-    setValue("Diagnosis", requiredField.Diagnosis);
-    setValue("Insurance", requiredField.Insurance);
+    setValue("DiagnosisIdId", requiredField.DiagnosisId);
+    setValue("InsuranceType", requiredField.InsuranceType);
     setValue("PhoneNumber", requiredField.phoneNumber);
     setValue("UrgencyNumber", requiredField.urgencyNumber);
-    setValue("Birthday", requiredField.Birthday);
+    setValue("DateOfBirth", requiredField.DateOfBirth);
   }, [requiredField, dispatch, setValue]);
 
   const submit = async () => {
@@ -49,13 +49,13 @@ const EditUser: FC = () => {
     dataGrid.append("Avatar", requiredField.Avatar);
     dataGrid.append("NationalIdDoc", nationalIdDoc);
     dataGrid.append("Comment", requiredField.Comment);
-    dataGrid.append("Diagnosis", requiredField.Diagnosis);
-    dataGrid.append("Insurance", requiredField.Insurance);
+    dataGrid.append("DiagnosisIdId", requiredField.DiagnosisId);
+    dataGrid.append("InsuranceType", requiredField.InsuranceType);
     dataGrid.append("CommitmentDoc", commitmentDoc);
     dataGrid.append("PolicyDoc", policyDoc);
     dataGrid.append("PhoneNumber", requiredField.phoneNumber);
     dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
-    dataGrid.append("Birthday", requiredField.Birthday);
+    dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
     dispatch(setBackdrop());
     const axiosPromise = new Promise((sent, rejected) => {

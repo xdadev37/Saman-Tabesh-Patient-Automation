@@ -19,15 +19,15 @@ import {
   setComment,
   setNationalIdDocLink,
   // setAvatar,
-  // setBirthday,
-  // setDiagnosis,
-  // setInsurance,
+  // setDateOfBirth,
+  // setDiagnosisId,
+  // setInsuranceType,
   // setUrgencyNumber,
-  // setphoneNumber,
+  // setPhoneNumber,
 } from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
-  id: number;
+  id: string;
   Name: string;
   FamilyName: string;
   NationalId: string;
@@ -49,7 +49,7 @@ const ButtonsGroup: FC<IProps> = ({
   let history = useHistory();
   const [openAlert, setOpenAlert] = useState(false);
 
-  const deleteAction = async (id: number) => {
+  const deleteAction = async (id: string) => {
     const deletePromise = new Promise((deleted, failed) => {
       axios
         .delete(

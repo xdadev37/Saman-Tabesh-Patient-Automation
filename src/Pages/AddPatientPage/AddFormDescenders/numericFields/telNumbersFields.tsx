@@ -70,9 +70,8 @@ const TelNumbersFields: FC = () => {
                   message: `مقدار شماره موبایل${input.value} حداقل باید 11 عدد باشد!`,
                 },
                 pattern: {
-                  // value: /^[\u06F0][\u06F0-\u06F9]{3}[\u06F0-\u06F9]{3}[\u06F0-\u06F9]{4}/,
-                  value: /(0|\+98)?([ ]|,|-|[()]){0,2}9[1|2|3|4]([ ]|,|-|[()]){0,2}(?:[0-9]([ ]|,|-|[()]){0,2}){8}/,
-                  message: `شماره موبایل${input.value} اشتباه وارد شده`,
+                  value: /\d{9}/,
+                  message: `شماره موبایل${input.value} فقط شامل اعداد است`,
                 },
               })}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {

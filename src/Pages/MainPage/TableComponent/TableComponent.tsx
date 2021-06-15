@@ -18,8 +18,8 @@ import {
   setFamilyName,
   setNationalId,
   setComment,
-  setDiagnosis,
-  setInsurance,
+  setDiagnosisId,
+  setInsuranceType,
 } from "../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 
@@ -42,8 +42,8 @@ const TableComponent: React.FC = () => {
     dispatch(setFamilyName(""));
     dispatch(setNationalId(""));
     dispatch(setComment(""));
-    dispatch(setDiagnosis(""));
-    dispatch(setInsurance(""));
+    dispatch(setDiagnosisId(""));
+    dispatch(setInsuranceType(""));
   };
 
   return (

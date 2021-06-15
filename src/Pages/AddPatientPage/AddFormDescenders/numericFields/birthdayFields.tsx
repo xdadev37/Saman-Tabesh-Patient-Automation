@@ -1,13 +1,13 @@
 import { FC, ChangeEvent } from "react";
 import { InputLabel, Grid, TextField, Typography } from "@material-ui/core";
-import { birthday } from "../../../../dataArray";
+import { DateOfBirth } from "../../../../dataArray";
 import { useFormContext } from "react-hook-form";
 import { useAppSelector } from "../../../../Redux/hook";
 import { selectRequiredField } from "../../../../Redux/Slicer/patientInfoSlice";
 import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
 import { numericValidation } from "./numericValidation";
 
-const BirthdayFields: FC = () => {
+const DateOfBirthFields: FC = () => {
   const {
     register,
     formState: { errors },
@@ -18,7 +18,7 @@ const BirthdayFields: FC = () => {
 
   return (
     <Grid container justify="space-around">
-      {birthday.map((input) => (
+      {DateOfBirth.map((input) => (
         <Grid item key={input.id}>
           <Grid container alignItems="baseline">
             <InputLabel
@@ -30,7 +30,7 @@ const BirthdayFields: FC = () => {
               {input.value} تولد<span style={{ color: "#ff0000" }}>*</span> :
             </InputLabel>
             <TextField
-              defaultValue={defaultState.Birthday.split("/")[input.index]}
+              defaultValue={defaultState.DateOfBirth.split("/")[input.index]}
               id={input.id}
               variant="outlined"
               size="small"
@@ -65,7 +65,7 @@ const BirthdayFields: FC = () => {
         </Grid>
       ))}
       <Grid container direction="column">
-        {birthday.map((input) => (
+        {DateOfBirth.map((input) => (
           <Grid item key={input.id} style={{ marginTop: 10 }}>
             {errors[input.id] && (
               <Typography color="secondary" variant="subtitle2">
@@ -79,4 +79,4 @@ const BirthdayFields: FC = () => {
   );
 };
 
-export default BirthdayFields;
+export default DateOfBirthFields;

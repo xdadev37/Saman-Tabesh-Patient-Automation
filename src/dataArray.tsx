@@ -11,7 +11,7 @@ export const dataArrayOptional = [
   "توضیحات",
 ];
 
-export const birthday = [
+export const DateOfBirth = [
   {
     value: "روز",
     id: "day",

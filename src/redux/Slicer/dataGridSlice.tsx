@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 
 const initialState: IDataGrid[] = [
   {
-    id: 0,
+    id: "",
     Name: "",
     FamilyName: "",
     NationalId: "",

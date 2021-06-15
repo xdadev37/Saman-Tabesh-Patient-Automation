@@ -4,22 +4,20 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
-  FormHelperText,
   Typography,
   Button,
 } from "@material-ui/core";
-import { BorderColor, ChevronLeft } from "@material-ui/icons";
+import { ChevronLeft } from "@material-ui/icons";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   selectRequiredField,
   setComment,
-  setDiagnosis,
-  setInsurance,
+  setDiagnosisId,
+  setInsuranceType,
 } from "../../../Redux/Slicer/patientInfoSlice";
-import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
 import { selectDropDownMenu } from "../../../Redux/Slicer/dropMenuDataSlice";
-import { useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import CommentField from "../../CommentFieldUI";
 
 interface IProps {
   setTab: (arg: number) => void;
@@ -28,10 +26,13 @@ interface IProps {
 
 const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
   const dispatch = useAppDispatch();
-  const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
   const dropDownMenu = useAppSelector(selectDropDownMenu);
-  const { register } = useFormContext();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     setAnotherTabStatus(true);
@@ -39,18 +40,18 @@ const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
 
   const selectors = [
     {
-      id: "diagnosis",
+      id: "DiagnosisId",
       text: "تشخیص : ",
-      value: tempData.Diagnosis,
-      func: (arg: string) => setDiagnosis(arg),
-      menuData: dropDownMenu.diagnosisMenu,
+      value: tempData.DiagnosisId,
+      func: (arg: string) => setDiagnosisId(arg),
+      menuData: dropDownMenu.DiagnosisIdMenu,
     },
     {
-      id: "insurance",
+      id: "InsuranceType",
       text: "بیمه : ",
-      value: tempData.Insurance,
-      func: (arg: string) => setInsurance(arg),
-      menuData: dropDownMenu.insuranceMenu,
+      value: tempData.InsuranceType,
+      func: (arg: string) => setInsuranceType(arg),
+      menuData: dropDownMenu.InsuranceTypeMenu,
     },
   ];
 
@@ -60,35 +61,44 @@ const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
   };
 
   return (
-    <form autoComplete="off" onSubmit={submit}>
+    <form autoComplete="off" onSubmit={handleSubmit(submit)}>
       <Grid container>
         <Grid container justify="space-around">
           {selectors.map((input) => (
-            <InputLabel
-              key={input.id}
-              htmlFor={input.id}
-              style={{ marginTop: 10, marginBottom: 10 }}
-            >
-              {input.text}
-              <Select
-                id={input.id}
-                style={{ width: 200, height: 40 }}
-                variant="outlined"
-                value={input.value}
-                {...register(input.id, {
-                  required: `انتخاب نوع ${input.text.split(":")[0]} الزامی است`,
-                })}
-                onChange={(event: ChangeEvent<{ value: unknown }>) => {
-                  dispatch(input.func(String(event.target.value)));
-                }}
+            <Grid item>
+              <InputLabel
+                key={input.id}
+                htmlFor={input.id}
+                style={{ marginTop: 10, marginBottom: 10 }}
               >
-                {input.menuData.map((menu) => (
-                  <MenuItem key={input.id} value={menu.id}>
-                    <em>{menu.value}</em>
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
+                {input.text}
+                <Select
+                  id={input.id}
+                  style={{ width: 200, height: 40 }}
+                  variant="outlined"
+                  value={input.value}
+                  {...register(input.id, {
+                    required: `انتخاب نوع ${
+                      input.text.split(":")[0]
+                    } الزامی است`,
+                  })}
+                  onChange={(event: ChangeEvent<{ value: unknown }>) => {
+                    dispatch(input.func(String(event.target.value)));
+                  }}
+                >
+                  {input.menuData.map((menu) => (
+                    <MenuItem key={menu.id} value={menu.id}>
+                      {menu.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+              {errors[input.id] && (
+                <Typography variant="subtitle2" color="error">
+                  {errors[input.id].message}
+                </Typography>
+              )}
+            </Grid>
           ))}
         </Grid>
 
@@ -101,40 +111,11 @@ const MedicalInfoUI: FC<IProps> = ({ setTab, setAnotherTabStatus }) => {
               border: "0.0001px groove #000",
             }}
           />
-          <InputLabel
-            style={{
-              color: darkMode ? "#fff" : "#2962ff",
-            }}
-          >
-            <BorderColor />
-            &nbsp; توضیحات
-          </InputLabel>
-          <br />
-          <TextField
+
+          <CommentField
             defaultValue={tempData.Comment}
-            autoComplete="off"
-            label="توضیحات تکمیلی"
-            variant="filled"
-            multiline
-            rows={3}
-            fullWidth
-            inputProps={{ maxLength: 800 }}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setComment(event.target.value));
-            }}
+            func={() => dispatch(setComment)}
           />
-          <FormHelperText
-            style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
-          >
-            <br />
-            <Typography variant="subtitle2" component="span">
-              راهنما :
-              <br />
-              حداکثر تعداد برای توضیحات کاراکتر مجاز : 800
-              <br />
-              در آخر برای ثبت نهایی دکمه ثبت را بفشارید
-            </Typography>
-          </FormHelperText>
         </Grid>
 
         <Grid container justify="flex-end">

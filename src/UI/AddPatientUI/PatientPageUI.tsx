@@ -5,7 +5,6 @@ import MainInfoUI from "./Subsets/MainInfoUI";
 import MedicalInfo from "./Subsets/MedicalInfoUI";
 import MainFilesUI from "./Subsets/MainFilesUI";
 import CheckEntriesUI from "./Subsets/checkEntriesUI";
-import { useForm, FormProvider } from "react-hook-form";
 import { useAppSelector, useAppDispatch } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import { setOpen } from "../../Redux/Slicer/alertMessageSlice";
@@ -30,8 +29,6 @@ const PatientPageUI: FC<IProps> = ({
   commitmentDoc,
   policyDoc,
 }) => {
-  const methods = useForm();
-  const { watch } = methods;
   const dispatch = useAppDispatch();
   const [tab, setTab] = useState(0);
   const [anotherTabStatus, setAnotherTabStatus] = useState(true);
@@ -44,8 +41,8 @@ const PatientPageUI: FC<IProps> = ({
 
   useEffect(() => {
     // if (
-    //   dropDownMenu.diagnosisMenu.length === 1 ||
-    //   dropDownMenu.insuranceMenu.length === 1
+    //   dropDownMenu.DiagnosisIdMenu.length === 1 ||
+    //   dropDownMenu.InsuranceTypeMenu.length === 1
     // ) {
     //   axios
     //     .get("url")
@@ -86,7 +83,6 @@ const PatientPageUI: FC<IProps> = ({
       shownTab = (
         <MainInfoUI
           requiredField={requiredField}
-          watch={watch}
           setNationalIdDoc={setNationalIdDoc}
           setTab={setTab}
           setMedicalInfoStatus={setMedicalInfoStatus}
@@ -131,39 +127,37 @@ const PatientPageUI: FC<IProps> = ({
   }
 
   return (
-    <FormProvider {...methods}>
-      <AppBar color="default" position="relative">
-        <Tabs onChange={handleSwitchTabs} value={tab}>
-          <Tab label="اطلاعات هویتی" aria-controls="0" />
-          <Tab
-            label="اطلاعات درمانی"
-            aria-controls="1"
-            disabled={medicalInfoStatus}
-          />
-          <Tab label="مدارک" aria-controls="2" disabled={anotherTabStatus} />
-          <Tab
-            label="اطلاعات کلی"
-            aria-controls="3"
-            disabled={anotherTabStatus}
-          />
-        </Tabs>
-        <Box className={classes.root} component={Paper}>
-          {tab !== 0 && (
-            <Box justifyContent="flex-end" paddingBottom={0.01} paddingTop={3}>
-              <Button
-                variant="contained"
-                startIcon={<ChevronRight />}
-                onClick={() => setTab(tab - 1)}
-                style={{ float: "left", marginInline: 30 }}
-              >
-                برگشت
-              </Button>
-            </Box>
-          )}
-          {shownTab}
-        </Box>
-      </AppBar>
-    </FormProvider>
+    <AppBar color="default" position="relative">
+      <Tabs onChange={handleSwitchTabs} value={tab}>
+        <Tab label="اطلاعات هویتی" aria-controls="0" />
+        <Tab
+          label="اطلاعات درمانی"
+          aria-controls="1"
+          disabled={medicalInfoStatus}
+        />
+        <Tab label="مدارک" aria-controls="2" disabled={anotherTabStatus} />
+        <Tab
+          label="اطلاعات کلی"
+          aria-controls="3"
+          disabled={anotherTabStatus}
+        />
+      </Tabs>
+      <Box className={classes.root} component={Paper}>
+        {tab !== 0 && (
+          <Box justifyContent="flex-end" paddingBottom={0.01} paddingTop={3}>
+            <Button
+              variant="contained"
+              startIcon={<ChevronRight />}
+              onClick={() => setTab(tab - 1)}
+              style={{ float: "left", marginInline: 30 }}
+            >
+              برگشت
+            </Button>
+          </Box>
+        )}
+        {shownTab}
+      </Box>
+    </AppBar>
   );
 };
 

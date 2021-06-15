@@ -2,21 +2,37 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 const initialState = {
-  patientId: 0,
+  patientId: "",
+  patientFileId: "",
+  actionId: "",
 };
 
 export const idPasserSlice = createSlice({
   name: "idPasserSlice",
   initialState,
   reducers: {
-    setPatientId: (state, action: PayloadAction<number>) => {
+    setPatientId: (state, action: PayloadAction<string>) => {
       state.patientId = action.payload;
+    },
+
+    setPatientFileId: (state, action: PayloadAction<string>) => {
+      state.patientFileId = action.payload;
+    },
+    setActionId: (state, action: PayloadAction<string>) => {
+      state.actionId = action.payload;
     },
   },
 });
 
-export const { setPatientId } = idPasserSlice.actions;
+export const {
+  setPatientId,
+  setPatientFileId,
+  setActionId,
+} = idPasserSlice.actions;
 
 export const selectPatientId = (state: RootState) => state.idPasser.patientId;
+export const selectPatientFileId = (state: RootState) =>
+  state.idPasser.patientFileId;
+export const selectActionId = (state: RootState) => state.idPasser.actionId;
 
 export default idPasserSlice.reducer;

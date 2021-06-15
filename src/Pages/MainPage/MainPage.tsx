@@ -1,4 +1,4 @@
-import { FC, Fragment, useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import Options from "./Options/Options";
 import PageCounter from "./Options/PageCounter";
 import { Grid } from "@material-ui/core";
@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
 import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import axios from "axios";
-import GetActionName from "../patientActions/newAction/getActionName";
+import GetActionName from "../patientActions/newAction/ModalEntry";
 import CheckAction from "../patientActions/checkActions/checkActions";
 import EditUser from "../Edit/EditUser/EditUser";
 import EditFiles from "../Edit/EditAction/EditActionName";
@@ -50,11 +50,11 @@ const MainPage: FC = () => {
   }, [dispatch]);
 
   const MainPageRender = (
-    <Fragment>
+    <Grid container>
       {loading ? (
-        <Grid container alignItems="center" direction="column">
-          <Skeleton variant="rect" width="95%" height={650} animation="wave" />
-          <Skeleton width="95%" />
+        <Grid container>
+          <Skeleton variant="rect" width="100%" height={650} animation="wave" />
+          <Skeleton width="100%" />
         </Grid>
       ) : (
         <Grid container justify="center" alignItems="baseline">
@@ -69,10 +69,10 @@ const MainPage: FC = () => {
           </Grid>
         </Grid>
       )}
-    </Fragment>
+    </Grid>
   );
 
-  let Page = <Fragment></Fragment>;
+  let Page = <></>;
   switch (actionForm) {
     case "getActionName":
       Page = <GetActionName />;

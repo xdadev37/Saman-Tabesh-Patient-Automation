@@ -14,11 +14,11 @@ const initialState: IInitialState = {
       Avatar: "",
       NationalIdDocLink: "",
       Comment: "",
-      Diagnosis: "",
-      Insurance: "",
+      DiagnosisId: "",
+      InsuranceType: "",
       phoneNumber: "",
       urgencyNumber: "",
-      Birthday: "",
+      DateOfBirth: "",
     },
   ],
 };
@@ -55,20 +55,20 @@ export const patientInfoSlice = createSlice({
       state.requiredFields[0].urgencyNumber = `09${action.payload}`;
     },
 
-    setBirthday: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Birthday = action.payload;
+    setDateOfBirth: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].DateOfBirth = action.payload;
     },
 
     setComment: (state, action: PayloadAction<string>) => {
       state.requiredFields[0].Comment = action.payload;
     },
 
-    setDiagnosis: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Diagnosis = action.payload;
+    setDiagnosisId: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].DiagnosisId = action.payload;
     },
 
-    setInsurance: (state, action: PayloadAction<string>) => {
-      state.requiredFields[0].Insurance = action.payload;
+    setInsuranceType: (state, action: PayloadAction<string>) => {
+      state.requiredFields[0].InsuranceType = action.payload;
     },
   },
 });
@@ -80,11 +80,11 @@ export const {
   setComment,
   setAvatar,
   setNationalIdDocLink,
-  setDiagnosis,
-  setInsurance,
+  setDiagnosisId,
+  setInsuranceType,
   setPhoneNumber,
   setUrgencyNumber,
-  setBirthday,
+  setDateOfBirth,
 } = patientInfoSlice.actions;
 
 export const selectRequiredField = (state: RootState) =>

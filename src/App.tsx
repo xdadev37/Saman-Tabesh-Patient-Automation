@@ -42,7 +42,8 @@ const App: FC = () => {
             <Grid container justify="center">
               <Header />
               <Grid
-                item
+                container
+                justify="center"
                 style={{ marginTop: 90, marginBottom: 50, marginInline: 150 }}
               >
                 <Switch>

@@ -1,4 +1,4 @@
-import { FC, Fragment, ChangeEvent } from "react";
+import { FC, ChangeEvent, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -10,15 +10,14 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormHelperText,
-  TextField,
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Close, BorderColor, Check } from "@material-ui/icons";
-import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
-import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
-import { selectRequiredField } from "../../../../Redux/Slicer/patientInfoSlice";
-import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
+import { Close, Check } from "@material-ui/icons";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { selectRequiredField } from "../../../Redux/Slicer/patientInfoSlice";
+import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import CommentField from "../../../UI/CommentFieldUI";
+import OptionalFields from "./AddFilesForm/optionalFields";
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,28 +41,20 @@ const useStyle = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProps {
-  newActionName: string;
-  setNewActionName: (arg: string) => void;
-  userComment: string;
-  setUserComment: (arg: string) => void;
-  submit: () => void;
-}
-
-const ModalEntry: FC<IProps> = ({
-  newActionName,
-  setNewActionName,
-  userComment,
-  setUserComment,
-  submit,
-}) => {
+const ModalEntry: FC = () => {
   const dispatch = useAppDispatch();
-  const darkMode = useAppSelector(selectDarkMode);
   const tempData = useAppSelector(selectRequiredField);
   const classes = useStyle();
+  const [newActionName, setNewActionName] = useState("");
+  const [userComment, setUserComment] = useState("");
+  const [completedStatus, setCompletedStatus] = useState(false);
 
-  return (
-    <Fragment>
+  const submit = () => {
+    setCompletedStatus(true);
+  };
+
+  const modalEntry = (
+    <Grid container>
       <AppBar>
         <Toolbar>
           <Grid container justify="space-between">
@@ -106,40 +97,8 @@ const ModalEntry: FC<IProps> = ({
           </Select>
         </InputLabel>
 
-        {/* Comment */}
-        <InputLabel
-          style={{ width: "320px", color: darkMode ? "#fff" : "#2962ff" }}
-        >
-          <BorderColor />
-          <span className={classes.span}>توضیحات</span>
-        </InputLabel>
-        <TextField
-          className={classes.marginY}
-          autoComplete="off"
-          label="توضیحات تکمیلی"
-          variant="filled"
-          multiline
-          rows={7}
-          fullWidth
-          defaultValue={userComment}
-          inputProps={{ maxLength: 800 }}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setUserComment(event.target.value);
-          }}
-        />
-        <FormHelperText>
-          <Typography
-            variant="subtitle2"
-            component="span"
-            style={{ width: "320px", color: darkMode ? "#fff" : "#000" }}
-          >
-            راهنما :
-            <br />
-            حداکثر تعداد کاراکتر مجاز : 800
-            <br />
-            در آخر برای ثبت نهایی دکمه ثبت را بفشارید
-          </Typography>
-        </FormHelperText>
+        {/* ------------------------ Comment ------------------------ */}
+        <CommentField defaultValue={userComment} func={setUserComment} />
 
         <Button
           variant="contained"
@@ -151,7 +110,21 @@ const ModalEntry: FC<IProps> = ({
           ثبت رویداد
         </Button>
       </List>
-    </Fragment>
+    </Grid>
+  );
+
+  return (
+    <Grid container>
+      {completedStatus ? (
+        <OptionalFields
+          newActionName={newActionName}
+          userComment={userComment}
+          setCompletedStatus={setCompletedStatus}
+        />
+      ) : (
+        modalEntry
+      )}
+    </Grid>
   );
 };
 

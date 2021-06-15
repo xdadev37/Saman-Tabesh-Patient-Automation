@@ -26,7 +26,7 @@ const CheckEntriesUI: React.FC<IProps> = ({
       key: 1,
     },
     {
-      input1: `تاریخ تولد بیمار : ${requiredField.Birthday}`,
+      input1: `تاریخ تولد بیمار : ${requiredField.DateOfBirth}`,
       input2: `کد ملی بیمار : ${requiredField.NationalId}`,
       key: 2,
     },
@@ -42,8 +42,8 @@ const CheckEntriesUI: React.FC<IProps> = ({
   ];
 
   const medicalInfo = [
-    `نام بیماری : ${requiredField.Diagnosis}`,
-    `نوع بیمه : ${requiredField.Insurance}`,
+    `نام بیماری : ${requiredField.DiagnosisId}`,
+    `نوع بیمه : ${requiredField.InsuranceType}`,
   ];
 
   const filesInfo = [
@@ -83,11 +83,15 @@ const CheckEntriesUI: React.FC<IProps> = ({
   return (
     <form autoComplete="off" onSubmit={submit}>
       <Grid container justify="space-around" id="checkEntries">
-        <MyAvatar alt="Avatar" src={requiredField.Avatar}>
-          {firstFamilyNameChar}
-        </MyAvatar>
-        <br />
-        <br />
+        <Grid container justify="center" style={{ marginBottom: 30 }}>
+          <MyAvatar
+            alt="Avatar"
+            src={requiredField.Avatar}
+            style={{ width: 80, height: 80 }}
+          >
+            {firstFamilyNameChar}
+          </MyAvatar>
+        </Grid>
         {Topics("اطلاعات هویتی")}
         {mainInfo.map((input) => (
           <Grid item key={input.key}>

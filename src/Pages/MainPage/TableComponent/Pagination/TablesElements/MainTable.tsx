@@ -15,7 +15,7 @@ import MoreDetailsTable from "./MoreDetailsTable/MoreDetailsTable";
 
 interface IProps {
   row: number;
-  id: number;
+  id: string;
   Name: string;
   FamilyName: string;
   NationalId: string;

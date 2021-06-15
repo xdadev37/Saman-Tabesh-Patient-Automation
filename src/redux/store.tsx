@@ -14,6 +14,8 @@ import UserPassReducer from "./Slicer/userPassSlice";
 import PermissionReducer from "./Slicer/permissionSlice";
 import DropDownMenu from "./Slicer/dropMenuDataSlice";
 import AddFilesDataReducer from "./Slicer/addFilesDataSlice";
+import FilePageReducer from "./Slicer/filePageSlice";
+import PhysiciansSlice from "./Slicer/physiciansSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +34,8 @@ export const store = configureStore({
     permission: PermissionReducer,
     dropDownMenu: DropDownMenu,
     addFilesData: AddFilesDataReducer,
+    filePage: FilePageReducer,
+    physicians: PhysiciansSlice,
   },
 });
 

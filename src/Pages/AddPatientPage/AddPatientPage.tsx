@@ -3,12 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { selectRequiredField } from "../../Redux/Slicer/patientInfoSlice";
 import { setBackdrop } from "../../Redux/Slicer/backdropSlice";
 import { setPatientId } from "../../Redux/Slicer/idPasserSlice";
+import { setActionForm } from "../../Redux/Slicer/actionStatusSlice";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
 } from "../../Redux/Slicer/alertMessageSlice";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import PatientPageUI from "../../UI/AddPatientUI/PatientPageUI";
 // import {
@@ -23,7 +23,6 @@ const AddPatientPage: FC = () => {
   const [commitmentDoc, setCommitmentDoc] = useState<Blob | string>("");
   const [policyDoc, setPolicyDoc] = useState<Blob | string>("");
   const dispatch = useAppDispatch();
-  let history = useHistory();
 
   const submit = async () => {
     dataGrid.append("Name", requiredField.Name);
@@ -32,13 +31,13 @@ const AddPatientPage: FC = () => {
     dataGrid.append("Avatar", requiredField.Avatar);
     dataGrid.append("NationalIdDoc", nationalIdDoc);
     dataGrid.append("Comment", requiredField.Comment);
-    dataGrid.append("Diagnosis", requiredField.Diagnosis);
-    dataGrid.append("Insurance", requiredField.Insurance);
+    dataGrid.append("DiagnosisIdId", requiredField.DiagnosisId);
+    dataGrid.append("InsuranceType", requiredField.InsuranceType);
     dataGrid.append("CommitmentDoc", commitmentDoc);
     dataGrid.append("PolicyDoc", policyDoc);
     dataGrid.append("PhoneNumber", requiredField.phoneNumber);
     dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
-    dataGrid.append("Birthday", requiredField.Birthday);
+    dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
     dispatch(setBackdrop());
     const axiosPromise = new Promise((sent, rejected) => {
@@ -53,7 +52,7 @@ const AddPatientPage: FC = () => {
             dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
             dispatch(setAlertStatus("success"));
             dispatch(setPatientId(res.data.id));
-            history.push("/");
+            dispatch(setActionForm("addFile"));
 
             sent(dispatch(setOpen(true)));
           } else {

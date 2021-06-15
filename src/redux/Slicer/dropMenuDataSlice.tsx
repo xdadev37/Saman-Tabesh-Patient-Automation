@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 const initialState: IDropMenu = {
-  diagnosisMenu: [
+  DiagnosisIdMenu: [
     {
       id: "Test",
       value: "Test",
     },
   ],
-  insuranceMenu: [
+  InsuranceTypeMenu: [
     {
       id: "Test",
       value: "Test",
