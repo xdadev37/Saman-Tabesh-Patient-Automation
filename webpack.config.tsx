@@ -1,13 +1,13 @@
 module.exports = {
     mode: "development",
     devtool: "inline-source-map",
-    entry: "./app.ts",
+    entry: "./app.tsx",
     output: {
-        filename: "bundle.js"
+        filename: "bundle.jsx"
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".ts", ".tsx"]
     },
     module: {
         rules: [

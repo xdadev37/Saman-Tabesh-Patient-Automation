@@ -18,38 +18,36 @@ const Login: React.FC = () => {
   const username = useAppSelector(selectUsername);
   const password = useAppSelector(selectPass);
 
-  const submit = async () => {
+  const submit = () => {
     dispatch(setBackdrop());
-    await new Promise((authorized, unAuthorized) => {
-      axios
-        .post("https://reqres.in/api/login", {
-          email: username,
-          password: password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            window.sessionStorage.setItem("token", res.data.token);
-            authorized(dispatch(setLogin()));
-          } else {
-            dispatch(setAlertStatus("error"));
-            dispatch(setAlertText("نام کاربری و یا گذرواژه اشتباه است"));
-
-            unAuthorized(dispatch(setOpen(true)));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.request.responseText === "") {
-            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-          } else {
-            dispatch(setAlertText(error.request.responseText));
-          }
-
+    axios
+      .post("https://reqres.in/api/login", {
+        email: username,
+        password: password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          window.sessionStorage.setItem("token", res.data.token);
+          dispatch(setLogin());
+        } else {
           dispatch(setAlertStatus("error"));
-          unAuthorized(setOpen(true));
-        })
-        .finally(() => dispatch(setBackdrop()));
-    });
+          dispatch(setAlertText("نام کاربری و یا گذرواژه اشتباه است"));
+
+          dispatch(setOpen(true));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.request.responseText === "") {
+          dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+        } else {
+          dispatch(setAlertText(error.request.responseText));
+        }
+
+        dispatch(setAlertStatus("error"));
+        setOpen(true);
+      })
+      .finally(() => dispatch(setBackdrop()));
   };
 
   return <LoginUI submit={submit} />;

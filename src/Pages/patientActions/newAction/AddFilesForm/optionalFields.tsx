@@ -36,79 +36,75 @@ const OptionalFields: FC<IProps> = ({
   const actionNameGrid = new FormData();
   const fileGrid = new FormData();
 
-  const dispatchData = async () => {
+  const dispatchData = () => {
     dispatch(setBackdrop());
-    const dispatcher = new Promise((sent, rejected) => {
-      actionNameGrid.append("newActionName", newActionName);
-      actionNameGrid.append("userComment", userComment);
-      actionNameGrid.append("patientFileId", patientFileId);
+    actionNameGrid.append("newActionName", newActionName);
+    actionNameGrid.append("userComment", userComment);
+    actionNameGrid.append("patientFileId", patientFileId);
 
-      axios
-        .post("actionDB", { actionNameGrid })
-        .then(async (res) => {
-          console.log(res);
+    axios
+      .post("actionDB", { actionNameGrid })
+      .then(async (res) => {
+        console.log(res);
 
-          if (res.status === 201) {
-            await setActionId(res.data.actionId);
+        if (res.status === 201) {
+          await setActionId(res.data.actionId);
 
-            fileGrid.append("ActionId", actionId);
-            fileGrid.append("PathologyDoc", PathologyDoc);
-            fileGrid.append("TreatmentDoc", TreatmentDoc);
-            fileGrid.append("MRIReportDoc", MRIReportDoc);
-            fileGrid.append("CTReportDoc", CTReportDoc);
-            fileGrid.append("PETReportDoc", PETReportDoc);
-            fileGrid.append("SonoReportDoc", SonoReportDoc);
-            fileGrid.append("MamoReportDoc", MamoReportDoc);
-            fileGrid.append("LabReportDoc", LabReportDoc);
+          fileGrid.append("ActionId", actionId);
+          fileGrid.append("PathologyDoc", PathologyDoc);
+          fileGrid.append("TreatmentDoc", TreatmentDoc);
+          fileGrid.append("MRIReportDoc", MRIReportDoc);
+          fileGrid.append("CTReportDoc", CTReportDoc);
+          fileGrid.append("PETReportDoc", PETReportDoc);
+          fileGrid.append("SonoReportDoc", SonoReportDoc);
+          fileGrid.append("MamoReportDoc", MamoReportDoc);
+          fileGrid.append("LabReportDoc", LabReportDoc);
 
-            axios
-              .post(
-                "https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm",
-                { fileGrid }
-              )
-              .then((res) => {
-                if (res.status === 201) {
-                  dispatch(setAlertText("رویداد با موفقیت ثبت شد"));
-                  dispatch(setAlertStatus("success"));
-                  dispatch(setActionForm("checkAction"));
+          axios
+            .post(
+              "https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm",
+              { fileGrid }
+            )
+            .then((res) => {
+              if (res.status === 201) {
+                dispatch(setAlertText("رویداد با موفقیت ثبت شد"));
+                dispatch(setAlertStatus("success"));
+                dispatch(setActionForm("checkAction"));
 
-                  sent(dispatch(setOpen(true)));
-                } else {
-                  dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
-                  dispatch(setAlertStatus("error"));
-
-                  rejected(dispatch(setOpen(true)));
-                }
-              })
-              .catch((error) => {
-                console.log(error.request);
-                if (error.request.responseText === "") {
-                  dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-                } else {
-                  dispatch(setAlertText(error.request.responseText));
-                }
-
+                dispatch(setOpen(true));
+              } else {
+                dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
                 dispatch(setAlertStatus("error"));
-                rejected(dispatch(setOpen(true)));
-              })
-              .finally(() => dispatch(setBackdrop()));
-          }
-        })
-        .catch((error) => {
-          console.log(error.request);
-          if (error.request.responseText === "") {
-            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-          } else {
-            dispatch(setAlertText(error.request.responseText));
-          }
 
-          dispatch(setAlertStatus("error"));
-          rejected(dispatch(setOpen(true)));
-        })
-        .finally(() => dispatch(setBackdrop()));
-    });
+                dispatch(setOpen(true));
+              }
+            })
+            .catch((error) => {
+              console.log(error.request);
+              if (error.request.responseText === "") {
+                dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+              } else {
+                dispatch(setAlertText(error.request.responseText));
+              }
 
-    await dispatcher;
+              dispatch(setAlertStatus("error"));
+              dispatch(setOpen(true));
+            })
+            .finally(() => dispatch(setBackdrop()));
+        }
+      })
+      .catch((error) => {
+        console.log(error.request);
+        if (error.request.responseText === "") {
+          dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+        } else {
+          dispatch(setAlertText(error.request.responseText));
+        }
+
+        dispatch(setAlertStatus("error"));
+        dispatch(setOpen(true));
+      })
+      .finally(() => dispatch(setBackdrop()));
   };
 
   return (

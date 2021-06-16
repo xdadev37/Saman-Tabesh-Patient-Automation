@@ -42,7 +42,7 @@ const EditUser: FC = () => {
     setValue("DateOfBirth", requiredField.DateOfBirth);
   }, [requiredField, dispatch, setValue]);
 
-  const submit = async () => {
+  const submit = () => {
     dataGrid.append("Name", requiredField.Name);
     dataGrid.append("FamilyName", requiredField.FamilyName);
     dataGrid.append("NationalId", requiredField.NationalId);
@@ -58,42 +58,38 @@ const EditUser: FC = () => {
     dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
     dispatch(setBackdrop());
-    const axiosPromise = new Promise((sent, rejected) => {
-      axios
-        .patch(
-          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${patientId}`,
-          dataGrid
-        )
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            dispatch(setActionForm("mainPage"));
-            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ویرایش شد"));
-            dispatch(setAlertStatus("success"));
+    axios
+      .patch(
+        `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${patientId}`,
+        dataGrid
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          dispatch(setActionForm("mainPage"));
+          dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ویرایش شد"));
+          dispatch(setAlertStatus("success"));
 
-            sent(dispatch(setOpen(true)));
-          } else {
-            dispatch(setAlertText("ویرایش اطلاعات انجام نشد"));
-            dispatch(setAlertStatus("error"));
-
-            rejected(dispatch(setOpen(true)));
-          }
-        })
-        .catch((error) => {
-          console.log(error.request);
-          if (error.request.responseText === "") {
-            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-          } else {
-            dispatch(setAlertText(error.request.responseText));
-          }
-
+          dispatch(setOpen(true));
+        } else {
+          dispatch(setAlertText("ویرایش اطلاعات انجام نشد"));
           dispatch(setAlertStatus("error"));
-          rejected(dispatch(setOpen(true)));
-        })
-        .finally(() => dispatch(setBackdrop()));
-    });
 
-    await axiosPromise;
+          dispatch(setOpen(true));
+        }
+      })
+      .catch((error) => {
+        console.log(error.request);
+        if (error.request.responseText === "") {
+          dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+        } else {
+          dispatch(setAlertText(error.request.responseText));
+        }
+
+        dispatch(setAlertStatus("error"));
+        dispatch(setOpen(true));
+      })
+      .finally(() => dispatch(setBackdrop()));
   };
 
   const avatarFirstLetter = requiredField.FamilyName.charAt(0);

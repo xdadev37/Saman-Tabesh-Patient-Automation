@@ -49,22 +49,18 @@ const ButtonsGroup: FC<IProps> = ({
   let history = useHistory();
   const [openAlert, setOpenAlert] = useState(false);
 
-  const deleteAction = async (id: string) => {
-    const deletePromise = new Promise((deleted, failed) => {
-      axios
-        .delete(
-          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${id}`
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            deleted(history.push("/"));
-          } else {
-            failed(console.log("Action Not Happened", res.statusText));
-          }
-        });
-    });
-
-    await deletePromise;
+  const deleteAction = (id: string) => {
+    axios
+      .delete(
+        `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${id}`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          history.push("/");
+        } else {
+          console.log("Action Not Happened", res.statusText);
+        }
+      });
   };
 
   const deleteDialog = (

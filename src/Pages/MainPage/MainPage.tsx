@@ -20,33 +20,25 @@ const MainPage: FC = () => {
   const actionForm = useAppSelector(selectActionForm);
 
   useEffect(() => {
-    const data = async () => {
-      dispatch(emptyData());
-      const getData = new Promise((got, failed) => {
-        axios
-          .get(
-            "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm"
-          )
-          .then((res) => {
-            if (res.status === 200) {
-              for (let i = 0; i < res.data.length; i++) {
-                dispatch(setDataGrid(res.data[i]));
-              }
+    dispatch(emptyData());
+    axios
+      .get(
+        "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm"
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          for (let i = 0; i < res.data.length; i++) {
+            dispatch(setDataGrid(res.data[i]));
+          }
 
-              got(setLoading(false));
-            } else {
-              failed(console.log("Failed", res.statusText));
-            }
-          })
-          .catch((error) => {
-            failed(console.log(error));
-          });
+          setLoading(false);
+        } else {
+          console.log("Failed", res.statusText);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      await getData;
-    };
-
-    data();
   }, [dispatch]);
 
   const MainPageRender = (

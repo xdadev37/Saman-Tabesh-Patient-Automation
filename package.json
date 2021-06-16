@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "global": "^4.4.0",
     "jss-rtl": "^0.3.0",
     "notistack": "^1.0.9",
     "react": "^17.0.2",
@@ -29,9 +30,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "@material-ui/x-grid-data-generator": "^4.0.0-alpha.30",
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^26.0.23",

@@ -64,22 +64,18 @@ const TableBody: FC<IProps> = ({
   const dispatch = useAppDispatch();
   const requiredField = useAppSelector(selectRequiredField);
 
-  const deleteAction = async (id: number) => {
-    const deletePromise = new Promise((deleted, failed) => {
-      axios
-        .delete(
-          `https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName/${id}`
-        )
-        .then((res) => {
-          if ((res.status = 200)) {
-            deleted(dispatch(setActionForm("checkAction")));
-          } else {
-            failed(console.log("Action Not Happened", res.statusText));
-          }
-        });
-    });
-
-    await deletePromise;
+  const deleteAction = (id: number) => {
+    axios
+      .delete(
+        `https://my-json-server.typicode.com/xdadev37/jsonDatabase/actionName/${id}`
+      )
+      .then((res) => {
+        if ((res.status = 200)) {
+          dispatch(setActionForm("checkAction"));
+        } else {
+          console.log("Action Not Happened", res.statusText);
+        }
+      });
   };
 
   const deleteDialog = (

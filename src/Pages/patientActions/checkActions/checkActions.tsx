@@ -30,31 +30,23 @@ const CheckActions: FC = () => {
   useEffect(() => {
     dispatch(emptyData());
 
-    const data = async () => {
-      const getActionFiles = new Promise((got, failed) => {
-        axios
-          .get(
-            `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm?PatientId=${selectId}`
-          )
-          .then((res) => {
-            if ((res.status === 200)) {
-              for (let i = 0; i < res.data.length; i++) {
-                dispatch(setFilesLinks(res.data[i]));
-                got(setLoading(false));
-              }
-            } else {
-              failed(console.log("Failed", res.statusText));
-            }
-          })
-          .catch((error) => {
-            failed(console.log(error));
-          });
+    axios
+      .get(
+        `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm?PatientId=${selectId}`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          for (let i = 0; i < res.data.length; i++) {
+            dispatch(setFilesLinks(res.data[i]));
+            setLoading(false);
+          }
+        } else {
+          console.log("Failed", res.statusText);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      await getActionFiles;
-    };
-
-    data();
   }, [dispatch, selectId]);
 
   return (

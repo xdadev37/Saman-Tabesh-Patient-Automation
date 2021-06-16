@@ -11,10 +11,6 @@ import {
 } from "../../Redux/Slicer/alertMessageSlice";
 import axios from "axios";
 import PatientPageUI from "../../UI/AddPatientUI/PatientPageUI";
-// import {
-//   setDropDownMenu,
-//   selectDropDownMenu,
-// } from "../../Redux/Slicer/dropMenuDataSlice";
 
 const AddPatientPage: FC = () => {
   const requiredField = useAppSelector(selectRequiredField);
@@ -24,7 +20,7 @@ const AddPatientPage: FC = () => {
   const [policyDoc, setPolicyDoc] = useState<Blob | string>("");
   const dispatch = useAppDispatch();
 
-  const submit = async () => {
+  const submit = () => {
     dataGrid.append("Name", requiredField.Name);
     dataGrid.append("FamilyName", requiredField.FamilyName);
     dataGrid.append("NationalId", requiredField.NationalId);
@@ -40,43 +36,39 @@ const AddPatientPage: FC = () => {
     dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
     dispatch(setBackdrop());
-    const axiosPromise = new Promise((sent, rejected) => {
-      axios
-        .post(
-          "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm",
-          dataGrid
-        )
-        .then((res) => {
-          console.log(res);
-          if (res.status === 201) {
-            dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
-            dispatch(setAlertStatus("success"));
-            dispatch(setPatientId(res.data.id));
-            dispatch(setActionForm("addFile"));
+    axios
+      .post(
+        "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm",
+        dataGrid
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          dispatch(setAlertText("اطلاعات اولیه بیمار با موفقیت ثبت شد"));
+          dispatch(setAlertStatus("success"));
+          dispatch(setPatientId(res.data.id));
+          dispatch(setActionForm("addFile"));
 
-            sent(dispatch(setOpen(true)));
-          } else {
-            dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
-            dispatch(setAlertStatus("error"));
-
-            rejected(dispatch(setOpen(true)));
-          }
-        })
-        .catch((error) => {
-          console.log(error.request);
-          if (error.request.responseText === "") {
-            dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
-          } else {
-            dispatch(setAlertText(error.request.responseText));
-          }
-
+          dispatch(setOpen(true));
+        } else {
+          dispatch(setAlertText("ثبت اطلاعات انجام نشد"));
           dispatch(setAlertStatus("error"));
-          rejected(dispatch(setOpen(true)));
-        })
-        .finally(() => dispatch(setBackdrop()));
-    });
 
-    await axiosPromise;
+          dispatch(setOpen(true));
+        }
+      })
+      .catch((error) => {
+        console.log(error.request);
+        if (error.request.responseText === "") {
+          dispatch(setAlertText("ارتباط با سرور برقرار نیست"));
+        } else {
+          dispatch(setAlertText(error.request.responseText));
+        }
+
+        dispatch(setAlertStatus("error"));
+        dispatch(setOpen(true));
+      })
+      .finally(() => dispatch(setBackdrop()));
   };
 
   return (

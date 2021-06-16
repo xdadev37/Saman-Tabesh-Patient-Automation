@@ -1,4 +1,5 @@
 const plugins = [
+  "@babel/preset-react",
   [
     "babel-plugin-import",
     {
