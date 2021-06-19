@@ -20,7 +20,7 @@ interface IProps {
   FamilyName: string;
   NationalId: string;
   Avatar: string;
-  NationalIdDocLink: string;
+  DiagnosisId: string;
   Comment: string;
 }
 
@@ -31,7 +31,7 @@ const MainTable: FC<IProps> = ({
   FamilyName,
   NationalId,
   Avatar,
-  NationalIdDocLink,
+  DiagnosisId,
   Comment,
 }) => {
   const [open, setOpen] = useState(false);
@@ -81,7 +81,7 @@ const MainTable: FC<IProps> = ({
         FamilyName={FamilyName}
         NationalId={NationalId}
         Avatar={Avatar}
-        NationalIdDocLink={NationalIdDocLink}
+        DiagnosisId={DiagnosisId}
         Comment={Comment}
         setCommentAlert={setCommentAlert}
       />

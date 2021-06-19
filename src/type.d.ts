@@ -18,7 +18,7 @@ interface IDataGrid {
   FamilyName: string;
   NationalId: string;
   Avatar: string;
-  NationalIdDocLink: string;
+  DiagnosisId: string;
   Comment: string;
 }
 
@@ -69,4 +69,11 @@ interface IAddFile {
 interface IPhysician {
   id: string;
   value: string;
+}
+
+interface IPatientFiles {
+  id: string;
+  physicianName: string;
+  fileNumber: string;
+  comment: string;
 }

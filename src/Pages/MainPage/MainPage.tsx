@@ -1,37 +1,42 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import Options from "./Options/Options";
 import PageCounter from "./Options/PageCounter";
 import { Grid } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import TableComponent from "./TableComponent/TableComponent";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
 import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
 import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
+import { setSkeleton } from "../../Redux/Slicer/backdropSlice";
 import axios from "axios";
 import GetActionName from "../patientActions/newAction/ModalEntry";
 import CheckAction from "../patientActions/checkActions/checkActions";
 import EditUser from "../Edit/EditUser/EditUser";
-import EditFiles from "../Edit/EditAction/EditActionName";
-import AddFile from "../AddFile/AddFile";
+import EditAction from "../Edit/EditAction/EditActionName";
+import AddFile from "../patientFiles/AddFile/AddFile";
+import CheckFile from "../patientFiles/CheckFile/CheckFile";
 
 const MainPage: FC = () => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(true);
   const actionForm = useAppSelector(selectActionForm);
 
   useEffect(() => {
     dispatch(emptyData());
+    dispatch(setSkeleton(false));
+
     axios
       .get(
         "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm"
       )
       .then((res) => {
+        let i = 0;
+        const dataLength = res.data.length;
+
         if (res.status === 200) {
-          for (let i = 0; i < res.data.length; i++) {
+          for (i; i < dataLength; i++) {
             dispatch(setDataGrid(res.data[i]));
           }
 
-          setLoading(false);
+          dispatch(setSkeleton(true));
         } else {
           console.log("Failed", res.statusText);
         }
@@ -43,24 +48,17 @@ const MainPage: FC = () => {
 
   const MainPageRender = (
     <Grid container>
-      {loading ? (
-        <Grid container>
-          <Skeleton variant="rect" width="100%" height={650} animation="wave" />
-          <Skeleton width="100%" />
+      <Grid container justify="center" alignItems="baseline">
+        <Grid item sm={12} md={12} lg={12}>
+          <Options />
         </Grid>
-      ) : (
-        <Grid container justify="center" alignItems="baseline">
-          <Grid item sm={12} md={12} lg={12}>
-            <Options />
-          </Grid>
-          <Grid item sm={12} md={12} lg={12} style={{ marginBottom: 30 }}>
-            <PageCounter />
-          </Grid>
-          <Grid item sm={12} md={12} lg={12}>
-            <TableComponent />
-          </Grid>
+        <Grid item sm={12} md={12} lg={12} style={{ marginBottom: 30 }}>
+          <PageCounter />
         </Grid>
-      )}
+        <Grid item sm={12} md={12} lg={12}>
+          <TableComponent />
+        </Grid>
+      </Grid>
     </Grid>
   );
 
@@ -74,6 +72,10 @@ const MainPage: FC = () => {
       Page = MainPageRender;
       break;
 
+    case "addFile":
+      Page = <AddFile />;
+      break;
+
     case "checkAction":
       Page = <CheckAction />;
       break;
@@ -83,11 +85,11 @@ const MainPage: FC = () => {
       break;
 
     case "editAction":
-      Page = <EditFiles />;
+      Page = <EditAction />;
       break;
 
-    case "addFile":
-      Page = <AddFile />;
+    case "checkFile":
+      Page = <CheckFile />;
       break;
 
     default:

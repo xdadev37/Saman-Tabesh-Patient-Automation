@@ -17,13 +17,8 @@ import {
   setFamilyName,
   setNationalId,
   setComment,
-  setNationalIdDocLink,
+  setDiagnosisId,
   // setAvatar,
-  // setDateOfBirth,
-  // setDiagnosisId,
-  // setInsuranceType,
-  // setUrgencyNumber,
-  // setPhoneNumber,
 } from "../../../../../../../Redux/Slicer/patientInfoSlice";
 
 interface IProps {
@@ -32,7 +27,7 @@ interface IProps {
   FamilyName: string;
   NationalId: string;
   Avatar: string;
-  NationalIdDocLink: string;
+  DiagnosisId: string;
   Comment: string;
 }
 
@@ -42,7 +37,7 @@ const ButtonsGroup: FC<IProps> = ({
   FamilyName,
   NationalId,
   Avatar,
-  NationalIdDocLink,
+  DiagnosisId,
   Comment,
 }) => {
   const dispatch = useAppDispatch();
@@ -96,7 +91,7 @@ const ButtonsGroup: FC<IProps> = ({
           }}
           startIcon={<AmpStories />}
         >
-          مشاهده اقدامات
+          مشاهده پرونده
         </Button>
         {/* )} */}
         <Button
@@ -112,7 +107,7 @@ const ButtonsGroup: FC<IProps> = ({
         <Button
           onClick={() => {
             tempData();
-            dispatch(setNationalIdDocLink(NationalIdDocLink));
+            dispatch(setDiagnosisId(DiagnosisId));
             dispatch(setActionForm("editUser"));
           }}
           color="default"

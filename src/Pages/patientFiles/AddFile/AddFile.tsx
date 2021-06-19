@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import { Grid, Card, CardContent, Typography } from "@material-ui/core";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { selectPatientId } from "../../Redux/Slicer/idPasserSlice";
-import { setPatientId, setModality } from "../../Redux/Slicer/filePageSlice";
-import { setBackdrop } from "../../Redux/Slicer/backdropSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
+import { setPatientId, setModality } from "../../../Redux/Slicer/filePageSlice";
+import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
 import {
   setAddFileData,
   selectAddFilesData,
-} from "../../Redux/Slicer/addFilesDataSlice";
-import { setPhysicianData } from "../../Redux/Slicer/physiciansSlice";
+} from "../../../Redux/Slicer/addFilesDataSlice";
+import { setPhysicianData } from "../../../Redux/Slicer/physiciansSlice";
 import Page2 from "./Page2";
 
 const AddFile: FC = () => {
@@ -19,7 +19,7 @@ const AddFile: FC = () => {
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    setBackdrop();
+    dispatch(setBackdrop(true));
     axios
       .post("url", { id: patientId })
       .then((res) => {
@@ -27,7 +27,7 @@ const AddFile: FC = () => {
         dispatch(setPhysicianData(res.data.PhysiciansData));
       })
       .catch((error) => console.log(error))
-      .finally(() => dispatch(setBackdrop()));
+      .finally(() => dispatch(setBackdrop(false)));
   }, [patientId, dispatch]);
 
   const submit = (modality: string) => {
@@ -37,9 +37,18 @@ const AddFile: FC = () => {
   };
 
   const cardMapper = () => {
-    for (let i = 0; i < cardsData.length; i += 2)
+    let i = 0;
+    const cardsDataLength = cardsData.length;
+    const card1Action = () => {
+      submit(cardsData[i].id);
+    };
+    const card2Action = () => {
+      submit(cardsData[i + 1].id);
+    };
+
+    for (i; i < cardsDataLength; i += 2)
       <Grid container justify="space-evenly">
-        <Card key={cardsData[i].id} onClick={() => submit(cardsData[i].id)}>
+        <Card key={cardsData[i].id} onClick={card1Action}>
           <CardContent>
             <Typography variant="h5">{cardsData[i].value}</Typography>
             <Typography variant="subtitle2">
@@ -47,10 +56,7 @@ const AddFile: FC = () => {
             </Typography>
           </CardContent>
         </Card>
-        <Card
-          key={cardsData[i + 1].id}
-          onClick={() => submit(cardsData[i + 1].id)}
-        >
+        <Card key={cardsData[i + 1].id} onClick={card2Action}>
           <CardContent>
             <Typography variant="h5">{cardsData[i + 1].value}</Typography>
             <Typography variant="subtitle2">

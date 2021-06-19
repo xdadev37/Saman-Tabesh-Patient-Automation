@@ -22,7 +22,7 @@ interface IProps {
   FamilyName: string;
   NationalId: string;
   Avatar: string;
-  NationalIdDocLink: string;
+  DiagnosisId: string;
   Comment: string;
   setCommentAlert: (arg: boolean) => void;
 }
@@ -42,7 +42,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
   FamilyName,
   NationalId,
   Avatar,
-  NationalIdDocLink,
+  DiagnosisId,
   Comment,
   setCommentAlert,
 }) => {
@@ -65,7 +65,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell>عکس پرسنلی بیمار</TableCell>
-                <TableCell>کپی کارت ملی بیمار</TableCell>
+                <TableCell>تشخیص</TableCell>
                 <TableCell>توضیحات</TableCell>
               </TableRow>
             </TableHead>
@@ -74,20 +74,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                 <TableCell>
                   <AvatarMU alt="Avatar" src={Avatar} />
                 </TableCell>
-                <TableCell>
-                  {NationalIdDocLink === "" ? (
-                    "ندارد"
-                  ) : (
-                    <Link
-                      color={darkMode ? "textPrimary" : "primary"}
-                      target="_blank"
-                      href={NationalIdDocLink}
-                      rel="noreferrer"
-                    >
-                      مشاهده پی دی اف
-                    </Link>
-                  )}
-                </TableCell>
+                <TableCell>{DiagnosisId}</TableCell>
                 <TableCell>
                   {Comment === "" ? (
                     "ندارد"
@@ -101,7 +88,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                   )}
                 </TableCell>
 
-                {/* Buttons */}
+                {/* ------------------- Buttons ------------------- */}
                 <Grid
                   component="td"
                   container
@@ -114,7 +101,7 @@ const MoreDetailsTable: React.FC<IProps> = ({
                     FamilyName={FamilyName}
                     NationalId={NationalId}
                     Avatar={Avatar}
-                    NationalIdDocLink={NationalIdDocLink}
+                    DiagnosisId={DiagnosisId}
                     Comment={Comment}
                   />
                 </Grid>

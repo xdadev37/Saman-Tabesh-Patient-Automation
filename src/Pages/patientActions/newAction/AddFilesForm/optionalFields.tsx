@@ -37,7 +37,7 @@ const OptionalFields: FC<IProps> = ({
   const fileGrid = new FormData();
 
   const dispatchData = () => {
-    dispatch(setBackdrop());
+    dispatch(setBackdrop(true));
     actionNameGrid.append("newActionName", newActionName);
     actionNameGrid.append("userComment", userComment);
     actionNameGrid.append("patientFileId", patientFileId);
@@ -90,7 +90,7 @@ const OptionalFields: FC<IProps> = ({
               dispatch(setAlertStatus("error"));
               dispatch(setOpen(true));
             })
-            .finally(() => dispatch(setBackdrop()));
+            .finally(() => dispatch(setBackdrop(false)));
         }
       })
       .catch((error) => {
@@ -104,7 +104,7 @@ const OptionalFields: FC<IProps> = ({
         dispatch(setAlertStatus("error"));
         dispatch(setOpen(true));
       })
-      .finally(() => dispatch(setBackdrop()));
+      .finally(() => dispatch(setBackdrop(false)));
   };
 
   return (

@@ -67,6 +67,7 @@ const TableComponent: React.FC = () => {
       </Table>
       <Box margin={1}>
         <Button
+          id="newPatient"
           color="primary"
           variant="contained"
           onClick={() => {

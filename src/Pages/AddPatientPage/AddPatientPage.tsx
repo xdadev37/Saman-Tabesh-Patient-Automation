@@ -35,7 +35,7 @@ const AddPatientPage: FC = () => {
     dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
     dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
-    dispatch(setBackdrop());
+    dispatch(setBackdrop(true));
     axios
       .post(
         "https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm",
@@ -68,7 +68,7 @@ const AddPatientPage: FC = () => {
         dispatch(setAlertStatus("error"));
         dispatch(setOpen(true));
       })
-      .finally(() => dispatch(setBackdrop()));
+      .finally(() => dispatch(setBackdrop(false)));
   };
 
   return (

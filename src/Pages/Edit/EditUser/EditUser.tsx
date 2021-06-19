@@ -57,7 +57,7 @@ const EditUser: FC = () => {
     dataGrid.append("UrgencyNumber", requiredField.urgencyNumber);
     dataGrid.append("DateOfBirth", requiredField.DateOfBirth);
 
-    dispatch(setBackdrop());
+    dispatch(setBackdrop(true));
     axios
       .patch(
         `https://my-json-server.typicode.com/xdadev37/jsonDatabase/requiredForm/${patientId}`,
@@ -89,7 +89,7 @@ const EditUser: FC = () => {
         dispatch(setAlertStatus("error"));
         dispatch(setOpen(true));
       })
-      .finally(() => dispatch(setBackdrop()));
+      .finally(() => dispatch(setBackdrop(false)));
   };
 
   const avatarFirstLetter = requiredField.FamilyName.charAt(0);

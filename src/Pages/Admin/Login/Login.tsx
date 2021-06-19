@@ -19,7 +19,7 @@ const Login: React.FC = () => {
   const password = useAppSelector(selectPass);
 
   const submit = () => {
-    dispatch(setBackdrop());
+    dispatch(setBackdrop(true));
     axios
       .post("https://reqres.in/api/login", {
         email: username,
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
         dispatch(setAlertStatus("error"));
         setOpen(true);
       })
-      .finally(() => dispatch(setBackdrop()));
+      .finally(() => dispatch(setBackdrop(false)));
   };
 
   return <LoginUI submit={submit} />;
