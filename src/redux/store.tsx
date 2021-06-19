@@ -16,6 +16,7 @@ import DropDownMenu from "./Slicer/dropMenuDataSlice";
 import AddFilesDataReducer from "./Slicer/addFilesDataSlice";
 import FilePageReducer from "./Slicer/filePageSlice";
 import PhysiciansSlice from "./Slicer/physiciansSlice";
+import PatientFilesReducer from "./Slicer/patientFilesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ export const store = configureStore({
     addFilesData: AddFilesDataReducer,
     filePage: FilePageReducer,
     physicians: PhysiciansSlice,
+    patientFiles: PatientFilesReducer,
   },
 });
 
