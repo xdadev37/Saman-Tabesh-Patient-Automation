@@ -13,7 +13,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonsGroup from "./ButtonsGroup/ButtonsGroup";
 import { useAppSelector } from "../../../../../../Redux/hook";
-import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
+import { selectDarkMode } from "../../../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 interface IProps {
   open: boolean;

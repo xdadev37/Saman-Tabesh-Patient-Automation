@@ -14,8 +14,8 @@ import {
   setComment,
   setDiagnosisId,
   setInsuranceType,
-} from "../../../Redux/Slicer/patientInfoSlice";
-import { selectDropDownMenu } from "../../../Redux/Slicer/dropMenuDataSlice";
+} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDropDownMenu } from "../../../Redux/Slicer/CachedDataSlice/dropMenuDataSlice";
 import { useForm } from "react-hook-form";
 import CommentField from "../../CommentFieldUI";
 

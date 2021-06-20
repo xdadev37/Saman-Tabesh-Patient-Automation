@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import {
   selectRequiredField,
   setNationalId,
-} from "../../../../Redux/Slicer/patientInfoSlice";
-import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
+} from "../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDarkMode } from "../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import { numericValidation } from "./numericValidation";
 
 const NumericFields: FC = () => {

@@ -2,8 +2,8 @@ import { FC, Fragment, ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input, InputLabel, Typography } from "@material-ui/core";
 import { useAppDispatch, useAppSelector } from "../Redux/hook";
-import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
-import { setUsername, setPassword } from "../Redux/Slicer/userPassSlice";
+import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { setUsername, setPassword } from "../Redux/Slicer/AuthSlice/userPassSlice";
 
 const UserPassUI: FC = () => {
   const {

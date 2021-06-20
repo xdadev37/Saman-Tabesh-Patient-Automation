@@ -20,8 +20,8 @@ import {
   setComment,
   setDiagnosisId,
   setInsuranceType,
-} from "../../../Redux/Slicer/patientInfoSlice";
-import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
+} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDarkMode } from "../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 const TableComponent: React.FC = () => {
   let history = useHistory();

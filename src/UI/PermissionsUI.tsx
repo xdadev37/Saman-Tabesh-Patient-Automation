@@ -5,9 +5,9 @@ import { ChevronRight } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import UserPassUI from "./UserPassUI";
 import { useAppDispatch, useAppSelector } from "../Redux/hook";
-import { setDocName, setDocFamilyName } from "../Redux/Slicer/permissionSlice";
-import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
-import { selectPass } from "../Redux/Slicer/userPassSlice";
+import { setDocName, setDocFamilyName } from "../Redux/Slicer/AuthSlice/permissionSlice";
+import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { selectPass } from "../Redux/Slicer/AuthSlice/userPassSlice";
 import WebcamImage from "../Pages/AddPatientPage/AddFormDescenders/Webcam/webcamImage";
 
 interface IProps {

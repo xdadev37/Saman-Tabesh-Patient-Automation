@@ -9,16 +9,16 @@ import {
   Button,
 } from "@material-ui/core";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { selectPhysicians } from "../../../Redux/Slicer/physiciansSlice";
-import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
-import { setPatientFileId } from "../../../Redux/Slicer/idPasserSlice";
-import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
+import { selectPhysicians } from "../../../Redux/Slicer/CachedDataSlice/physiciansSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setPatientFileId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import {
   selectFilePage,
   setFileNumber,
   setPhysicianId,
   setComment,
-} from "../../../Redux/Slicer/filePageSlice";
+} from "../../../Redux/Slicer/CheckDataSlice/filePageSlice";
 import { useForm } from "react-hook-form";
 import { numericValidation } from "../../AddPatientPage/AddFormDescenders/numericFields/numericValidation";
 import CommentField from "../../../UI/CommentFieldUI";

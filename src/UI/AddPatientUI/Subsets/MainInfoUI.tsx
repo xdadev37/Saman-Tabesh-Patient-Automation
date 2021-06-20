@@ -7,7 +7,7 @@ import {
   setName,
   setFamilyName,
   setDateOfBirth,
-} from "../../../Redux/Slicer/patientInfoSlice";
+} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
 import { useForm, FormProvider } from "react-hook-form";
 import DateOfBirth from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/birthdayFields";
 import NationalId from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/nationalIdField";

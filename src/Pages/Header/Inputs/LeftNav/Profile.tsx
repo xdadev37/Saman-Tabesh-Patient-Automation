@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Add, Edit, ExpandMore } from "@material-ui/icons";
 import { useAppDispatch } from "../../../../Redux/hook";
-import { setLogin } from "../../../../Redux/Slicer/loginSlice";
+import { setLogin } from "../../../../Redux/Slicer/AuthSlice/loginSlice";
 
 const Profile: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

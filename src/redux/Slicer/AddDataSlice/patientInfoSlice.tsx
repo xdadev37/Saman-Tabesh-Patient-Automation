@@ -1,22 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import type { RootState } from "../../store";
 
-const initialState: IRequiredFields[] = [
-  {
-    Name: "",
-    FamilyName: "",
-    NationalId: "",
-    Avatar: "",
-    NationalIdDocLink: "",
-    Comment: "",
-    DiagnosisId: "",
-    InsuranceType: "",
-    phoneNumber: "",
-    urgencyNumber: "",
-    DateOfBirth: "",
-  },
-];
-
+const initialState: IRequiredFields = {
+  Name: "",
+  FamilyName: "",
+  NationalId: "",
+  Avatar: "",
+  NationalIdDocLink: "",
+  Comment: "",
+  DiagnosisId: "",
+  InsuranceType: "",
+  phoneNumber: "",
+  urgencyNumber: "",
+  DateOfBirth: "",
+};
 export const patientInfoSlice = createSlice({
   name: "patientInfoSlice",
   initialState,
@@ -64,6 +61,10 @@ export const patientInfoSlice = createSlice({
     setInsuranceType: (state, action: PayloadAction<string>) => {
       state.InsuranceType = action.payload;
     },
+
+    setAllPatientData: (state, action: PayloadAction<IRequiredFields>) => {
+      state = action.payload;
+    },
   },
 });
 
@@ -79,6 +80,7 @@ export const {
   setPhoneNumber,
   setUrgencyNumber,
   setDateOfBirth,
+  setAllPatientData,
 } = patientInfoSlice.actions;
 
 export const selectRequiredField = (state: RootState) => state.patientInfo;

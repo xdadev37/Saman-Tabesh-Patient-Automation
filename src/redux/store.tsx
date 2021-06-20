@@ -1,22 +1,22 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import patientInfoReducer from "./Slicer/patientInfoSlice";
-import idPasserReducer from "./Slicer/idPasserSlice";
-import dataGridReducer from "./Slicer/dataGridSlice";
-import createActionFormReducer from "./Slicer/actionStatusSlice";
-import checkActionReducer from "./Slicer/checkActionSlice";
-import PaginationReducer from "./Slicer/paginationSlice";
-import AlertMessageReducer from "./Slicer/alertMessageSlice";
-import EditActionReducer from "./Slicer/editActionSlice";
-import DarkModeReducer from "./Slicer/darkModeSlice";
-import BackdropReducer from "./Slicer/backdropSlice";
-import LoginReducer from "./Slicer/loginSlice";
-import UserPassReducer from "./Slicer/userPassSlice";
-import PermissionReducer from "./Slicer/permissionSlice";
-import DropDownMenu from "./Slicer/dropMenuDataSlice";
-import AddFilesDataReducer from "./Slicer/addFilesDataSlice";
-import FilePageReducer from "./Slicer/filePageSlice";
-import PhysiciansSlice from "./Slicer/physiciansSlice";
-import PatientFilesReducer from "./Slicer/patientFilesSlice";
+import patientInfoReducer from "./Slicer/AddDataSlice/patientInfoSlice";
+import idPasserReducer from "./Slicer/StatePasserSlice/idPasserSlice";
+import dataGridReducer from "./Slicer/CheckDataSlice/dataGridSlice";
+import createActionFormReducer from "./Slicer/StatePasserSlice/actionStatusSlice";
+import checkActionReducer from "./Slicer/CheckDataSlice/checkActionSlice";
+import PaginationReducer from "./Slicer/CheckDataSlice/paginationSlice";
+import AlertMessageReducer from "./Slicer/GlobalReduxUIState/alertMessageSlice";
+import EditActionReducer from "./Slicer/EditDataSlice/editActionSlice";
+import DarkModeReducer from "./Slicer/GlobalReduxUIState/darkModeSlice";
+import BackdropReducer from "./Slicer/GlobalReduxUIState/backdropSlice";
+import LoginReducer from "./Slicer/AuthSlice/loginSlice";
+import UserPassReducer from "./Slicer/AuthSlice/userPassSlice";
+import PermissionReducer from "./Slicer/AuthSlice/permissionSlice";
+import DropDownMenu from "./Slicer/CachedDataSlice/dropMenuDataSlice";
+import AddFilesDataReducer from "./Slicer/CachedDataSlice/addFilesDataSlice";
+import FilePageReducer from "./Slicer/CheckDataSlice/filePageSlice";
+import PhysiciansReducer from "./Slicer/CachedDataSlice/physiciansSlice";
+import PatientFilesReducer from "./Slicer/AddDataSlice/patientFilesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -36,7 +36,7 @@ export const store = configureStore({
     dropDownMenu: DropDownMenu,
     addFilesData: AddFilesDataReducer,
     filePage: FilePageReducer,
-    physicians: PhysiciansSlice,
+    physicians: PhysiciansReducer,
     patientFiles: PatientFilesReducer,
   },
 });

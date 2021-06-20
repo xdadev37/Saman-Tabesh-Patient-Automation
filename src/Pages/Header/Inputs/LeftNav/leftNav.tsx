@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import {
   setDarkMode,
   selectDarkMode,
-} from "../../../../Redux/Slicer/darkModeSlice";
+} from "../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import IOSSwitch from "./darkModeToggle";
 import Profile from "./Profile";
 import { MyAvatar } from "../../../../UI/Avatar";

@@ -12,15 +12,15 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setFilesLinks,
   emptyData,
-} from "../../../Redux/Slicer/checkActionSlice";
+} from "../../../Redux/Slicer/CheckDataSlice/checkActionSlice";
 import {
   selectPatientId,
   selectPatientFileId,
-} from "../../../Redux/Slicer/idPasserSlice";
-import { setSkeleton } from "../../../Redux/Slicer/backdropSlice";
+} from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setSkeleton } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
-import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { Add, ChevronRight } from "@material-ui/icons";
 import InfoBar from "../../../UI/InfoBar";
 
@@ -40,7 +40,7 @@ const CheckActions: FC = () => {
         if (res.status === 200) {
           for (let i = 0; i < res.data.length; i++) {
             dispatch(setFilesLinks(res.data[i]));
-            dispatch(setSkeleton(false));
+            dispatch(setSkeleton(true));
           }
         } else {
           console.log("Failed", res.statusText);

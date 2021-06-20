@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
 import { useAppSelector } from "../../../Redux/hook";
-import { selectDarkMode } from "../../../Redux/Slicer/darkModeSlice";
+import { selectDarkMode } from "../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 interface IProps {
   id: string;

@@ -1,10 +1,10 @@
 import { FC, ChangeEvent } from "react";
 import { InputLabel, Grid, TextField, Typography } from "@material-ui/core";
-import { DateOfBirth } from "../../../../dataArray";
+import { DateOfBirth } from "../../../../GloballyComponents/dataArray";
 import { useFormContext } from "react-hook-form";
 import { useAppSelector } from "../../../../Redux/hook";
-import { selectRequiredField } from "../../../../Redux/Slicer/patientInfoSlice";
-import { selectDarkMode } from "../../../../Redux/Slicer/darkModeSlice";
+import { selectRequiredField } from "../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDarkMode } from "../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import { numericValidation } from "./numericValidation";
 
 const DateOfBirthFields: FC = () => {

@@ -4,9 +4,9 @@ import PageCounter from "./Options/PageCounter";
 import { Grid } from "@material-ui/core";
 import TableComponent from "./TableComponent/TableComponent";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { setDataGrid, emptyData } from "../../Redux/Slicer/dataGridSlice";
-import { selectActionForm } from "../../Redux/Slicer/actionStatusSlice";
-import { setSkeleton } from "../../Redux/Slicer/backdropSlice";
+import { setDataGrid, emptyData } from "../../Redux/Slicer/CheckDataSlice/dataGridSlice";
+import { selectActionForm } from "../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setSkeleton } from "../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import axios from "axios";
 import GetActionName from "../patientActions/newAction/ModalEntry";
 import CheckAction from "../patientActions/checkActions/checkActions";
@@ -21,7 +21,7 @@ const MainPage: FC = () => {
 
   useEffect(() => {
     dispatch(emptyData());
-    dispatch(setSkeleton(false));
+    dispatch(setSkeleton(true));
 
     axios
       .get(
@@ -36,7 +36,7 @@ const MainPage: FC = () => {
             dispatch(setDataGrid(res.data[i]));
           }
 
-          dispatch(setSkeleton(true));
+          dispatch(setSkeleton(false));
         } else {
           console.log("Failed", res.statusText);
         }

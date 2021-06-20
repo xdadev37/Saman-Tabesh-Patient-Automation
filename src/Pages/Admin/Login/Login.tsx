@@ -4,13 +4,13 @@ import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../../Redux/Slicer/alertMessageSlice";
-import { setBackdrop } from "../../../Redux/Slicer/backdropSlice";
-import { setLogin } from "../../../Redux/Slicer/loginSlice";
+} from "../../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { setLogin } from "../../../Redux/Slicer/AuthSlice/loginSlice";
 import {
   selectUsername,
   selectPass,
-} from "../../../Redux/Slicer/userPassSlice";
+} from "../../../Redux/Slicer/AuthSlice/userPassSlice";
 import LoginUI from "../../../UI/LoginUI";
 
 const Login: React.FC = () => {

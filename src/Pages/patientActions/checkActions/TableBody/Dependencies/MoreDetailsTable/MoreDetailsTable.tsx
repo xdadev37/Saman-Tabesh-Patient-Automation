@@ -11,9 +11,9 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { dataArrayOptional } from "../../../../../../dataArray";
+import { dataArrayOptional } from "../../../../../../GloballyComponents/dataArray";
 import { useAppSelector } from "../../../../../../Redux/hook";
-import { selectDarkMode } from "../../../../../../Redux/Slicer/darkModeSlice";
+import { selectDarkMode } from "../../../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 const useRowStyles = makeStyles({
   root: {

@@ -4,7 +4,7 @@ import webcamGuide from "./GuidePics/webcamPermissionGuide.png";
 import permissionGuide from "./GuidePics/permissionGuide.png";
 import permissionGuide3 from "./GuidePics/permissionGuide3.png";
 import { useAppDispatch,useAppSelector } from "../../../../Redux/hook";
-import { selectRequiredField,setAvatar } from "../../../../Redux/Slicer/patientInfoSlice";
+import { selectRequiredField,setAvatar } from "../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
 
 interface IProps {
   setVideoSrc: (arg: HTMLVideoElement) => void;

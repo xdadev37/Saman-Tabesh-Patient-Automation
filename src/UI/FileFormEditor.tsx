@@ -4,7 +4,7 @@ import { Check } from "@material-ui/icons";
 import FileMapper from "../Pages/patientActions/newAction/AddFilesForm/FileMapper/FileMapper";
 import InfoBar from "./InfoBar";
 import { useAppSelector } from "../Redux/hook";
-import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
+import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

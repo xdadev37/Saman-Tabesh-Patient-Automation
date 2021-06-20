@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useAppSelector } from "../Redux/hook";
-import { selectDarkMode } from "../Redux/Slicer/darkModeSlice";
+import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import { useForm, FormProvider } from "react-hook-form";
 import backgroundLogin from "./SalamateFarda.jpg";
 import UserPassUI from "./UserPassUI";

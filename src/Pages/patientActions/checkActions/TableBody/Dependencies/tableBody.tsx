@@ -24,9 +24,9 @@ import {
   setActionId,
   setActionName,
   setActionComment,
-} from "../../../../../Redux/Slicer/editActionSlice";
-import { setActionForm } from "../../../../../Redux/Slicer/actionStatusSlice";
-import { selectRequiredField } from "../../../../../Redux/Slicer/patientInfoSlice";
+} from "../../../../../Redux/Slicer/EditDataSlice/editActionSlice";
+import { setActionForm } from "../../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { selectRequiredField } from "../../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
 import axios from "axios";
 
 interface IProps {

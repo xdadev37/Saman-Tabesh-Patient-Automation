@@ -1,7 +1,7 @@
 import { MyAvatar } from "./Avatar";
 import { Typography, Grid, Paper } from "@material-ui/core";
 import { useAppSelector } from "../Redux/hook";
-import { selectRequiredField } from "../Redux/Slicer/patientInfoSlice";
+import { selectRequiredField } from "../Redux/Slicer/AddDataSlice/patientInfoSlice";
 
 const InfoBar: React.FC = () => {
   const tempData = useAppSelector(selectRequiredField);

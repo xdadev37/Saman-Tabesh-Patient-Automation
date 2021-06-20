@@ -2,7 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 // import mainLogo from "./mainLogo.png";
 import { useAppDispatch } from "../../../../Redux/hook";
-import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
+import { setActionForm } from "../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { useHistory } from "react-router-dom";
 import { Home } from "@material-ui/icons";
 

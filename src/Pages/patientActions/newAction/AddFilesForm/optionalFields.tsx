@@ -5,11 +5,11 @@ import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../../../Redux/Slicer/alertMessageSlice";
-import { setActionForm } from "../../../../Redux/Slicer/actionStatusSlice";
-import { setBackdrop } from "../../../../Redux/Slicer/backdropSlice";
+} from "../../../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { setActionForm } from "../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setBackdrop } from "../../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import FileFormEditor from "../../../../UI/FileFormEditor";
-import { selectPatientFileId } from "../../../../Redux/Slicer/idPasserSlice";
+import { selectPatientFileId } from "../../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
 
 interface IProps {
   newActionName: string;

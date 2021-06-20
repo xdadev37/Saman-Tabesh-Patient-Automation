@@ -17,12 +17,12 @@ import {
   ButtonGroup,
 } from "@material-ui/core";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { setAllPatientData } from "../../../Redux/Slicer/patientInfoSlice";
-import { selectPatientFiles } from "../../../Redux/Slicer/patientFilesSlice";
-import { selectPatientId } from "../../../Redux/Slicer/idPasserSlice";
-import { setSkeleton } from "../../../Redux/Slicer/backdropSlice";
-import { setActionForm } from "../../../Redux/Slicer/actionStatusSlice";
-import { setPatientFileId } from "../../../Redux/Slicer/idPasserSlice";
+import { setAllPatientData } from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectPatientFiles } from "../../../Redux/Slicer/AddDataSlice/patientFilesSlice";
+import { selectPatientId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setSkeleton } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setPatientFileId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
 import { ChevronRight, Edit, DeleteForever } from "@material-ui/icons";
 
 const CheckFile: FC = () => {
@@ -31,14 +31,14 @@ const CheckFile: FC = () => {
   const patientFileId = useAppSelector(selectPatientFiles);
 
   useEffect(() => {
-    dispatch(setSkeleton(false));
+    dispatch(setSkeleton(true));
 
     axios
       .get(`url/${patientId}`)
       .then((res) => {
         if (res.status === 200) {
           dispatch(setAllPatientData(res.data));
-          dispatch(setSkeleton(true));
+          dispatch(setSkeleton(false));
         }
       })
       .catch((error) => console.log(error));
