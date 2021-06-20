@@ -68,7 +68,7 @@ const CheckFile: FC = () => {
           for (i; i < dataLength; i++) {
             dispatch(setAddFileData(res.data[i]));
           }
-
+// new Git Tree
           dispatch(setSkeleton(false));
         }
       })
