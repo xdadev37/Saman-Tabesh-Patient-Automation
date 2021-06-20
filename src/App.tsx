@@ -9,9 +9,9 @@ import RTLProvider from "./GloballyComponents/RTLProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./Pages/MainPage/MainPage";
 import AddPatientPage from "./Pages/AddPatientPage/AddPatientPage";
-import { useAppSelector } from "./redux/hook";
-import { selectDarkMode } from "./redux/Slicer/GlobalReduxUIState/darkModeSlice";
-import { selectLogin } from "./redux/Slicer/AuthSlice/loginSlice";
+import { useAppSelector } from "./Redux/hook";
+import { selectDarkMode } from "./Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { selectLogin } from "./Redux/Slicer/AuthSlice/loginSlice";
 import Login from "./Pages/Admin/Login/Login";
 import GlobalRedux from "./GloballyComponents/globalRedux";
 

@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import TableBody from "./Dependencies/tableBody";
-import { useAppSelector } from "../../../../redux/hook";
-import { selectFileLinks } from "../../../../redux/Slicer/CheckDataSlice/checkActionSlice";
+import { useAppSelector } from "../../../../Redux/hook";
+import { selectFileLinks } from "../../../../Redux/Slicer/CheckDataSlice/checkActionSlice";
 
 const TableMapper: FC = () => {
   const selectAction = useAppSelector(selectFileLinks);

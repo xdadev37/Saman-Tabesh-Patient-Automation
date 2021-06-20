@@ -12,7 +12,7 @@ import {
 import { Add } from "@material-ui/icons";
 import Pagination from "./Pagination/Pagination";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setName,
   setFamilyName,
@@ -20,8 +20,8 @@ import {
   setComment,
   setDiagnosisId,
   setInsuranceType,
-} from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
-import { selectDarkMode } from "../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
+} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDarkMode } from "../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 const TableComponent: React.FC = () => {
   let history = useHistory();

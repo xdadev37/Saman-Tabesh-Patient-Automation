@@ -1,7 +1,7 @@
 import { Grid, Typography, Button } from "@material-ui/core";
 import { Check } from "@material-ui/icons";
-import { useAppSelector } from "../../../redux/hook";
-import { selectRequiredField } from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
+import { useAppSelector } from "../../../Redux/hook";
+import { selectRequiredField } from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
 import { MyAvatar } from "../../Avatar";
 
 interface IProps {

@@ -13,9 +13,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Close, Check } from "@material-ui/icons";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
-import { selectRequiredField } from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
-import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { selectRequiredField } from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
 import CommentField from "../../../UI/CommentFieldUI";
 import OptionalFields from "./AddFilesForm/optionalFields";
 

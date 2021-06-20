@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { selectRequiredField } from "../../redux/Slicer/AddDataSlice/patientInfoSlice";
-import { setBackdrop } from "../../redux/Slicer/GlobalReduxUIState/backdropSlice";
-import { setPatientId } from "../../redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setActionForm } from "../../redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import { selectRequiredField } from "../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { setBackdrop } from "../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { setPatientId } from "../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setActionForm } from "../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+} from "../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
 import axios from "axios";
 import PatientPageUI from "../../UI/AddPatientUI/PatientPageUI";
 

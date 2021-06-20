@@ -8,14 +8,14 @@ import {
   Button,
 } from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   selectRequiredField,
   setComment,
   setDiagnosisId,
   setInsuranceType,
-} from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
-import { selectDropDownMenu } from "../../../redux/Slicer/CachedDataSlice/dropMenuDataSlice";
+} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDropDownMenu } from "../../../Redux/Slicer/CachedDataSlice/dropMenuDataSlice";
 import { useForm } from "react-hook-form";
 import CommentField from "../../CommentFieldUI";
 

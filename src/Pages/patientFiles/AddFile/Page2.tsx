@@ -8,17 +8,17 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
-import { selectPhysicians } from "../../../redux/Slicer/CachedDataSlice/physiciansSlice";
-import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
-import { setPatientFileId } from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setBackdrop } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { selectPhysicians } from "../../../Redux/Slicer/CachedDataSlice/physiciansSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setPatientFileId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import {
   selectFilePage,
   setFileNumber,
   setPhysicianId,
   setComment,
-} from "../../../redux/Slicer/CheckDataSlice/filePageSlice";
+} from "../../../Redux/Slicer/CheckDataSlice/filePageSlice";
 import { useForm } from "react-hook-form";
 import { numericValidation } from "../../AddPatientPage/AddFormDescenders/numericFields/numericValidation";
 import CommentField from "../../../UI/CommentFieldUI";

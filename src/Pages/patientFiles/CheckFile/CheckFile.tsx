@@ -16,17 +16,17 @@ import {
   Button,
   ButtonGroup,
 } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
-import { setAllPatientData } from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
-import { selectPatientFiles } from "../../../redux/Slicer/AddDataSlice/patientFilesSlice";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { setAllPatientData } from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectPatientFiles } from "../../../Redux/Slicer/AddDataSlice/patientFilesSlice";
 import {
   selectPatientId,
   setPatientFileId,
   selectPatientFileId,
-} from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setSkeleton } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
-import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
-import { selectAddFilesData } from "../../../redux/Slicer/CachedDataSlice/addFilesDataSlice";
+} from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setSkeleton } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { selectAddFilesData } from "../../../Redux/Slicer/CachedDataSlice/addFilesDataSlice";
 import { ChevronRight, Edit, DeleteForever } from "@material-ui/icons";
 
 const CheckFile: FC = () => {

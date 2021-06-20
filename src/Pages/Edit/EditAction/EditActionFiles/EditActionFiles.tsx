@@ -1,18 +1,18 @@
 import { FC, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
 import axios from "axios";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../../../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
-import { setActionForm } from "../../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
-import { setBackdrop } from "../../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
+} from "../../../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { setActionForm } from "../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setBackdrop } from "../../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import FileFormEditor from "../../../../UI/FileFormEditor";
 import {
   selectPatientFileId,
   selectActionId,
-} from "../../../../redux/Slicer/StatePasserSlice/idPasserSlice";
+} from "../../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
 
 interface IProps {
   newActionName: string;

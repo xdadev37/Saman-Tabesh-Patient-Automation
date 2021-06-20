@@ -3,8 +3,8 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Check } from "@material-ui/icons";
 import FileMapper from "../Pages/patientActions/newAction/AddFilesForm/FileMapper/FileMapper";
 import InfoBar from "./InfoBar";
-import { useAppSelector } from "../redux/hook";
-import { selectDarkMode } from "../redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { useAppSelector } from "../Redux/hook";
+import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

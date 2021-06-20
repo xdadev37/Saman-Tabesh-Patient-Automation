@@ -8,19 +8,19 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setFilesLinks,
   emptyData,
-} from "../../../redux/Slicer/CheckDataSlice/checkActionSlice";
+} from "../../../Redux/Slicer/CheckDataSlice/checkActionSlice";
 import {
   selectPatientId,
   selectPatientFileId,
-} from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setSkeleton } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
+} from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setSkeleton } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
-import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { Add, ChevronRight } from "@material-ui/icons";
 
 const CheckActions: FC = () => {

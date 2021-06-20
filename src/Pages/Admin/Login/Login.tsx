@@ -1,16 +1,16 @@
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
-import { setBackdrop } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
-import { setLogin } from "../../../redux/Slicer/AuthSlice/loginSlice";
+} from "../../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { setLogin } from "../../../Redux/Slicer/AuthSlice/loginSlice";
 import {
   selectUsername,
   selectPass,
-} from "../../../redux/Slicer/AuthSlice/userPassSlice";
+} from "../../../Redux/Slicer/AuthSlice/userPassSlice";
 import LoginUI from "../../../UI/LoginUI";
 
 const Login: React.FC = () => {

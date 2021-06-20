@@ -1,16 +1,16 @@
 import AlertSnackbar from "../UI/AlertSnackbar";
 import { Backdrop, CircularProgress, Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { useAppSelector } from "../redux/hook";
+import { useAppSelector } from "../Redux/hook";
 import {
   selectAlertText,
   selectAlertStatus,
   selectOpen,
-} from "../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+} from "../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
 import {
   selectBackdrop,
   selectSkeleton,
-} from "../redux/Slicer/GlobalReduxUIState/backdropSlice";
+} from "../Redux/Slicer/GlobalReduxUIState/backdropSlice";
 
 const GlobalRedux: React.FC = () => {
   const alertText = useAppSelector(selectAlertText);

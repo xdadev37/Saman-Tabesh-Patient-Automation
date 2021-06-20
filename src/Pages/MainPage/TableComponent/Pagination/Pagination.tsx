@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import MainTable from "./TablesElements/MainTable";
-import { useAppSelector } from "../../../../redux/hook";
-import { selectDataGrids } from "../../../../redux/Slicer/CheckDataSlice/dataGridSlice";
+import { useAppSelector } from "../../../../Redux/hook";
+import { selectDataGrids } from "../../../../Redux/Slicer/CheckDataSlice/dataGridSlice";
 
 const Pagination: FC = () => {
   const selectData = useAppSelector(selectDataGrids);
