@@ -1,8 +1,8 @@
 import { FC, Fragment, ChangeEvent, useState } from "react";
 import { InputLabel, Input, Typography, Button, Box } from "@material-ui/core";
 import { CheckCircle, Error, NoteAdd } from "@material-ui/icons";
-import { useAppSelector } from "../../../../../../Redux/hook";
-import { selectDarkMode } from "../../../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { useAppSelector } from "../../../../../../redux/hook";
+import { selectDarkMode } from "../../../../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 interface IProps {
   id: string;

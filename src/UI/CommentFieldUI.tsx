@@ -6,8 +6,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { BorderColor } from "@material-ui/icons";
-import { useAppSelector } from "../Redux/hook";
-import { selectDarkMode } from "../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { useAppSelector } from "../redux/hook";
+import { selectDarkMode } from "../redux/Slicer/GlobalReduxUIState/darkModeSlice";
 
 interface IProps {
   defaultValue: string;

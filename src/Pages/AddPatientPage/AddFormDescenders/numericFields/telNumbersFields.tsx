@@ -1,13 +1,13 @@
 import { FC, ChangeEvent } from "react";
 import { InputLabel, TextField, Typography, Grid } from "@material-ui/core";
 import { useFormContext } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import {
   selectRequiredField,
   setPhoneNumber,
   setUrgencyNumber,
-} from "../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
-import { selectDarkMode } from "../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+} from "../../../../redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectDarkMode } from "../../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import { numericValidation } from "./numericValidation";
 
 const TelNumbersFields: FC = () => {

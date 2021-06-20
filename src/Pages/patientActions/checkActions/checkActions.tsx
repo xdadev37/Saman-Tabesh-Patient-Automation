@@ -8,21 +8,20 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import {
   setFilesLinks,
   emptyData,
-} from "../../../Redux/Slicer/CheckDataSlice/checkActionSlice";
+} from "../../../redux/Slicer/CheckDataSlice/checkActionSlice";
 import {
   selectPatientId,
   selectPatientFileId,
-} from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setSkeleton } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+} from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setSkeleton } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
 import axios from "axios";
 import TableMapper from "./TableBody/tableMapper";
-import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { Add, ChevronRight } from "@material-ui/icons";
-import InfoBar from "../../../UI/InfoBar";
 
 const CheckActions: FC = () => {
   const dispatch = useAppDispatch();
@@ -31,16 +30,20 @@ const CheckActions: FC = () => {
 
   useEffect(() => {
     dispatch(emptyData());
+    dispatch(setSkeleton(true));
 
     axios
       .get(
         `https://my-json-server.typicode.com/xdadev37/jsonDatabase/optionalForm?PatientId=${patientFileId}`
       )
       .then((res) => {
+        let i = 0;
+        const dataLength = res.data.length;
+
         if (res.status === 200) {
-          for (let i = 0; i < res.data.length; i++) {
+          for (i; i < dataLength; i++) {
             dispatch(setFilesLinks(res.data[i]));
-            dispatch(setSkeleton(true));
+            dispatch(setSkeleton(false));
           }
         } else {
           console.log("Failed", res.statusText);
@@ -49,7 +52,7 @@ const CheckActions: FC = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [dispatch, selectId]);
+  }, [dispatch, selectId, patientFileId]);
 
   return (
     <Grid container>

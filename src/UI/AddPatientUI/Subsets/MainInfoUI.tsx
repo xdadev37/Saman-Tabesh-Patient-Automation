@@ -2,12 +2,12 @@ import { FC, useEffect } from "react";
 import { Grid, Button } from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
 import NameFields from "../../../Pages/AddPatientPage/AddFormDescenders/nameFields";
-import { useAppDispatch } from "../../../Redux/hook";
+import { useAppDispatch } from "../../../redux/hook";
 import {
   setName,
   setFamilyName,
   setDateOfBirth,
-} from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+} from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
 import { useForm, FormProvider } from "react-hook-form";
 import DateOfBirth from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/birthdayFields";
 import NationalId from "../../../Pages/AddPatientPage/AddFormDescenders/numericFields/nationalIdField";

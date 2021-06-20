@@ -5,9 +5,9 @@ import MainInfoUI from "./Subsets/MainInfoUI";
 import MedicalInfo from "./Subsets/MedicalInfoUI";
 import MainFilesUI from "./Subsets/MainFilesUI";
 import CheckEntriesUI from "./Subsets/checkEntriesUI";
-import { useAppSelector, useAppDispatch } from "../../Redux/hook";
-import { selectRequiredField } from "../../Redux/Slicer/AddDataSlice/patientInfoSlice";
-import { setOpen } from "../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { useAppSelector, useAppDispatch } from "../../redux/hook";
+import { selectRequiredField } from "../../redux/Slicer/AddDataSlice/patientInfoSlice";
+import { setOpen } from "../../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
 import { useStyle } from "./AddPatientStyle";
 
 interface IProps {

@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import { Grid, Card, CardContent, Typography } from "@material-ui/core";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { selectPatientId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setPatientId, setModality } from "../../../Redux/Slicer/CheckDataSlice/filePageSlice";
-import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { selectPatientId } from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setPatientId, setModality } from "../../../redux/Slicer/CheckDataSlice/filePageSlice";
+import { setBackdrop } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
 import {
   setAddFileData,
   selectAddFilesData,
-} from "../../../Redux/Slicer/CachedDataSlice/addFilesDataSlice";
-import { setPhysicianData } from "../../../Redux/Slicer/CachedDataSlice/physiciansSlice";
+} from "../../../redux/Slicer/CachedDataSlice/addFilesDataSlice";
+import { setPhysicianData } from "../../../redux/Slicer/CachedDataSlice/physiciansSlice";
 import Page2 from "./Page2";
 
 const AddFile: FC = () => {

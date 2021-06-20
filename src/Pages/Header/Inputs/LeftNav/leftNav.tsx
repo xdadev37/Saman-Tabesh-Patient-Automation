@@ -1,9 +1,9 @@
 import { FormControlLabel, Grid } from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import {
   setDarkMode,
   selectDarkMode,
-} from "../../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+} from "../../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import IOSSwitch from "./darkModeToggle";
 import Profile from "./Profile";
 import { MyAvatar } from "../../../../UI/Avatar";

@@ -1,8 +1,8 @@
 import { FC, SyntheticEvent } from "react";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useAppDispatch } from "../Redux/hook";
-import { setOpen } from "../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { useAppDispatch } from "../redux/hook";
+import { setOpen } from "../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
 
 interface IProps {
   alertStatus: string;

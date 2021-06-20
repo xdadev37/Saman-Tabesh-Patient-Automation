@@ -1,7 +1,7 @@
 import { FormHelperText, Typography, Button, Grid } from "@material-ui/core";
 import { ChevronLeft } from "@material-ui/icons";
-import { useAppSelector } from "../../../Redux/hook";
-import { selectDarkMode } from "../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { useAppSelector } from "../../../redux/hook";
+import { selectDarkMode } from "../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
 import FilesFields from "../../../Pages/patientActions/newAction/AddFilesForm/FileMapper/FilesFields/filesFields";
 import WebcamImage from "../../../Pages/AddPatientPage/AddFormDescenders/Webcam/webcamImage";
 

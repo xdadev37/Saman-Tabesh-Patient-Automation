@@ -8,9 +8,9 @@ import {
 } from "@material-ui/core";
 import { DeleteForever, Add, AmpStories, Edit } from "@material-ui/icons";
 import axios from "axios";
-import { useAppDispatch } from "../../../../../../../Redux/hook";
-import { setPatientId } from "../../../../../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setActionForm } from "../../../../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { useAppDispatch } from "../../../../../../../redux/hook";
+import { setPatientId } from "../../../../../../../redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setActionForm } from "../../../../../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { useHistory } from "react-router-dom";
 import {
   setName,
@@ -19,7 +19,7 @@ import {
   setComment,
   setDiagnosisId,
   // setAvatar,
-} from "../../../../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+} from "../../../../../../../redux/Slicer/AddDataSlice/patientInfoSlice";
 
 interface IProps {
   id: string;

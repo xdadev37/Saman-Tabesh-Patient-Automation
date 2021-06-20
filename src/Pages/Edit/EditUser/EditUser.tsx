@@ -1,18 +1,18 @@
 import { FC, useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hook";
-import { selectPatientId } from "../../../Redux/Slicer/StatePasserSlice/idPasserSlice";
-import { setActionForm } from "../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { selectPatientId } from "../../../redux/Slicer/StatePasserSlice/idPasserSlice";
+import { setActionForm } from "../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
 import { Button, Grid } from "@material-ui/core";
 import { ChevronRight, Assignment } from "@material-ui/icons";
 import {
   setAlertStatus,
   setAlertText,
   setOpen,
-} from "../../../Redux/Slicer/GlobalReduxUIState/alertMessageSlice";
-import { selectDarkMode } from "../../../Redux/Slicer/GlobalReduxUIState/darkModeSlice";
-import { setBackdrop } from "../../../Redux/Slicer/GlobalReduxUIState/backdropSlice";
+} from "../../../redux/Slicer/GlobalReduxUIState/alertMessageSlice";
+import { selectDarkMode } from "../../../redux/Slicer/GlobalReduxUIState/darkModeSlice";
+import { setBackdrop } from "../../../redux/Slicer/GlobalReduxUIState/backdropSlice";
 import { MyAvatar } from "../../../UI/Avatar";
-import { selectRequiredField } from "../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+import { selectRequiredField } from "../../../redux/Slicer/AddDataSlice/patientInfoSlice";
 import { useForm } from "react-hook-form";
 import PatientPageUI from "../../../UI/AddPatientUI/PatientPageUI";
 import axios from "axios";

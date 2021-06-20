@@ -19,14 +19,14 @@ import {
   DeleteForever,
 } from "@material-ui/icons";
 import MoreDetailsTable from "./MoreDetailsTable/MoreDetailsTable";
-import { useAppDispatch, useAppSelector } from "../../../../../Redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/hook";
 import {
   setActionId,
   setActionName,
   setActionComment,
-} from "../../../../../Redux/Slicer/EditDataSlice/editActionSlice";
-import { setActionForm } from "../../../../../Redux/Slicer/StatePasserSlice/actionStatusSlice";
-import { selectRequiredField } from "../../../../../Redux/Slicer/AddDataSlice/patientInfoSlice";
+} from "../../../../../redux/Slicer/EditDataSlice/editActionSlice";
+import { setActionForm } from "../../../../../redux/Slicer/StatePasserSlice/actionStatusSlice";
+import { selectRequiredField } from "../../../../../redux/Slicer/AddDataSlice/patientInfoSlice";
 import axios from "axios";
 
 interface IProps {
