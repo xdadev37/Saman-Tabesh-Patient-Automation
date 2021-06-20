@@ -1,0 +1,19 @@
+@import url(./Fonts/css/fontiran.css);
+
+* {
+  font-family: IRANSans !important;
+  font-weight: 300;
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.5s;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
